@@ -1,0 +1,16 @@
+packages:
+  - "apps/*"
+
+# pnpm 12 supply-chain policy: refuse packages published < 24 h ago (default, kept).
+# Expo SDK 58 and its paired React Native 0.88 toolchain are first-party vendors that
+# ship frequent releases; exempt those scopes only.
+minimumReleaseAgeExclude:
+  - "expo"
+  - "expo-*"
+  - "@expo/*"
+  - "babel-preset-expo"
+  - "react-native"
+  - "@react-native/*"
+
+allowBuilds:
+  unrs-resolver: true
