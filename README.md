@@ -28,9 +28,9 @@ pnpm check          # lint + typecheck + build, same as CI
 ```
 
 ## Working here
-- Read **[`AGENTS.md`](AGENTS.md)** first — the rules for people and AI tools alike.
+- New here? **[`CONTRIBUTING.md`](CONTRIBUTING.md)** — setup, the branch → PR loop, and your first (warm-up) PR, step by step.
+- **[`AGENTS.md`](AGENTS.md)** — the rules, for people and AI tools alike.
 - One branch per task, one PR per change, the module owner approves. The PR template asks you to explain your code.
-- Your **warm-up PR**: one screen (in your module's app) + one table (copy `supabase/migrations/0001_warmup_notes.sql`).
 - AI use goes in [`docs/ai-use-log.md`](docs/ai-use-log.md).
 
 ## Stack
