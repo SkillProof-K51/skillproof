@@ -1,8 +1,10 @@
-import { colors, radius, space } from "@skillproof/tokens";
+import { gap, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
 import type { TodaysChallenge } from "../../lib/home";
-import { Button, Card, Chip, Icon, Mascot, Text } from "../ui";
+import { Button, Card, Chip, Mascot, Text } from "../ui";
+
+const MASCOT_WIDTH = 103; // Figma: the in-card mascot on Home
 
 type Props = {
   challenge: TodaysChallenge;
@@ -21,19 +23,7 @@ export function TodaysChallengeCard({ challenge, onPress }: Props) {
     <Card tone="butter" style={styles.card}>
       <View style={styles.top}>
         <Chip label="Today's challenge" tone="butter" />
-        <View style={styles.pill}>
-          {done ? (
-            <>
-              <Icon name="check" size={14} color={colors.text.primary} />
-              <Text variant="caption">Done</Text>
-            </>
-          ) : (
-            <>
-              <Icon name="clock" size={14} />
-              <Text variant="caption">{challenge.minutes} min</Text>
-            </>
-          )}
-        </View>
+        <Chip tone="surface" icon={done ? "check" : "clock"} label={done ? "Done" : `${challenge.minutes} min`} />
       </View>
 
       <View style={styles.body}>
@@ -48,7 +38,7 @@ export function TodaysChallengeCard({ challenge, onPress }: Props) {
             </Text>
           ) : null}
         </View>
-        <Mascot pose={done ? "happy" : "idea"} width={103} />
+        <Mascot pose={done ? "happy" : "idea"} width={MASCOT_WIDTH} />
       </View>
 
       {done ? (
@@ -63,15 +53,6 @@ export function TodaysChallengeCard({ challenge, onPress }: Props) {
 const styles = StyleSheet.create({
   card: { gap: space.md },
   top: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  pill: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: space.xs,
-    paddingHorizontal: 10,
-    paddingVertical: space.xs,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.surface,
-  },
   body: { flexDirection: "row", alignItems: "center", gap: space.md },
-  text: { flex: 1, gap: 6 },
+  text: { flex: 1, gap: gap.tight },
 });

@@ -1,7 +1,6 @@
-import { colors, layout, space } from "@skillproof/tokens";
+import { colors, gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ProjectCard } from "../../components/home/ProjectCard";
 import { TodaysChallengeCard } from "../../components/home/TodaysChallengeCard";
@@ -10,27 +9,23 @@ import {
   Card,
   Carousel,
   Chip,
+  Hero,
   Icon,
   IconBadge,
-  Mascot,
-  MascotShadow,
   ProgressRing,
   Screen,
   SectionHeader,
-  SkyBackdrop,
-  SpeechBubble,
   StatusBadge,
   Text,
 } from "../../components/ui";
 import { getHomeData, greetingFor } from "../../lib/home";
 
-const HERO = 300; // Home stretches the Tall sky to 300; the first card overlaps it by 56 (lip 32 + 24)
+const HERO = 300; // Home stretches the Tall sky to 300 (Figma)
 // The slider: the top open matches, then the next locked one as a goal. Everything else → "See all".
 const SLIDER_OPEN = 3;
 const SLIDER_LOCKED = 1;
 
 export default function HomeScreen() {
-  const insets = useSafeAreaInsets();
   const router = useRouter();
   const data = getHomeData();
 
@@ -46,13 +41,8 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      {/* Hero — sky, greeting, mascot. Positions are the Figma ones; the mascot anchors right. */}
-      <View style={styles.hero}>
-        <SkyBackdrop height={HERO} />
-        <MascotShadow width={88} style={styles.mascotShadow} />
-        <Mascot pose="wave" width={142} style={styles.mascot} />
-        <SpeechBubble text={data.bubble} style={styles.bubble} />
-        <View style={[styles.header, { top: insets.top + 13 }]}>
+      <Hero height={HERO} mascot="wave" bubble={data.bubble}>
+        <View style={styles.header}>
           <View style={styles.greeting}>
             <Text variant="title">
               {greetingFor(new Date())}, {student.firstName}
@@ -63,13 +53,13 @@ export default function HomeScreen() {
           </View>
           <Avatar initials={student.initials} tone="surface" />
         </View>
-      </View>
+      </Hero>
 
       <View style={styles.content}>
         {/* Readiness (Module 2 computes it; Home only displays) */}
         <Card style={styles.readiness}>
           <ProgressRing percent={readiness.percent} />
-          <View style={styles.readinessText}>
+          <View style={styles.stack}>
             <Text variant="label" color="secondary">
               {readiness.roleLabel}
             </Text>
@@ -114,7 +104,7 @@ export default function HomeScreen() {
         <SectionHeader title="Your passport" />
         <Card onPress={() => router.push("/passport")} style={styles.row}>
           <IconBadge icon="id-card" tone="green" />
-          <View style={styles.rowText}>
+          <View style={styles.stack}>
             <Text variant="heading">Skill Passport</Text>
             <View style={styles.chips}>
               <StatusBadge status="verified" label={`${passport.verified} Verified`} />
@@ -130,17 +120,11 @@ export default function HomeScreen() {
 
 /** Shown when there is no signed-in student yet (and TEST MODE is off). */
 function HomeEmpty() {
-  const insets = useSafeAreaInsets();
   return (
     <Screen>
-      <View style={styles.hero}>
-        <SkyBackdrop height={HERO} />
-        <MascotShadow width={88} style={styles.mascotShadow} />
-        <Mascot pose="question" width={142} style={styles.mascot} />
-        <View style={[styles.header, { top: insets.top + 13 }]}>
-          <Text variant="title">Nothing here yet</Text>
-        </View>
-      </View>
+      <Hero height={HERO} mascot="question">
+        <Text variant="title">Nothing here yet</Text>
+      </Hero>
       <View style={styles.content}>
         <Card>
           <Text variant="heading">Home fills up once you log in</Text>
@@ -155,19 +139,14 @@ function HomeEmpty() {
 }
 
 const styles = StyleSheet.create({
-  hero: { height: HERO, marginBottom: -(layout.skyLip + layout.heroOverlap) },
-  header: { position: "absolute", left: layout.gutter, right: layout.gutter, flexDirection: "row", alignItems: "center", gap: space.md },
-  greeting: { flex: 1, gap: 2 },
-  mascot: { position: "absolute", right: 20, top: 106 },
-  mascotShadow: { position: "absolute", right: 47, top: 229 },
-  bubble: { position: "absolute", left: layout.gutter, top: 140 },
-  content: { paddingHorizontal: layout.gutter, gap: 14 },
-  readiness: { flexDirection: "row", alignItems: "center", gap: 14 },
-  readinessText: { flex: 1, gap: 6 },
-  chips: { flexDirection: "row", gap: 6 },
+  header: { flexDirection: "row", alignItems: "center", gap: space.md },
+  greeting: { flex: 1, gap: space.xxs },
+  content: { paddingHorizontal: layout.gutter, gap: gap.loose },
+  readiness: { flexDirection: "row", alignItems: "center", gap: gap.loose },
+  stack: { flex: 1, gap: gap.tight },
+  chips: { flexDirection: "row", gap: gap.tight },
   link: { flexDirection: "row", alignItems: "center", gap: space.xs },
   row: { flexDirection: "row", alignItems: "center", gap: space.md },
-  rowText: { flex: 1, gap: 6 },
   fill: { flexGrow: 1 },
   emptyBody: { marginTop: space.xs },
 });

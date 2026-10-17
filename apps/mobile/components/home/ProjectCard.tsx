@@ -2,7 +2,7 @@ import { colors, space } from "@skillproof/tokens";
 import { StyleSheet, View, type ViewStyle } from "react-native";
 
 import { placesLeftLabel, type MicroProject } from "../../lib/home";
-import { Button, Card, Chip, Icon, Text } from "../ui";
+import { Button, Card, Chip, CHIP_HEIGHT, Icon, Text } from "../ui";
 
 type Props = {
   project: MicroProject;
@@ -74,7 +74,8 @@ export function ProjectCard({ project, eyebrow, onView, onPractise, style }: Pro
 
 const styles = StyleSheet.create({
   card: { gap: space.md },
-  top: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", minHeight: 26 },
+  // same height whether the right side holds a Fit chip (open) or a lock icon (locked)
+  top: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", minHeight: CHIP_HEIGHT },
   text: { gap: space.xs },
   spacer: { flexGrow: 1, marginTop: -space.md },
 });

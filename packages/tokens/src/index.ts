@@ -60,13 +60,29 @@ export const colors = {
   },
 } as const;
 
-/** Spacing scale (px). Figma: spacing/xs … xl. */
+/** Spacing scale (px). Figma: spacing/xs … xl, plus xxs for the 2 px title/subtitle gaps. */
 export const space = {
+  xxs: 2,
   xs: 4,
   sm: 8,
   md: 12,
   lg: 16,
   xl: 24,
+} as const;
+
+/**
+ * Off-scale gaps the Figma frames use as raw values (not Figma variables). Named here so screens
+ * never repeat the numbers.
+ */
+export const gap = {
+  tight: 6, // between lines of text in a card, between chips
+  loose: 14, // between cards stacked on a screen; ring ↔ text in the readiness card
+} as const;
+
+/** Press feedback for anything tappable. */
+export const opacity = {
+  pressed: 0.85,
+  disabled: 0.5,
 } as const;
 
 /** Corner radius (px). Figma has lg and xl both at 16 — kept so names match the inspector. */

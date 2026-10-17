@@ -1,4 +1,4 @@
-import { colors, radius, space } from "@skillproof/tokens";
+import { colors, opacity, radius, space } from "@skillproof/tokens";
 import { Pressable, StyleSheet, View, type PressableProps, type ViewProps, type ViewStyle } from "react-native";
 
 type Props = ViewProps & {
@@ -42,5 +42,5 @@ const styles = StyleSheet.create({
   surface: { backgroundColor: colors.bg.surface },
   butter: { backgroundColor: colors.accent.butterSoft },
   blue: { backgroundColor: colors.status.practised.bg },
-  pressed: { opacity: 0.9 },
+  pressed: { opacity: opacity.pressed },
 });

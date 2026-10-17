@@ -29,8 +29,10 @@ export function IconBadge({ icon, tone = "blue", shape = "tile" }: Props) {
   );
 }
 
+const SIZE = 44; // Figma "Icon badge"
+
 const styles = StyleSheet.create({
-  badge: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
+  badge: { width: SIZE, height: SIZE, alignItems: "center", justifyContent: "center" },
   circle: { borderRadius: radius.full },
   tile: { borderRadius: radius.tile },
 });

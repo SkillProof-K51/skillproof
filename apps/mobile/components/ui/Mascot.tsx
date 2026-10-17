@@ -18,6 +18,13 @@ const POSES = {
 
 export type MascotPose = keyof typeof POSES;
 
+/** Rendered size of a pose at a given width (height follows the pose's aspect ratio). */
+export function mascotSize(pose: MascotPose, width?: number): { width: number; height: number } {
+  const p = POSES[pose];
+  const w = width ?? p.width;
+  return { width: w, height: Math.round((w * p.height) / p.width) };
+}
+
 type Props = {
   pose?: MascotPose;
   /** Rendered width; height follows the pose's aspect ratio. Default = Figma size. */
@@ -30,12 +37,10 @@ type Props = {
  * card. Never on the filled Skill Passport or on task screens (Fix the bug, SQL live, Explain it).
  */
 export function Mascot({ pose = "wave", width, style }: Props) {
-  const p = POSES[pose];
-  const w = width ?? p.width;
-  const h = Math.round((w * p.height) / p.width);
+  const { width: w, height: h } = mascotSize(pose, width);
   return (
     <Image
-      source={p.source}
+      source={POSES[pose].source}
       accessible={false}
       contentFit="contain"
       style={[{ width: w, height: h }, style]}

@@ -1,4 +1,4 @@
-import { colors } from "@skillproof/tokens";
+import { colors, space } from "@skillproof/tokens";
 import type { Tabs } from "expo-router";
 import type { ComponentProps } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -24,7 +24,7 @@ const TAB_ICONS: Record<string, IconName> = {
 export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
+    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, space.md) }]}>
       {state.routes.map((route, index) => {
         const focused = state.index === index;
         const { options } = descriptors[route.key];
@@ -46,7 +46,7 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
             <View style={styles.slot}>
               <Icon
                 name={TAB_ICONS[route.name] ?? "compass"}
-                size={focused ? 24 : 22}
+                size={focused ? ICON_ACTIVE : ICON_IDLE}
                 weight={focused ? "duotone" : "regular"}
                 color={focused ? colors.text.primary : colors.icon.default}
               />
@@ -61,14 +61,21 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   );
 }
 
+// Figma "Tab Bar" / "Tab Item"
+const BAR_PAD_X = 14;
+const BAR_PAD_TOP = 10;
+const ITEM_WIDTH = 70;
+const ICON_ACTIVE = 24; // Duotone
+const ICON_IDLE = 22; // Regular
+
 const styles = StyleSheet.create({
   bar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 14,
-    paddingTop: 10,
+    paddingHorizontal: BAR_PAD_X,
+    paddingTop: BAR_PAD_TOP,
     backgroundColor: colors.bg.app,
   },
-  item: { width: 70, alignItems: "center", gap: 4 },
-  slot: { height: 24, justifyContent: "center" },
+  item: { width: ITEM_WIDTH, alignItems: "center", gap: space.xs },
+  slot: { height: ICON_ACTIVE, justifyContent: "center" },
 });

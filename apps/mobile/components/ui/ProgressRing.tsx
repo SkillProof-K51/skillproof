@@ -34,7 +34,7 @@ export function ProgressRing({ percent, size = 64, label }: Props) {
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
         />
       </Svg>
-      <View style={styles.center} pointerEvents="none">
+      <View style={[StyleSheet.absoluteFill, styles.center]} pointerEvents="none">
         <Text variant="bodyStrong" style={styles.label}>
           {label ?? `${clamped}%`}
         </Text>
@@ -44,6 +44,6 @@ export function ProgressRing({ percent, size = 64, label }: Props) {
 }
 
 const styles = StyleSheet.create({
-  center: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center" },
+  center: { alignItems: "center", justifyContent: "center" },
   label: { fontFamily: fontFamilyFor("sans", 600) }, // Figma: the ring value is SemiBold
 });

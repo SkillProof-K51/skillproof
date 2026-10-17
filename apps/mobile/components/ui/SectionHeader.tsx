@@ -1,4 +1,4 @@
-import { colors } from "@skillproof/tokens";
+import { colors, space } from "@skillproof/tokens";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { Icon } from "./Icon";
@@ -30,5 +30,5 @@ export function SectionHeader({ title, link, onPressLink }: Props) {
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", alignSelf: "stretch" },
-  link: { flexDirection: "row", alignItems: "center", gap: 2 },
+  link: { flexDirection: "row", alignItems: "center", gap: space.xxs },
 });

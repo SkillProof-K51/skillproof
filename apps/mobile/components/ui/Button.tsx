@@ -1,4 +1,4 @@
-import { colors, radius, space } from "@skillproof/tokens";
+import { colors, opacity, radius, space } from "@skillproof/tokens";
 import { Pressable, StyleSheet, type PressableProps, type ViewStyle } from "react-native";
 
 import { Icon, type IconName } from "./Icon";
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     borderColor: colors.border.default,
   },
   block: { alignSelf: "stretch" },
-  pressed: { opacity: 0.85 },
-  disabled: { opacity: 0.5 },
+  pressed: { opacity: opacity.pressed },
+  disabled: { opacity: opacity.disabled },
 });
