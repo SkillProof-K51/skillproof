@@ -36,7 +36,8 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 | green (`status.verified`) | Verified by a mentor (M4) | Verified badges, Fit % chips, achievements |
 | blue (`status.practised`) | Practised / in progress (M3) | Practised badges, project cards and badges |
 | butter (`accent.butter`) | energy | today's challenge only |
-| strong blue (`action.primaryStrong`) | the main action / where you are | the one primary button per screen, the active tab in the bottom nav |
+| navy (`action.primaryStrong`) | the main action | the one primary button per screen |
+| brand blue (`accent.brand`) on soft sky (`accent.skySoft`) | where you are | the active tab in the bottom nav |
 Never use a status colour as decoration.
 
 ## Text

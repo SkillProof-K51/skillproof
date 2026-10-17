@@ -30,11 +30,13 @@ export const colors = {
     muted: "#8492a6",
   },
   action: {
-    primaryStrong: "#2f6fdc", // the ONE strong CTA per screen + the active tab's pill (AA 4.74:1 with white)
+    primaryStrong: "#0b1a35", // the ONE strong CTA per screen — dark navy (Azim, 18 Oct; 16.6:1 with white)
     onPrimaryStrong: "#ffffff",
   },
   accent: {
     sky: "#bfdbfe", // brand / avatars / sky top
+    skySoft: "#dbeafe", // the active tab's pill in the bottom nav
+    brand: "#2f6fdc", // the brand blue: active tab icon + label
     butter: "#ffe9a8", // energy — today's challenge tag, butter icon badges
     butterSoft: "#fff6d6", // Figma butter/100 — today's challenge card
     progress: "#6fa8f5", // readiness ring fill
