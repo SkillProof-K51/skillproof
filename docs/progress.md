@@ -3,6 +3,7 @@
 Update this when you finish a step. Newest at the top of each list.
 
 ## Done
+- 2026-10-18 — Home review round 1 (Azim): flat page + deeper sky, white avatar on the sky, project slider (top 3 + next locked), "Done for today" state, shared `Hero`, named spacing/opacity tokens, `app.config.ts` from tokens, lint guardrail + AGENTS.md rule 13 + `docs/ui.md`. TEST MODE pill removed for the review — restore it or amend rule 4 before demo data reaches `main`.
 - 2026-10-17 — UI kit foundation (branch `feat/ui-kit-foundation`): Expo SDK 57 (store Expo Go), Expo Router with the 5 module tabs, `packages/tokens` (`@skillproof/tokens`, mirrored from the Figma variables, `tokens.css` for the web), 17 components in `apps/mobile/components/ui`, mascot poses, Home as the proof screen behind `EXPO_PUBLIC_TEST_MODE`. Awaiting Azim's on-device review.
 - 2026-10-16 — Proposal submitted on ulearn, recommended by Dr. Farah.
 - 2026-10-16 — Repo scaffolded: pnpm workspace, `apps/web` (Next.js 16), `apps/mobile` (Expo SDK 58), AGENTS.md, CI, PR template, warm-up migration.
