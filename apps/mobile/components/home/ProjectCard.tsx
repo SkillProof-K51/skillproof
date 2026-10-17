@@ -19,7 +19,7 @@ type Props = {
 /**
  * A micro-project in the Home slider. The ranking comes from the fit engine (Module 2) — this
  * card only displays it.
- * - Open: blue card, Fit chip, "View project".
+ * - Open: white card, blue eyebrow, Fit chip, "View project" (white, not blue — Azim: "too much blue").
  * - Locked (a required skill isn't Practised yet): white card, muted, "Practise <skill>" — the
  *   lock becomes the way back to Module 3.
  * Buttons are secondary: the screen's one strong CTA stays "Start challenge".
@@ -32,7 +32,6 @@ export function ProjectCard({ project, eyebrow, onView, onPractise, style }: Pro
 
   return (
     <Card
-      tone={locked ? "surface" : "blue"}
       style={StyleSheet.flatten([styles.card, style])}
       accessibilityLabel={locked ? `${project.title}, locked until ${project.lockedBy} is Practised` : undefined}
     >

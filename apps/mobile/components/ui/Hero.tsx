@@ -1,70 +1,74 @@
-import { layout } from "@skillproof/tokens";
-import type { ReactNode } from "react";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { layout, space } from "@skillproof/tokens";
+import { useState, type ReactNode } from "react";
+import { StyleSheet, useWindowDimensions, View, type LayoutChangeEvent } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Mascot, mascotSize, type MascotPose } from "./Mascot";
-import { MascotShadow } from "./MascotShadow";
+import { GroundedMascot } from "./GroundedMascot";
+import { mascotSize, type MascotPose } from "./Mascot";
 import { SkyBackdrop } from "./SkyBackdrop";
 import { SpeechBubble } from "./SpeechBubble";
 
-// Hero geometry, measured from the Figma frames (390 wide) and written once here:
-const HEADER_BELOW_STATUS_BAR = 13; // header top 72 under a 59 px status bar
-const MASCOT_INSET_RIGHT = 20; // right-aligned mascot: 20 from the screen edge (Home, M3 Challenges)
+// Hero geometry, written once here:
+const HEADER_BELOW_STATUS_BAR = 13; // the first line starts 13 below the status bar
+const MASCOT_INSET_RIGHT = 20; // right-aligned mascot: 20 from the screen edge
 const MASCOT_LIFT = 62; // the mascot's feet sit 62 above the hero bottom (30 above the lip)
-const SHADOW_RATIO = 0.62; // shadow width ≈ 62 % of the mascot (Figma note)
-const SHADOW_TUCK = 9; // the shadow's top sits 9 px above the mascot's feet
-const BUBBLE_DROP = 34; // the speech bubble's top sits 34 below the mascot's top (Home)
-const DEFAULT_MASCOT_WIDTH = 142; // Home's Wave
+const BUBBLE_DROP = 34; // a short speech bubble's top sits 34 below the mascot's top
+const DEFAULT_MASCOT_WIDTH = 142;
+// content in the hero ends this far above the hero's bottom edge: clear of the lip and of the
+// first card, which overlaps the hero by lip + 24
+const CONTENT_BOTTOM = layout.skyLip + layout.heroOverlap + space.lg;
 
 type Props = {
   /** tall (290) = Home / Welcome / a module's first screen · compact (180) = sub-screens, auth, lists. */
   size?: "tall" | "compact";
-  /** Stretch the sky, e.g. Home uses 300. */
+  /** Minimum height of the sky (e.g. 300). The hero grows taller if its content needs it. */
   height?: number;
-  /** One hero mascot per module home (docs/ui.md). Leave out on task screens. */
+  /** A mascot standing at the bottom right of the sky. Leave out on task screens. */
   mascot?: MascotPose;
   mascotWidth?: number;
-  /** right = beside a greeting (Home, module homes) · center = onboarding and level-ups. */
+  /** right = beside a greeting (module homes) · center = onboarding and level-ups. */
   mascotAlign?: "right" | "center";
-  /** Speech bubble to the left of a right-aligned mascot. One short line, ~40 characters. */
+  /** Short speech bubble to the left of the mascot. One line, ~40 characters. */
   bubble?: string;
-  /** The header: greeting / title, placed under the status bar between the gutters. */
+  /** The hero's content (greeting, title, and anything else), laid out top-down under the status bar. */
   children?: ReactNode;
 };
 
 /**
- * Screen-top hero: sky backdrop + optional mascot, ground shadow and speech bubble + a header slot.
- * Put it first in a <Screen>; the content after it overlaps the sky's lip by 24 automatically.
+ * Screen-top hero: sky backdrop + optional mascot and speech bubble + your content in normal flow.
+ * The sky grows with the content (never shorter than `size`/`height`). Put it first in a <Screen>;
+ * the content after it overlaps the sky's lip by 24 automatically.
  */
 export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, children }: Props) {
   const insets = useSafeAreaInsets();
   const { width: screenWidth } = useWindowDimensions();
-  const h = height ?? (size === "tall" ? layout.heroTall : layout.heroCompact);
+  const minHeight = height ?? (size === "tall" ? layout.heroTall : layout.heroCompact);
+  const [h, setH] = useState(minHeight); // the hero's real height once laid out
+  const onLayout = (e: LayoutChangeEvent) => setH(Math.round(e.nativeEvent.layout.height));
 
   const m = mascot ? mascotSize(mascot, mascotWidth) : null;
   const mascotTop = m ? h - MASCOT_LIFT - m.height : 0;
-  const shadowWidth = m ? Math.round(m.width * SHADOW_RATIO) : 0;
   const mascotX = m && (mascotAlign === "right" ? { right: MASCOT_INSET_RIGHT } : { left: (screenWidth - m.width) / 2 });
 
   return (
-    <View style={{ height: h, marginBottom: -(layout.skyLip + layout.heroOverlap) }}>
+    <View
+      onLayout={onLayout}
+      style={[styles.hero, { minHeight, paddingTop: insets.top + HEADER_BELOW_STATUS_BAR }]}
+    >
       <SkyBackdrop size={size} height={h} />
-      {mascot && m ? (
-        <View style={[styles.mascotSlot, { top: mascotTop, width: m.width, height: m.height }, mascotX]} pointerEvents="none">
-          {/* shadow first so it sits behind the feet */}
-          <MascotShadow width={shadowWidth} style={{ position: "absolute", left: (m.width - shadowWidth) / 2, top: m.height - SHADOW_TUCK }} />
-          <Mascot pose={mascot} width={m.width} />
-        </View>
-      ) : null}
-      {bubble && m ? <SpeechBubble text={bubble} style={[styles.bubble, { top: mascotTop + BUBBLE_DROP }]} /> : null}
-      <View style={[styles.header, { top: insets.top + HEADER_BELOW_STATUS_BAR }]}>{children}</View>
+      {mascot && m ? <GroundedMascot pose={mascot} width={m.width} style={[styles.absolute, { top: mascotTop }, mascotX]} /> : null}
+      {bubble && m ? <SpeechBubble text={bubble} style={[styles.absolute, styles.bubble, { top: mascotTop + BUBBLE_DROP }]} /> : null}
+      {children}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  mascotSlot: { position: "absolute" },
-  bubble: { position: "absolute", left: layout.gutter },
-  header: { position: "absolute", left: layout.gutter, right: layout.gutter },
+  hero: {
+    marginBottom: -(layout.skyLip + layout.heroOverlap),
+    paddingHorizontal: layout.gutter,
+    paddingBottom: CONTENT_BOTTOM,
+  },
+  absolute: { position: "absolute" },
+  bubble: { left: layout.gutter },
 });

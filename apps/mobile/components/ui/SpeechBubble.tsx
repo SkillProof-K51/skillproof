@@ -1,29 +1,33 @@
 import { colors, radius, shadow } from "@skillproof/tokens";
+import type { ReactNode } from "react";
 import { StyleSheet, View, type StyleProp, type ViewStyle } from "react-native";
 
 import { Text } from "./Text";
 
-// Figma "Speech bubble" component (178 × 56 on Home)
 const PAD_X = 14;
 const PAD_Y = 10;
-const TEXT_WIDTH = 150; // wraps the ~40-character line onto two lines
+const TEXT_WIDTH = 150; // a short one-liner wraps onto two lines
 const TAIL = 12; // square rotated 45°, half of it sticks out on the right
 const TAIL_RADIUS = 2;
 
 type Props = {
-  /** One short line, max ~40 characters. */
-  text: string;
+  /** A short line, max ~40 characters… */
+  text?: string;
+  /** …or richer content (e.g. today's challenge). The bubble then takes the width you give it. */
+  children?: ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 
 /** Mascot speech bubble, tail on the right (the mascot stands to the right of it). */
-export function SpeechBubble({ text, style }: Props) {
+export function SpeechBubble({ text, children, style }: Props) {
   return (
     <View style={[styles.wrap, style]}>
       <View style={styles.bubble}>
-        <Text variant="small" style={styles.text}>
-          {text}
-        </Text>
+        {children ?? (
+          <Text variant="small" style={styles.text}>
+            {text}
+          </Text>
+        )}
       </View>
       <View style={styles.tail} />
     </View>
