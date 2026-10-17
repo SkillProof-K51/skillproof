@@ -22,13 +22,15 @@ const TAB_ICONS: Record<string, IconName> = {
 
 const BAR_PAD_X = 14;
 const ITEM_WIDTH = 70; // 5 items fit a 390 screen with the bar padding
-const ICON_ACTIVE = 24; // Duotone
+const ICON_ACTIVE = 24; // Fill
 const ICON_IDLE = 22; // Regular
+const ACTIVE = colors.action.onPrimaryStrong; // white icon + label on the strong-blue pill (4.74:1)
 
 /**
- * Bottom navigation, "pill highlight" on a white dock (Azim, 18 Oct): the active tab sits in a
- * soft-sky pill with a Duotone icon and a Medium label; the others are a Regular icon + Regular
- * label. The dock has the same rounded top as the sky's lip and casts a faint shadow upwards.
+ * Bottom navigation, "pill highlight" on a white dock (Azim, 18 Oct): the active tab is a solid
+ * strong-blue pill (the same blue as the primary button, his pick) with a white Fill icon and a
+ * white Medium label; the others are a Regular icon + Regular label. The dock has the same rounded
+ * top as the sky's lip and casts a faint shadow upwards.
  */
 export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeAreaInsets();
@@ -55,11 +57,11 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
               <Icon
                 name={TAB_ICONS[route.name] ?? "compass"}
                 size={focused ? ICON_ACTIVE : ICON_IDLE}
-                weight={focused ? "duotone" : "regular"}
-                color={focused ? colors.text.primary : colors.icon.default}
+                weight={focused ? "fill" : "regular"}
+                color={focused ? ACTIVE : colors.icon.default}
               />
             </View>
-            <Text variant={focused ? "captionStrong" : "caption"} color={focused ? "primary" : "secondary"}>
+            <Text variant={focused ? "captionStrong" : "caption"} color={focused ? ACTIVE : "secondary"}>
               {label}
             </Text>
           </Pressable>
@@ -88,6 +90,6 @@ const styles = StyleSheet.create({
     paddingVertical: space.sm,
     borderRadius: radius.lg,
   },
-  itemActive: { backgroundColor: colors.accent.skySoft },
+  itemActive: { backgroundColor: colors.action.primaryStrong },
   slot: { height: ICON_ACTIVE, justifyContent: "center" },
 });
