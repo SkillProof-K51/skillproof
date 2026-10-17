@@ -2,6 +2,7 @@
 export { Avatar } from "./Avatar";
 export { Button } from "./Button";
 export { Card } from "./Card";
+export { Carousel } from "./Carousel";
 export { Chip } from "./Chip";
 export { Icon, type IconName } from "./Icon";
 export { IconBadge } from "./IconBadge";

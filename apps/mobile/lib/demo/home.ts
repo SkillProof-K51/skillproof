@@ -20,6 +20,8 @@ export const demoHome: HomeData = {
   },
   microProjects: [
     { id: "cafe", title: "Café landing page (sample)", skillsLabel: "Skills: HTML and CSS · React", fitPercent: 86, placesLeft: 2 },
+    { id: "bookstore", title: "Bookstore REST API (sample)", skillsLabel: "Skills: Node.js · Testing", fitPercent: 81, placesLeft: 1 },
+    { id: "clinic", title: "Clinic booking form (sample)", skillsLabel: "Skills: HTML and CSS · JavaScript", fitPercent: 74, placesLeft: 3 },
     { id: "sales", title: "Sales dashboard (sample)", skillsLabel: "Skills: SQL · Data visualisation", lockedBy: "SQL" },
   ],
   passport: { verified: 3, practised: 2 },

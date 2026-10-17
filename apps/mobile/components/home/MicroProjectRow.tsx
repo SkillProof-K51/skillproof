@@ -1,7 +1,7 @@
 import { space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import type { MicroProject } from "../../lib/home";
+import { placesLeftLabel, type MicroProject } from "../../lib/home";
 import { Card, Chip, Icon, IconBadge, Text } from "../ui";
 
 type Props = {
@@ -21,7 +21,7 @@ export function MicroProjectRow({ project, onPress }: Props) {
         </Text>
         <View style={styles.meta}>
           {project.fitPercent !== undefined ? <Chip label={`Fit ${project.fitPercent}%`} tone="verified" /> : null}
-          {project.placesLeft !== undefined ? <Chip label={`${project.placesLeft} places left`} /> : null}
+          {project.placesLeft !== undefined ? <Chip label={placesLeftLabel(project.placesLeft)} /> : null}
         </View>
       </View>
       <Icon name="chevron-right" size={20} />

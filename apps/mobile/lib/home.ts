@@ -51,6 +51,11 @@ export function getHomeData(): HomeData | null {
   return isTestMode ? demoHome : null;
 }
 
+/** "1 place left" / "3 places left". */
+export function placesLeftLabel(n: number): string {
+  return `${n} ${n === 1 ? "place" : "places"} left`;
+}
+
 /** Time-of-day greeting from the device clock. */
 export function greetingFor(date: Date): string {
   const h = date.getHours();

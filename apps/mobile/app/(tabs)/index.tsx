@@ -10,6 +10,7 @@ import { TodaysChallengeCard } from "../../components/home/TodaysChallengeCard";
 import {
   Avatar,
   Card,
+  Carousel,
   Chip,
   Icon,
   IconBadge,
@@ -26,6 +27,7 @@ import {
 import { getHomeData, greetingFor } from "../../lib/home";
 
 const HERO = 300; // Home stretches the Tall sky to 300; the first card overlaps it by 56 (lip 32 + 24)
+const TOP_MATCHES = 3; // micro-projects in the carousel
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -34,9 +36,9 @@ export default function HomeScreen() {
 
   if (!data) return <HomeEmpty />;
   const { student, readiness, todaysChallenge, microProjects, passport } = data;
-  // The list arrives ranked; the first open project is featured, the rest follow as rows.
-  const featured = microProjects.find((p) => !p.lockedBy);
-  const others = microProjects.filter((p) => p !== featured);
+  // The list arrives ranked: the top 3 open projects go in the carousel, the rest follow as rows.
+  const topMatches = microProjects.filter((p) => !p.lockedBy).slice(0, TOP_MATCHES);
+  const others = microProjects.filter((p) => !topMatches.includes(p));
   const openProjects = () => router.push("/projects");
 
   return (
@@ -88,7 +90,19 @@ export default function HomeScreen() {
 
         {/* Micro-projects (Module 4) */}
         <SectionHeader title="Micro-projects for you" link="See all" onPressLink={openProjects} />
-        {featured ? <FeaturedProjectCard project={featured} onPress={openProjects} /> : null}
+        <Carousel
+          items={topMatches}
+          keyExtractor={(p) => p.id}
+          accessibilityLabel="Top micro-project matches, swipe for more"
+          renderItem={(project, i) => (
+            <FeaturedProjectCard
+              project={project}
+              eyebrow={i === 0 ? "Best match" : "Good fit"}
+              onPress={openProjects}
+              style={styles.fill}
+            />
+          )}
+        />
         {others.map((project) =>
           project.lockedBy ? (
             <LockedProjectRow key={project.id} project={project} onPress={openProjects} />
@@ -155,5 +169,6 @@ const styles = StyleSheet.create({
   link: { flexDirection: "row", alignItems: "center", gap: space.xs },
   row: { flexDirection: "row", alignItems: "center", gap: space.md },
   rowText: { flex: 1, gap: 6 },
+  fill: { flexGrow: 1 },
   emptyBody: { marginTop: space.xs },
 });
