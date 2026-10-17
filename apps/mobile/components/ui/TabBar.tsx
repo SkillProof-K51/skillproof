@@ -22,14 +22,14 @@ const TAB_ICONS: Record<string, IconName> = {
 
 const BAR_PAD_X = 14;
 const ITEM_WIDTH = 70; // 5 items fit a 390 screen with the bar padding
-const ICON_ACTIVE = 24; // Fill
-const ICON_IDLE = 22; // Regular
-const ACTIVE = colors.accent.brand; // filled brand-blue icon + label on the soft-sky pill
+const ICON_ACTIVE = 24; // outline, a touch bigger
+const ICON_IDLE = 22; // outline
+const ACTIVE = colors.accent.brand; // brand-blue outline icon + label on the soft-sky pill
 
 /**
  * Bottom navigation, "pill highlight" on a white dock (Azim, 18 Oct): the active tab sits in a
- * soft-sky pill with a filled brand-blue icon and label; the others are a Regular icon + Regular
- * label. The dock has the same rounded top as the sky's lip and casts a faint shadow upwards.
+ * soft-sky pill with a brand-blue outline icon and label (outline, not filled — Azim); the others
+ * are a slate outline icon + Regular label. The dock has the same rounded top as the sky's lip and casts a faint shadow upwards.
  */
 export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeAreaInsets();
@@ -56,7 +56,7 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
               <Icon
                 name={TAB_ICONS[route.name] ?? "compass"}
                 size={focused ? ICON_ACTIVE : ICON_IDLE}
-                weight={focused ? "fill" : "regular"}
+                weight="regular"
                 color={focused ? ACTIVE : colors.icon.default}
               />
             </View>
