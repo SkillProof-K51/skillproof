@@ -6,9 +6,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FeaturedProjectCard } from "../../components/home/FeaturedProjectCard";
 import { LockedProjectRow } from "../../components/home/LockedProjectRow";
 import { MicroProjectRow } from "../../components/home/MicroProjectRow";
+import { TodaysChallengeCard } from "../../components/home/TodaysChallengeCard";
 import {
   Avatar,
-  Button,
   Card,
   Chip,
   Icon,
@@ -81,27 +81,9 @@ export default function HomeScreen() {
           </View>
         </Card>
 
-        {/* Today's challenge (Module 3) — the one strong CTA on this screen */}
+        {/* Today's challenge (Module 3) — the one strong CTA on this screen while it is to do */}
         {todaysChallenge ? (
-          <Card tone="butter" style={styles.challenge}>
-            <View style={styles.rowBetween}>
-              <Chip label="Today's challenge" tone="butter" />
-              <View style={styles.timer}>
-                <Icon name="clock" size={14} />
-                <Text variant="caption">{todaysChallenge.minutes} min</Text>
-              </View>
-            </View>
-            <View style={styles.challengeBody}>
-              <View style={styles.challengeText}>
-                <Text variant="heading">{todaysChallenge.title}</Text>
-                <Text variant="caption">
-                  {todaysChallenge.skill} · {todaysChallenge.passed} of {todaysChallenge.of} passed
-                </Text>
-              </View>
-              <Mascot pose="idea" width={103} />
-            </View>
-            <Button label="Start challenge" block onPress={() => router.push("/challenges")} />
-          </Card>
+          <TodaysChallengeCard challenge={todaysChallenge} onPress={() => router.push("/challenges")} />
         ) : null}
 
         {/* Micro-projects (Module 4) */}
@@ -171,19 +153,6 @@ const styles = StyleSheet.create({
   readinessText: { flex: 1, gap: 6 },
   chips: { flexDirection: "row", gap: 6 },
   link: { flexDirection: "row", alignItems: "center", gap: space.xs },
-  challenge: { gap: space.md },
-  rowBetween: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  timer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: space.xs,
-    paddingHorizontal: 10,
-    paddingVertical: space.xs,
-    borderRadius: 999,
-    backgroundColor: colors.bg.surface,
-  },
-  challengeBody: { flexDirection: "row", alignItems: "center", gap: space.md },
-  challengeText: { flex: 1, gap: 6 },
   row: { flexDirection: "row", alignItems: "center", gap: space.md },
   rowText: { flex: 1, gap: 6 },
   emptyBody: { marginTop: space.xs },

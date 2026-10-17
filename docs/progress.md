@@ -16,6 +16,9 @@ Update this when you finish a step. Newest at the top of each list.
 - [ ] Azim: Supabase project values into `.env.local` / `.env`; `supabase/` linked to the project.
 - [ ] Azim (weeks 6–7): shared core — auth, profiles, skills, student_skills, seed.
 
+## Ideas for later
+- M3 (Azim): a streak line on Today's challenge ("🔥 3-day streak"). Needs Module 3 to keep a daily pass log. Agreed 18 Oct; not in the first build.
+
 ## Blocked / decisions needed
 - Micro-project count at launch (Azim + Fiona).
 - Pass marks: Practised 3 × ≥ 70 % (M3), Verified ≥ 3/5 (M4), Ready ≥ 70 % (M2) — confirm.
