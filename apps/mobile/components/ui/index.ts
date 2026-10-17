@@ -14,5 +14,4 @@ export { SkyBackdrop } from "./SkyBackdrop";
 export { SpeechBubble } from "./SpeechBubble";
 export { StatusBadge, type SkillStatus } from "./StatusBadge";
 export { TabBar } from "./TabBar";
-export { TestModeBanner } from "./TestModeBanner";
 export { Text } from "./Text";

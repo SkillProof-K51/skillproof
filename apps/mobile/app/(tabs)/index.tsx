@@ -56,7 +56,7 @@ export default function HomeScreen() {
               {student.pathLabel}
             </Text>
           </View>
-          <Avatar initials={student.initials} />
+          <Avatar initials={student.initials} tone="surface" />
         </View>
       </View>
 

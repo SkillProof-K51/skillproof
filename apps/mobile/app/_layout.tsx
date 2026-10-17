@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { fontsToLoad } from "../components/ui/fonts";
-import { TestModeBanner } from "../components/ui/TestModeBanner";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,7 +26,6 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg.app } }}>
         <Stack.Screen name="(tabs)" />
       </Stack>
-      <TestModeBanner />
     </SafeAreaProvider>
   );
 }
