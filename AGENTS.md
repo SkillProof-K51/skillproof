@@ -4,7 +4,8 @@ BITU3923 Workshop II · Group K51 · Supervisor: Ts. Dr. Farah Nadia Azman.
 Read `docs/spec.md` (what we build, by module) before writing code. `docs/progress.md` says what is done and what is next — update it when you finish a step.
 
 ## Stack (fixed — agreed by the team and approved by the supervisor; don't swap)
-- **Mobile app (students)**: Expo SDK 58 (React Native) + TypeScript → `apps/mobile`
+- **Mobile app (students)**: Expo SDK 57 (React Native) + TypeScript → `apps/mobile` — 57 because the store Expo Go still runs 57; one upgrade PR to 58 when it moves (`docs/progress.md`)
+- **Design system**: `packages/tokens` (`@skillproof/tokens` — colours, type, spacing, mirrored from Figma) + the UI kit in `apps/mobile/components/ui` → how to use them: `docs/ui.md`
 - **Web portal (companies, mentors, university coordinators, admin)**: Next.js 16 App Router + TypeScript + Tailwind CSS 4 → `apps/web`
 - **Backend**: one Supabase project — Postgres, Auth, Storage, Row Level Security → `supabase/`
 - **AI**: Gemini API (free tier), called from server code only — never from the app with a key
@@ -13,10 +14,11 @@ Read `docs/spec.md` (what we build, by module) before writing code. `docs/progre
 ## Folder map
 | Path | What |
 |---|---|
-| `apps/mobile/` | Expo app — `app/` screens, `components/`, `lib/` (data access) |
+| `apps/mobile/` | Expo app — `app/` screens, `components/ui/` (the kit), `components/<area>/` (screen parts), `lib/` (data access) |
+| `packages/tokens/` | design tokens: edit `src/index.ts`, then `pnpm --filter @skillproof/tokens build` |
 | `apps/web/src/` | Next.js — `app/` routes, `components/`, `lib/` (data access, server actions) |
 | `supabase/migrations/` | database schema, one file per change; `supabase/seed.sql` demo data |
-| `docs/` | `spec.md`, `progress.md`, `ai-use-log.md`, `data-contracts.md` |
+| `docs/` | `spec.md`, `progress.md`, `ui.md`, `ai-use-log.md`, `data-contracts.md` |
 
 ## Rules
 1. **Auth + owner column + Row Level Security from the first table.** Every table has `owner_id` (or an equivalent) and RLS policies in the same migration. Test every table with two different accounts before merging. Never write with the service-role key from an app.
@@ -31,3 +33,4 @@ Read `docs/spec.md` (what we build, by module) before writing code. `docs/progre
 10. **Before saying "done"**: `pnpm check` (lint + typecheck + build) passes and you ran the screen on a device or in the browser. Small commits; `main` always runs.
 11. **Never "reset" the database by renaming files or dropping tables in prod.** Write a new migration. Show sync/save failures in the UI, never swallow them.
 12. **Fictional people only** in seed data and screenshots (our persona is Aina Sofea). No real names, matric numbers or phone numbers.
+13. **UI goes through the kit — never hard-code a look.** Screens compose components from `components/ui` and values from `@skillproof/tokens`. No hex/rgb colours, font names or raw sizes (margin, padding, gap, top/left…, width/height, radius, font size) in screens or components; a size that belongs to one component is a named constant at the top of that file. A new look = change the token or the component, never one screen. `pnpm lint` fails on violations. Read `docs/ui.md` before building a screen.

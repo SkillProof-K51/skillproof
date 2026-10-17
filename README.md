@@ -34,4 +34,4 @@ pnpm check          # lint + typecheck + build, same as CI
 - AI use goes in [`docs/ai-use-log.md`](docs/ai-use-log.md).
 
 ## Stack
-Expo SDK 58 (mobile) · Next.js 16 (web) · Supabase (Postgres, Auth, Storage, RLS) · Gemini API (server-side) · TypeScript · pnpm
+Expo SDK 57 (mobile) · Next.js 16 (web) · Supabase (Postgres, Auth, Storage, RLS) · Gemini API (server-side) · TypeScript · pnpm
