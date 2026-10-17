@@ -2,6 +2,7 @@ import { colors } from "@skillproof/tokens";
 import { Briefcase } from "phosphor-react-native/src/icons/Briefcase";
 import { Bug } from "phosphor-react-native/src/icons/Bug";
 import { CaretRight } from "phosphor-react-native/src/icons/CaretRight";
+import { ChartBar } from "phosphor-react-native/src/icons/ChartBar";
 import { ChatCircle } from "phosphor-react-native/src/icons/ChatCircle";
 import { Check } from "phosphor-react-native/src/icons/Check";
 import { CheckCircle } from "phosphor-react-native/src/icons/CheckCircle";
@@ -18,6 +19,7 @@ import { Microphone } from "phosphor-react-native/src/icons/Microphone";
 import { Plant } from "phosphor-react-native/src/icons/Plant";
 import { Play } from "phosphor-react-native/src/icons/Play";
 import { ShareNetwork } from "phosphor-react-native/src/icons/ShareNetwork";
+import { TestTube } from "phosphor-react-native/src/icons/TestTube";
 import { User } from "phosphor-react-native/src/icons/User";
 import { Warning } from "phosphor-react-native/src/icons/Warning";
 import { X } from "phosphor-react-native/src/icons/X";
@@ -49,6 +51,9 @@ const ICONS = {
   "x-circle": XCircle,
   "check-circle": CheckCircle,
   compass: Compass,
+  // skills without a logo (SkillLogo falls back to these)
+  test: TestTube,
+  chart: ChartBar,
 } as const;
 
 export type IconName = keyof typeof ICONS;

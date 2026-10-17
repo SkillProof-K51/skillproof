@@ -1,4 +1,5 @@
 import { colors, radius, space, type } from "@skillproof/tokens";
+import type { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Icon, type IconName } from "./Icon";
@@ -20,14 +21,20 @@ const ICON = 14;
 /** A chip's height — rows that sit next to chips use it so they line up. */
 export const CHIP_HEIGHT = type.captionStrong.lineHeight + 2 * space.xs;
 
-type Props = { label: string; tone?: Tone; icon?: IconName };
+type Props = {
+  label: string;
+  tone?: Tone;
+  icon?: IconName;
+  /** Anything else in front of the label, e.g. a <SkillLogo>. Wins over `icon`. */
+  leading?: ReactNode;
+};
 
 /** Small info pill (skill names, "Fit 86%", "3 min"). Colour = meaning, see tokens. */
-export function Chip({ label, tone = "neutral", icon }: Props) {
+export function Chip({ label, tone = "neutral", icon, leading }: Props) {
   const t = TONES[tone];
   return (
     <View style={[styles.chip, { backgroundColor: t.bg }]}>
-      {icon ? <Icon name={icon} size={ICON} color={t.icon} /> : null}
+      {leading ?? (icon ? <Icon name={icon} size={ICON} color={t.icon} /> : null)}
       <Text variant={t.weight} color={t.fg}>
         {label}
       </Text>

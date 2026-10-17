@@ -42,11 +42,9 @@ export const colors = {
     progress: "#6fa8f5", // readiness ring fill
   },
   sky: {
-    // Sky backdrop gradient, top → bottom. mid + bottom deepened on 18 Oct (Azim's review: the
-    // sheet edge vanished into the sky).
-    top: "#bfdbfe",
-    mid: "#cbe1fc",
-    bottom: "#d2e5fc",
+    // The hero is a painted sky (assets/sky.jpg, Azim's own generation, 18 Oct); this is its top
+    // colour, shown while the image loads.
+    base: "#97cefd",
   },
   status: {
     // Skill status colours carry meaning — never reuse them for decoration.

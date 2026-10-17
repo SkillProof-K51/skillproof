@@ -36,4 +36,10 @@ module.exports = defineConfig([
     files: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}"],
     rules: { "no-restricted-syntax": ["error", ...uiKitRules] },
   },
+  {
+    // The one exception: generated third-party logo data (Simple Icons). Its hex values are the
+    // brands' own colours, not design choices, so they don't belong in our tokens. No styles here.
+    files: ["components/ui/skillLogos.ts"],
+    rules: { "no-restricted-syntax": "off" },
+  },
 ]);

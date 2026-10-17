@@ -2,7 +2,7 @@ import { gap, space } from "@skillproof/tokens";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import type { HomeData } from "../../lib/home";
-import { Chip, Icon, ProgressRing, Text } from "../ui";
+import { Chip, Icon, ProgressRing, SkillLogo, Text } from "../ui";
 
 const RING = 140; // the focal element of Home
 
@@ -30,7 +30,7 @@ export function ReadinessHero({ readiness, onPressRoadmap }: Props) {
       {readiness.focusSkills.length ? (
         <View style={styles.chips}>
           {readiness.focusSkills.map((skill) => (
-            <Chip key={skill} label={skill} tone="surface" icon="seedling" />
+            <Chip key={skill} label={skill} tone="surface" leading={<SkillLogo skill={skill} />} />
           ))}
         </View>
       ) : null}

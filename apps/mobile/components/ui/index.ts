@@ -14,6 +14,7 @@ export { ProgressBar } from "./ProgressBar";
 export { ProgressRing } from "./ProgressRing";
 export { Screen } from "./Screen";
 export { SectionHeader } from "./SectionHeader";
+export { SkillLogo } from "./SkillLogo";
 export { SkyBackdrop } from "./SkyBackdrop";
 export { SpeechBubble } from "./SpeechBubble";
 export { StatusBadge, type SkillStatus } from "./StatusBadge";
