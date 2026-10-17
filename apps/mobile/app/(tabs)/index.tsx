@@ -3,6 +3,8 @@ import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { FeaturedProjectCard } from "../../components/home/FeaturedProjectCard";
+import { LockedProjectRow } from "../../components/home/LockedProjectRow";
 import { MicroProjectRow } from "../../components/home/MicroProjectRow";
 import {
   Avatar,
@@ -32,6 +34,10 @@ export default function HomeScreen() {
 
   if (!data) return <HomeEmpty />;
   const { student, readiness, todaysChallenge, microProjects, passport } = data;
+  // The list arrives ranked; the first open project is featured, the rest follow as rows.
+  const featured = microProjects.find((p) => !p.lockedBy);
+  const others = microProjects.filter((p) => p !== featured);
+  const openProjects = () => router.push("/projects");
 
   return (
     <Screen>
@@ -99,10 +105,15 @@ export default function HomeScreen() {
         ) : null}
 
         {/* Micro-projects (Module 4) */}
-        <SectionHeader title="Micro-projects for you" link="See all" onPressLink={() => router.push("/projects")} />
-        {microProjects.map((project) => (
-          <MicroProjectRow key={project.id} project={project} onPress={() => router.push("/projects")} />
-        ))}
+        <SectionHeader title="Micro-projects for you" link="See all" onPressLink={openProjects} />
+        {featured ? <FeaturedProjectCard project={featured} onPress={openProjects} /> : null}
+        {others.map((project) =>
+          project.lockedBy ? (
+            <LockedProjectRow key={project.id} project={project} onPress={openProjects} />
+          ) : (
+            <MicroProjectRow key={project.id} project={project} onPress={openProjects} />
+          ),
+        )}
 
         {/* Passport snapshot (Module 5) */}
         <SectionHeader title="Your passport" />

@@ -2,8 +2,11 @@ import { colors, radius, space } from "@skillproof/tokens";
 import { Pressable, StyleSheet, View, type PressableProps, type ViewProps, type ViewStyle } from "react-native";
 
 type Props = ViewProps & {
-  /** surface = white card (default); butter = energy, e.g. today's challenge. */
-  tone?: "surface" | "butter";
+  /**
+   * surface = white card (default) · butter = energy, e.g. today's challenge ·
+   * blue = a featured project (blue = in progress / projects, same rule as the Icon badge).
+   */
+  tone?: "surface" | "butter" | "blue";
   /** Makes the card tappable (list rows). */
   onPress?: PressableProps["onPress"];
   style?: ViewStyle;
@@ -11,7 +14,7 @@ type Props = ViewProps & {
 
 /** Flat card: radius 16, padding 16, no border, no shadow. */
 export function Card({ tone = "surface", onPress, style, children, ...rest }: Props) {
-  const toneStyle = tone === "butter" ? styles.butter : styles.surface;
+  const toneStyle = styles[tone];
   if (onPress) {
     return (
       <Pressable
@@ -38,5 +41,6 @@ const styles = StyleSheet.create({
   },
   surface: { backgroundColor: colors.bg.surface },
   butter: { backgroundColor: colors.accent.butterSoft },
+  blue: { backgroundColor: colors.status.practised.bg },
   pressed: { opacity: 0.9 },
 });

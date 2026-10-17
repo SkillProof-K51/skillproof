@@ -1,40 +1,30 @@
 import { space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import type { HomeData } from "../../lib/home";
+import type { MicroProject } from "../../lib/home";
 import { Card, Chip, Icon, IconBadge, Text } from "../ui";
 
 type Props = {
-  project: HomeData["microProjects"][number];
+  project: MicroProject;
   onPress?: () => void;
 };
 
-/** One micro-project in a list. Locked rows go grey and show why. (Module 4 will own the real one.) */
+/** An open micro-project in a list (after the featured one). Locked ones use LockedProjectRow. */
 export function MicroProjectRow({ project, onPress }: Props) {
-  const locked = !!project.lockedBy;
-  const color = locked ? "secondary" : "primary";
   return (
     <Card onPress={onPress} style={styles.row}>
-      <IconBadge icon={locked ? "lock" : "briefcase"} tone={locked ? "grey" : "blue"} />
+      <IconBadge icon="briefcase" tone="blue" />
       <View style={styles.text}>
-        <Text variant="subheading" color={color}>
-          {project.title}
-        </Text>
+        <Text variant="subheading">{project.title}</Text>
         <Text variant="caption" color="secondary">
           {project.skillsLabel}
         </Text>
-        {locked ? (
-          <Text variant="caption" color="secondary">
-            Unlocks when {project.lockedBy} is Practised
-          </Text>
-        ) : (
-          <View style={styles.meta}>
-            {project.fitPercent !== undefined ? <Chip label={`Fit ${project.fitPercent}%`} tone="verified" /> : null}
-            {project.placesLeft !== undefined ? <Chip label={`${project.placesLeft} places left`} /> : null}
-          </View>
-        )}
+        <View style={styles.meta}>
+          {project.fitPercent !== undefined ? <Chip label={`Fit ${project.fitPercent}%`} tone="verified" /> : null}
+          {project.placesLeft !== undefined ? <Chip label={`${project.placesLeft} places left`} /> : null}
+        </View>
       </View>
-      <Icon name={locked ? "lock" : "chevron-right"} size={20} />
+      <Icon name="chevron-right" size={20} />
     </Card>
   );
 }

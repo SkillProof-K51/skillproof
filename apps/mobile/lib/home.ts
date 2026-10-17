@@ -1,6 +1,16 @@
 import { demoHome } from "./demo/home";
 import { isTestMode } from "./testMode";
 
+export type MicroProject = {
+  id: string;
+  title: string;
+  skillsLabel: string;
+  fitPercent?: number;
+  placesLeft?: number;
+  /** Set when the project is locked until this skill is Practised. */
+  lockedBy?: string;
+};
+
 /** What the Home screen displays. Every number is computed elsewhere (rule 2) — Home only shows it. */
 export type HomeData = {
   student: { firstName: string; initials: string; pathLabel: string };
@@ -14,15 +24,8 @@ export type HomeData = {
     focusSkills: string[];
   };
   todaysChallenge: { title: string; skill: string; passed: number; of: number; minutes: number } | null;
-  microProjects: {
-    id: string;
-    title: string;
-    skillsLabel: string;
-    fitPercent?: number;
-    placesLeft?: number;
-    /** Set when the project is locked until this skill is Practised. */
-    lockedBy?: string;
-  }[];
+  /** Already ranked by the fit engine (Module 2), best first. Home features the first open one. */
+  microProjects: MicroProject[];
   passport: { verified: number; practised: number };
 };
 
