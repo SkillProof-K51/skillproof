@@ -1,5 +1,6 @@
 packages:
   - "apps/*"
+  - "packages/*"
 
 # pnpm 12 supply-chain policy: refuse packages published < 24 h ago (default, kept).
 # Expo SDK 58 and its paired React Native 0.88 toolchain are first-party vendors that

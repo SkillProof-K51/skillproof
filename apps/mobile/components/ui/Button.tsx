@@ -1,0 +1,63 @@
+import { colors, radius, space } from "@skillproof/tokens";
+import { Pressable, StyleSheet, type PressableProps, type ViewStyle } from "react-native";
+
+import { Icon, type IconName } from "./Icon";
+import { Text } from "./Text";
+
+type Props = Omit<PressableProps, "style" | "children"> & {
+  label: string;
+  /** primary = the ONE main action on a screen; secondary = everything else. */
+  variant?: "primary" | "secondary";
+  icon?: IconName;
+  /** Stretch to the container width (cards, sheets). */
+  block?: boolean;
+  style?: ViewStyle;
+};
+
+export function Button({ label, variant = "primary", icon, block, style, disabled, ...rest }: Props) {
+  const primary = variant === "primary";
+  const fg = primary ? colors.action.onPrimaryStrong : colors.text.primary;
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
+      disabled={disabled}
+      {...rest}
+      style={({ pressed }) => [
+        styles.base,
+        primary ? styles.primary : styles.secondary,
+        block && styles.block,
+        pressed && styles.pressed,
+        disabled && styles.disabled,
+        style,
+      ]}
+    >
+      {icon ? <Icon name={icon} size={18} color={fg} /> : null}
+      <Text variant="bodyStrong" color={fg}>
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  base: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: space.sm,
+    paddingHorizontal: space.xl,
+    paddingVertical: space.md,
+    borderRadius: radius.lg,
+    alignSelf: "flex-start",
+  },
+  primary: { backgroundColor: colors.action.primaryStrong },
+  secondary: {
+    backgroundColor: colors.bg.surface,
+    borderWidth: 1,
+    borderColor: colors.border.default,
+  },
+  block: { alignSelf: "stretch" },
+  pressed: { opacity: 0.85 },
+  disabled: { opacity: 0.5 },
+});
