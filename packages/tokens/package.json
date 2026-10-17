@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "SkillProof design tokens — one source for the mobile app (TypeScript), the web portal (tokens.css) and config files (tokens.json). Mirrors the Figma variables.",
+  "description": "SkillProof design tokens — one source for the mobile app (TypeScript), the web portal (tokens.css) and config files (tokens.json). The design source of truth.",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "exports": {

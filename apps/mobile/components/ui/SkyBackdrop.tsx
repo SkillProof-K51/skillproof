@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: layout.skyLip,
     backgroundColor: colors.bg.app,
-    borderTopLeftRadius: radius.sky,
-    borderTopRightRadius: radius.sky,
+    borderTopLeftRadius: radius.sheet,
+    borderTopRightRadius: radius.sheet,
   },
 });

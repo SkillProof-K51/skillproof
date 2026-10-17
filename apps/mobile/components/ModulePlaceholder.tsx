@@ -27,8 +27,7 @@ export function ModulePlaceholder({ title, module, owner, pose }: Props) {
         <Card>
           <Text variant="heading">Coming in weeks 7–11</Text>
           <Text variant="small" color="secondary" style={styles.body}>
-            {owner} designs the screens for this module in Figma on the shared design system, then builds them
-            with the components in components/ui.
+            {owner} builds the screens for this module with the components in components/ui (see docs/ui.md).
           </Text>
         </Card>
       </View>

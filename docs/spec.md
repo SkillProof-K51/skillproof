@@ -29,7 +29,7 @@ The approved proposal is the source of truth: `Workshop II/03 Deliverables/BITU3
 Proposed numbers (owners may refine, then update here): Readiness = Σ weight × (verified 1 / practised 0.5 / not_yet 0), "Ready" ≥ 70 %. Weights come from Module 1.
 
 ## Build order
-1. **Now → 23 Oct**: repo, warm-up PR each (1 screen + 1 table), module screens designed in Figma.
+1. **Now → 23 Oct**: repo, warm-up PR each (1 screen + 1 table), module screens planned on the coded UI kit (`docs/ui.md`; Figma was the starting sketch, no longer updated).
 2. **Weeks 6–7**: shared core — auth for all user types, `profiles`, `skills`, `student_skills` (status), seed data. Owner: Azim.
 3. **Weeks 7–11**: each module on top of the core, in its own app and `lib/` folder.
 4. **Weeks 10–12**: integration + testing → Progress III live demo. Poster weeks 11–12. Showcase week 14.

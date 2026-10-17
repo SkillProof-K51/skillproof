@@ -1,4 +1,4 @@
-import { colors, space } from "@skillproof/tokens";
+import { colors, radius, shadow, space } from "@skillproof/tokens";
 import type { Tabs } from "expo-router";
 import type { ComponentProps } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -20,7 +20,16 @@ const TAB_ICONS: Record<string, IconName> = {
   profile: "user",
 };
 
-/** Flat bottom navigation: no surface, no border, no indicator. Active = Duotone glyph + Medium label. */
+const BAR_PAD_X = 14;
+const ITEM_WIDTH = 70; // 5 items fit a 390 screen with the bar padding
+const ICON_ACTIVE = 24; // Duotone
+const ICON_IDLE = 22; // Regular
+
+/**
+ * Bottom navigation, "pill highlight" on a white dock (Azim, 18 Oct): the active tab sits in a
+ * soft-sky pill with a Duotone icon and a Medium label; the others are a Regular icon + Regular
+ * label. The dock has the same rounded top as the sky's lip and casts a faint shadow upwards.
+ */
 export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeAreaInsets();
   return (
@@ -40,8 +49,7 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
             accessibilityState={focused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel ?? label}
             onPress={onPress}
-            hitSlop={8}
-            style={styles.item}
+            style={[styles.item, focused && styles.itemActive]}
           >
             <View style={styles.slot}>
               <Icon
@@ -61,21 +69,25 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
   );
 }
 
-// Figma "Tab Bar" / "Tab Item"
-const BAR_PAD_X = 14;
-const BAR_PAD_TOP = 10;
-const ITEM_WIDTH = 70;
-const ICON_ACTIVE = 24; // Duotone
-const ICON_IDLE = 22; // Regular
-
 const styles = StyleSheet.create({
   bar: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: BAR_PAD_X,
-    paddingTop: BAR_PAD_TOP,
-    backgroundColor: colors.bg.app,
+    paddingTop: space.sm,
+    backgroundColor: colors.bg.surface,
+    borderTopLeftRadius: radius.sheet,
+    borderTopRightRadius: radius.sheet,
+    boxShadow: shadow.dock,
   },
-  item: { width: ITEM_WIDTH, alignItems: "center", gap: space.xs },
+  // the pill: the whole tab is the touch target, so it's big and easy to hit
+  item: {
+    width: ITEM_WIDTH,
+    alignItems: "center",
+    gap: space.xs,
+    paddingVertical: space.sm,
+    borderRadius: radius.lg,
+  },
+  itemActive: { backgroundColor: colors.accent.skySoft },
   slot: { height: ICON_ACTIVE, justifyContent: "center" },
 });

@@ -1,8 +1,8 @@
 # Building a screen — the UI kit
 
-Read this before you (or your AI tool) build any mobile screen. The look comes from the Figma file
-**SkillProof — Design System**; this repo holds the same look as code, and `pnpm lint` enforces it
-(AGENTS.md rule 13).
+Read this before you (or your AI tool) build any mobile screen. **The code is the design source of
+truth** — the tokens and components in this repo, not the Figma file (it was the starting sketch and
+is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 
 ## Where things live
 | What | Where |
@@ -43,7 +43,7 @@ Never use a status colour as decoration.
 Always `<Text variant="…">` (title · heading · subheading · bodyStrong · body · label · small · caption · captionStrong · sectionLabel · code). Never set `fontFamily` or `fontSize` yourself.
 
 ## When something needs to change
-- **A value is wrong everywhere** (a colour, a gap) → change it in `packages/tokens/src/index.ts`, run `pnpm --filter @skillproof/tokens build` (CI fails if you forget), and tell Azim so the Figma variable gets the same value.
+- **A value is wrong everywhere** (a colour, a gap) → change it in `packages/tokens/src/index.ts`, run `pnpm --filter @skillproof/tokens build` (CI fails if you forget). Tokens are shared core — Azim reviews the PR.
 - **A component looks wrong** → fix the component in `components/ui`; every screen gets the fix.
 - **A size only one component uses** → a named constant at the top of that file (`const TAIL = 12;`), with a comment saying where it comes from.
 - **Never** fix a look on one screen only, and never type a hex colour, a font name or a raw size — lint will stop the build.

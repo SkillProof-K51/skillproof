@@ -1,14 +1,14 @@
 /**
  * SkillProof design tokens.
  *
- * One source of truth for colours, type, spacing and radius, mirrored from the
- * Figma file "SkillProof — Design System" (variables on the Foundations page).
+ * THE source of truth for colours, type, spacing and radius (Azim, 18 Oct: the code leads the
+ * design; the Figma file "SkillProof — Design System" was the starting sketch and is no longer
+ * followed — "Figma …" comments below only record where a value first came from).
  * The mobile app imports this file directly; the web portal uses the generated
  * `tokens.css` (`pnpm --filter @skillproof/tokens build`).
  *
  * Rules (docs/ui.md): screens never hard-code a colour or font — they go
  * through these tokens and the components in `apps/mobile/components/ui`.
- * If a value changes, change it here AND in the Figma variable.
  */
 
 export const colors = {
@@ -35,13 +35,14 @@ export const colors = {
   },
   accent: {
     sky: "#bfdbfe", // brand / avatars / sky top
+    skySoft: "#dbeafe", // the active tab's pill in the bottom nav
     butter: "#ffe9a8", // energy — today's challenge tag, butter icon badges
     butterSoft: "#fff6d6", // Figma butter/100 — today's challenge card
     progress: "#6fa8f5", // readiness ring fill
   },
   sky: {
     // Sky backdrop gradient, top → bottom. mid + bottom deepened on 18 Oct (Azim's review: the
-    // sheet edge vanished into the sky) — Figma still has #d7e8fc / #e3effd → update at freeze.
+    // sheet edge vanished into the sky).
     top: "#bfdbfe",
     mid: "#cbe1fc",
     bottom: "#d2e5fc",
@@ -50,7 +51,7 @@ export const colors = {
     // Skill status colours carry meaning — never reuse them for decoration.
     verified: { fg: "#1d7348", bg: "#d9f2e3" }, // green = achievement (Module 4)
     practised: { fg: "#2a5db0", bg: "#dcebff" }, // blue = in progress (Module 3)
-    notYet: { fg: "#5f6f84", bg: "#eef3f9" }, // ⚠ assumed from text/secondary + bg/subtle — confirm against the Figma Status Badge
+    notYet: { fg: "#5f6f84", bg: "#eef3f9" }, // grey = no evidence yet (text/secondary on bg/subtle)
   },
   overlay: {
     scrim: "rgba(51, 65, 85, 0.45)", // Figma overlay/scrim = slate at 45 %
@@ -90,7 +91,7 @@ export const radius = {
   tile: 14, // icon badge tiles
   lg: 16, // buttons
   xl: 16, // cards
-  sky: 28, // sheet lip on the sky backdrop
+  sheet: 28, // top corners of a sheet: the sky's lip, the bottom-nav dock
   full: 999,
 } as const;
 
@@ -143,4 +144,7 @@ export const fontStack = {
 /** Shadows. Only floating elements get one — cards are flat. */
 export const shadow = {
   bubble: { color: colors.shadow.ink, opacity: 0.1, offsetY: 4, blur: 12 }, // speech bubble, toasts
+  // the bottom-nav dock: a faint shadow cast UP onto the content (CSS box-shadow, works on iOS,
+  // Android and web with the New Architecture)
+  dock: "0px -4px 16px rgba(51, 66, 89, 0.06)",
 } as const;

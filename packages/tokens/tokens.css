@@ -12,6 +12,7 @@
   --color-action-primary-strong: #2f6fdc;
   --color-action-on-primary-strong: #ffffff;
   --color-accent-sky: #bfdbfe;
+  --color-accent-sky-soft: #dbeafe;
   --color-accent-butter: #ffe9a8;
   --color-accent-butter-soft: #fff6d6;
   --color-accent-progress: #6fa8f5;
@@ -37,7 +38,7 @@
   --radius-tile: 14px;
   --radius-lg: 16px;
   --radius-xl: 16px;
-  --radius-sky: 28px;
+  --radius-sheet: 28px;
   --radius-full: 999px;
   --font-sans: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;

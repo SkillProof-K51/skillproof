@@ -13,7 +13,7 @@ Update this when you finish a step. Newest at the top of each list.
 - [ ] Azim: upgrade to Expo SDK 58 once the store Expo Go supports it (one PR; the new Expo Go drops SDK 57).
 - [ ] Everyone: clone, `pnpm install`, `pnpm dev:web` and `pnpm dev:mobile` run on your machine.
 - [ ] Everyone: warm-up PR — one screen in your module's app + one table copied from `supabase/migrations/0001_warmup_notes.sql`.
-- [ ] Everyone: design your module's screens in Figma on the shared design system.
+- [ ] Everyone: plan your module's screens from the coded kit (`docs/ui.md`; the `/kit` preview screen comes with Step 2). The Figma file is no longer updated (Azim, 18 Oct) — sketch anywhere, but build only with the kit.
 - [ ] Azim: Supabase project values into `.env.local` / `.env`; `supabase/` linked to the project.
 - [ ] Azim (weeks 6–7): shared core — auth, profiles, skills, student_skills, seed.
 
