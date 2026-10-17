@@ -52,6 +52,12 @@ export const colors = {
     practised: { fg: "#2a5db0", bg: "#dcebff" }, // blue = in progress (Module 3)
     notYet: { fg: "#5f6f84", bg: "#eef3f9" }, // grey = no evidence yet (text/secondary on bg/subtle)
   },
+  decor: {
+    // soft decorative circles inside cards (Azim, 18 Oct) — one tint per card tone, kept faint
+    surface: "#eef5ff",
+    butter: "#ffe9a8",
+    blue: "#c9defc",
+  },
   glass: {
     // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
     veil: "rgba(255, 255, 255, 0.6)",

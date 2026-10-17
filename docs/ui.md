@@ -28,7 +28,8 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 - **Hero first.** `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists. The first card overlaps the sky's lip automatically.
 - **One hero mascot per module home**, at most one more inside a card. No mascot on task screens (Fix the bug, SQL live, Explain it) or on the filled Skill Passport.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
-- **Cards are flat**: white (`tone="surface"`), butter for energy (today's challenge), blue for projects.
+- **Cards are flat**: white (`tone="surface"`), butter for energy (today's challenge), blue for projects. Every card carries two faint decorative circles in its own tint (`colors.decor`); pass `plain` for forms and dense lists.
+- **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label + a small navy arrow circle, like Today's challenge — and an `accessibilityLabel` that says what tapping does.
 
 ## Colour = meaning
 | Colour | Means | Use for |

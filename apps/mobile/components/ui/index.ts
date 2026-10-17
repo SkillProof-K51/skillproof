@@ -11,6 +11,7 @@ export { IconBadge } from "./IconBadge";
 export { Mascot, type MascotPose } from "./Mascot";
 export { MascotShadow } from "./MascotShadow";
 export { ProgressBar } from "./ProgressBar";
+export { ProgressDots } from "./ProgressDots";
 export { ProgressRing } from "./ProgressRing";
 export { Screen } from "./Screen";
 export { SectionHeader } from "./SectionHeader";
