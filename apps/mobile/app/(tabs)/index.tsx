@@ -3,9 +3,7 @@ import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { FeaturedProjectCard } from "../../components/home/FeaturedProjectCard";
-import { LockedProjectRow } from "../../components/home/LockedProjectRow";
-import { MicroProjectRow } from "../../components/home/MicroProjectRow";
+import { ProjectCard } from "../../components/home/ProjectCard";
 import { TodaysChallengeCard } from "../../components/home/TodaysChallengeCard";
 import {
   Avatar,
@@ -27,7 +25,9 @@ import {
 import { getHomeData, greetingFor } from "../../lib/home";
 
 const HERO = 300; // Home stretches the Tall sky to 300; the first card overlaps it by 56 (lip 32 + 24)
-const TOP_MATCHES = 3; // micro-projects in the carousel
+// The slider: the top open matches, then the next locked one as a goal. Everything else → "See all".
+const SLIDER_OPEN = 3;
+const SLIDER_LOCKED = 1;
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -36,10 +36,13 @@ export default function HomeScreen() {
 
   if (!data) return <HomeEmpty />;
   const { student, readiness, todaysChallenge, microProjects, passport } = data;
-  // The list arrives ranked: the top 3 open projects go in the carousel, the rest follow as rows.
-  const topMatches = microProjects.filter((p) => !p.lockedBy).slice(0, TOP_MATCHES);
-  const others = microProjects.filter((p) => !topMatches.includes(p));
+  // The list arrives ranked by the fit engine; Home only picks what goes in the slider.
+  const slider = [
+    ...microProjects.filter((p) => !p.lockedBy).slice(0, SLIDER_OPEN),
+    ...microProjects.filter((p) => p.lockedBy).slice(0, SLIDER_LOCKED),
+  ];
   const openProjects = () => router.push("/projects");
+  const openChallenges = () => router.push("/challenges");
 
   return (
     <Screen>
@@ -84,32 +87,28 @@ export default function HomeScreen() {
         </Card>
 
         {/* Today's challenge (Module 3) — the one strong CTA on this screen while it is to do */}
-        {todaysChallenge ? (
-          <TodaysChallengeCard challenge={todaysChallenge} onPress={() => router.push("/challenges")} />
-        ) : null}
+        {todaysChallenge ? <TodaysChallengeCard challenge={todaysChallenge} onPress={openChallenges} /> : null}
 
         {/* Micro-projects (Module 4) */}
-        <SectionHeader title="Micro-projects for you" link="See all" onPressLink={openProjects} />
-        <Carousel
-          items={topMatches}
-          keyExtractor={(p) => p.id}
-          accessibilityLabel="Top micro-project matches, swipe for more"
-          renderItem={(project, i) => (
-            <FeaturedProjectCard
-              project={project}
-              eyebrow={i === 0 ? "Best match" : "Good fit"}
-              onPress={openProjects}
-              style={styles.fill}
+        {slider.length ? (
+          <>
+            <SectionHeader title="Micro-projects for you" link="See all" onPressLink={openProjects} />
+            <Carousel
+              items={slider}
+              keyExtractor={(p) => p.id}
+              accessibilityLabel="Micro-projects for you, swipe for more"
+              renderItem={(project, i) => (
+                <ProjectCard
+                  project={project}
+                  eyebrow={i === 0 ? "Best match" : "Good fit"}
+                  onView={openProjects}
+                  onPractise={openChallenges}
+                  style={styles.fill}
+                />
+              )}
             />
-          )}
-        />
-        {others.map((project) =>
-          project.lockedBy ? (
-            <LockedProjectRow key={project.id} project={project} onPress={openProjects} />
-          ) : (
-            <MicroProjectRow key={project.id} project={project} onPress={openProjects} />
-          ),
-        )}
+          </>
+        ) : null}
 
         {/* Passport snapshot (Module 5) */}
         <SectionHeader title="Your passport" />
