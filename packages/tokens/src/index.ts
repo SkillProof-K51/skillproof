@@ -54,6 +54,10 @@ export const colors = {
     practised: { fg: "#2a5db0", bg: "#dcebff" }, // blue = in progress (Module 3)
     notYet: { fg: "#5f6f84", bg: "#eef3f9" }, // grey = no evidence yet (text/secondary on bg/subtle)
   },
+  glass: {
+    // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
+    veil: "rgba(255, 255, 255, 0.6)",
+  },
   overlay: {
     scrim: "rgba(51, 65, 85, 0.45)", // Figma overlay/scrim = slate at 45 %
   },
@@ -79,6 +83,11 @@ export const space = {
 export const gap = {
   tight: 6, // between lines of text in a card, between chips
   loose: 14, // between cards stacked on a screen; ring ↔ text in the readiness card
+} as const;
+
+/** Blur strength (expo-blur intensity, 0–100) of the frosted dock fallback. */
+export const blur = {
+  dock: 40,
 } as const;
 
 /** Press feedback for anything tappable. */
