@@ -41,8 +41,10 @@ type Props = {
 };
 
 /**
- * Screen-top sky: gradient, clouds and the sheet lip in bg/app. Put it first inside a hero View of
- * the same height; place greeting, mascot and bubble on top. Content below overlaps the lip by 24.
+ * Screen-top sky: gradient, clouds and the sheet lip in bg/app-top — the same colour <Screen>
+ * paints behind the content, so the lip reads as the top edge of the page, not a separate strip.
+ * Put it first inside a hero View of the same height; place greeting, mascot and bubble on top.
+ * Content below overlaps the lip by 24.
  */
 export function SkyBackdrop({ size = "tall", height }: Props) {
   const base = size === "tall" ? layout.heroTall : layout.heroCompact;
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: layout.skyLip,
-    backgroundColor: colors.bg.app,
+    backgroundColor: colors.bg.appTop,
     borderTopLeftRadius: radius.sky,
     borderTopRightRadius: radius.sky,
   },

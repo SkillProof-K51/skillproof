@@ -18,8 +18,8 @@ export const colors = {
     inverse: "#ffffff", // text on primary-strong buttons
   },
   bg: {
-    app: "#f3f8fe", // page background and the sky's sheet lip (Figma bg/app)
-    appTop: "#e9f1fd", // top of the page gradient (Figma: raw value on Home, now a token)
+    app: "#f3f8fe", // page background below the fade (Figma bg/app)
+    appTop: "#e9f1fd", // top of the page AND the sky's sheet lip, so they read as one surface (Figma: raw value on Home, now a token)
     surface: "#ffffff", // cards, sheets, speech bubbles
     subtle: "#eef3f9", // neutral chips, grey icon badges
   },
@@ -86,6 +86,11 @@ export const layout = {
   heroCompact: 180, // Sky backdrop · Size=Compact
   skyLip: 32, // height of the sheet lip at the bottom of the sky
   heroOverlap: 24, // the first card sits 24 px above the lip
+  // Page background: bg/app-top held from the top of the content (so the sky's lip, also
+  // bg/app-top, melts into it under every hero, the tallest being Welcome at 400), then fading
+  // to bg/app. Figma's Home frame: hold to 30 %, fade to 80 % of 1094 ≈ 328 → 875.
+  pageFadeStart: 420,
+  pageFadeEnd: 900,
 } as const;
 
 /**
