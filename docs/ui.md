@@ -40,7 +40,8 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 | Text & actions | `Text` · `Button` (primary · secondary · danger) · `IconButton` · `Chip` · `Icon` |
 | Forms | `TextField` · `Select` (one choice from a list) · `Checkbox` · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
-| Status & progress | `StatusBadge` · `Stamp` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `Stat` · `IconBadge` · `Avatar` · `SkillLogo` |
+| Status & progress | `StatusBadge` · `Stamp` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
+| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `SkyPanel` (sky surface for a Result's celebration) |
 | Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` |
 | Mascot | `Mascot` · `GroundedMascot` · `MascotShadow` · `SpeechBubble` |
 
@@ -49,6 +50,12 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 - **A question that needs an answer before going on** → `<Dialog>`; if the answer can't be undone (remove, delete, withdraw) → `confirm={{ …, variant: "danger" }}`.
 - **Options, filters, a short form** → `<BottomSheet>`. **One choice inside a form** → `<Select>`. Several choices → `Checkbox` rows in a `BottomSheet`.
 - **Nothing to show yet** → `<EmptyState>` that says what will fill the space and how.
+
+## Numbers and charts (report screens)
+- A headline number is a `<Stat>`: label, icon, value with its unit, optional signed `delta`. Two in a row on the page. A trend goes in a `<BarChart>` beside it, not inside the tile.
+- A series is a `<BarChart>`: **one hue** (blue), the highlighted column in brand blue, a faint track to the goal. Never two y-axes, never a pie.
+- The figure wears text ink. Meaning lives in the icon circle (green = Verified, blue = Practised) — never colour the number, and never colour alone: always icon + label.
+- Values arrive computed and formatted (rule 2); these only draw them.
 
 ## Motion
 Durations are the `motion` tokens (quick · standard · toast · breath). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components.
