@@ -11,6 +11,7 @@ type Reference = { title: string; subtitle: string; icon: IconName; href: Href }
 
 // One screen per pattern a module copies (docs/ui.md). Open one, read its file, build yours the same way.
 const SCREENS: Reference[] = [
+  { title: "Welcome", subtitle: "First screen: the mascot, three steps, get started", icon: "compass", href: "/welcome" },
   { title: "Challenges", subtitle: "Module home: today’s card, progress, a filtered list", icon: "zap", href: "/challenges" },
   {
     title: "Result: passed, now Practised",
@@ -30,7 +31,7 @@ export function ReferenceScreens() {
     <View style={styles.section}>
       <SectionHeader title="Reference screens" />
       <Text variant="code" color="secondary">
-        app/(tabs)/challenges.tsx · app/challenges/result.tsx · app/(tabs)/passport.tsx
+        app/(auth)/welcome.tsx · app/(tabs)/challenges.tsx · app/challenges/result.tsx · app/(tabs)/passport.tsx
       </Text>
       <Card style={styles.list}>
         {SCREENS.map((s, i) => (
