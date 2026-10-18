@@ -7,8 +7,7 @@ export const demoHome: HomeData = {
   bubble: "Ready for today’s challenge, Aina?",
   readiness: {
     percent: 72,
-    roleLabel: "Readiness for Web Developer",
-    headline: "Job-ready · 2 skills to 100%",
+    headline: "2 skills left on your roadmap",
     focusSkills: ["Node.js", "Testing"],
   },
   todaysChallenge: {

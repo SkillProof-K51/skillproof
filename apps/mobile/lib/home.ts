@@ -30,8 +30,8 @@ export type HomeData = {
   readiness: {
     /** 0–100 integer from the Module 2 fit engine. */
     percent: number;
-    roleLabel: string;
-    /** "Job-ready" copy must follow Module 2's threshold rule (Ready ≥ 70 %). */
+    /** One line under the gauge, e.g. "2 skills left on your roadmap". Never claim "job-ready" here —
+     *  that is Module 2's threshold to define. */
     headline: string;
     focusSkills: string[];
   };

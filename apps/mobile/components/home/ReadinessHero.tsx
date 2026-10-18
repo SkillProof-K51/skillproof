@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import type { HomeData } from "../../lib/home";
 import { Chip, Icon, ProgressRing, SkillLogo, Text } from "../ui";
 
-const RING = 260; // the focal element of Home — a half-ring gauge this wide
+const RING = 230; // the focal element of Home — a half-ring gauge this wide
 
 type Props = {
   readiness: HomeData["readiness"];
@@ -18,15 +18,13 @@ type Props = {
 export function ReadinessHero({ readiness, onPressRoadmap }: Props) {
   return (
     <View style={styles.wrap}>
+      <Text variant="sectionLabel" color="secondary">
+        Your career goal
+      </Text>
       <ProgressRing percent={readiness.percent} size={RING} tone="sky" shape="half" caption="ready" />
-      <View style={styles.text}>
-        <Text variant="label" color="secondary" align="center">
-          {readiness.roleLabel}
-        </Text>
-        <Text variant="heading" align="center">
-          {readiness.headline}
-        </Text>
-      </View>
+      <Text variant="heading" align="center">
+        {readiness.headline}
+      </Text>
       {readiness.focusSkills.length ? (
         <View style={styles.chips}>
           {readiness.focusSkills.map((skill) => (
@@ -44,7 +42,6 @@ export function ReadinessHero({ readiness, onPressRoadmap }: Props) {
 
 const styles = StyleSheet.create({
   wrap: { alignItems: "center", gap: space.md, marginTop: space.lg },
-  text: { alignItems: "center", gap: space.xxs },
   chips: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: gap.tight },
   link: { flexDirection: "row", alignItems: "center", gap: space.xxs },
 });
