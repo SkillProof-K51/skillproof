@@ -14,6 +14,8 @@ export type MicroProject = {
 /** One challenge per day, picked by Module 3. */
 export type TodaysChallenge = {
   title: string;
+  /** First few lines of today's code or query — a teaser for Home, never the answer. */
+  preview?: string[];
   skill: string;
   /** Passed challenges in this skill so far, out of `of` (3 = Practised). */
   passed: number;

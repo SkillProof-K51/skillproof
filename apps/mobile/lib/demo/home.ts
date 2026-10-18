@@ -12,6 +12,7 @@ export const demoHome: HomeData = {
   },
   todaysChallenge: {
     title: "Fix the bug in this Node.js function",
+    preview: ["function total(items) {", "  return items.reduce((s, i) =>", "    s + i.price);", "}"],
     skill: "Node.js",
     passed: 2,
     of: 3,
