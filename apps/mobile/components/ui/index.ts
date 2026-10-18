@@ -2,6 +2,7 @@
 export { Avatar } from "./Avatar";
 export { Button } from "./Button";
 export { Card } from "./Card";
+export { Checkbox } from "./Checkbox";
 export { Carousel } from "./Carousel";
 export { Chip, CHIP_HEIGHT } from "./Chip";
 export { GroundedMascot } from "./GroundedMascot";
@@ -19,5 +20,7 @@ export { SkillLogo } from "./SkillLogo";
 export { SkyBackdrop } from "./SkyBackdrop";
 export { SpeechBubble } from "./SpeechBubble";
 export { StatusBadge, type SkillStatus } from "./StatusBadge";
+export { Switch } from "./Switch";
 export { TabBar } from "./TabBar";
 export { Text } from "./Text";
+export { TextField } from "./TextField";
