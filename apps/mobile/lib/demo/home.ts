@@ -25,5 +25,5 @@ export const demoHome: HomeData = {
     { id: "bookstore", title: "Bookstore REST API (sample)", skillsLabel: "Skills: Node.js · Testing", lockedBy: "Node.js" },
     { id: "sales", title: "Sales dashboard (sample)", skillsLabel: "Skills: SQL · Data visualisation", lockedBy: "SQL" },
   ],
-  passport: { verified: 3, practised: 2 },
+  passport: { verified: 3, practised: 2, latestVerified: "HTML and CSS" },
 };

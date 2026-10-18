@@ -41,7 +41,8 @@ export type HomeData = {
   todaysChallenge: TodaysChallenge | null;
   /** Already ranked by the fit engine (Module 2), best first. Home features the first open one. */
   microProjects: MicroProject[];
-  passport: { verified: number; practised: number };
+  /** Counts of the student's skills by status, and the skill most recently Verified (Module 5). */
+  passport: { verified: number; practised: number; latestVerified?: string };
 };
 
 /**

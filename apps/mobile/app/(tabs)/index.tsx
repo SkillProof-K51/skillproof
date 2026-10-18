@@ -2,6 +2,7 @@ import { gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
+import { PassportCard } from "../../components/home/PassportCard";
 import { ProjectCard } from "../../components/home/ProjectCard";
 import { ReadinessHero } from "../../components/home/ReadinessHero";
 import { TodayCard } from "../../components/home/TodayCard";
@@ -11,11 +12,8 @@ import {
   Card,
   Carousel,
   Hero,
-  Icon,
-  IconBadge,
   Screen,
   SectionHeader,
-  StatusBadge,
   Text,
 } from "../../components/ui";
 import { getHomeData, greetingFor, nextUnlock } from "../../lib/home";
@@ -100,17 +98,7 @@ export default function HomeScreen() {
 
         {/* Passport snapshot (Module 5) */}
         <SectionHeader title="Your passport" />
-        <Card onPress={() => router.push("/passport")} style={styles.row}>
-          <IconBadge icon="id-card" tone="green" />
-          <View style={styles.stack}>
-            <Text variant="heading">Skill Passport</Text>
-            <View style={styles.chips}>
-              <StatusBadge status="verified" label={`${passport.verified} Verified`} />
-              <StatusBadge status="practised" label={`${passport.practised} Practised`} />
-            </View>
-          </View>
-          <Icon name="chevron-right" size={20} />
-        </Card>
+        <PassportCard passport={passport} onPress={() => router.push("/passport")} />
       </View>
     </Screen>
   );
@@ -140,9 +128,6 @@ const styles = StyleSheet.create({
   header: { flexDirection: "row", alignItems: "center", gap: space.md },
   greeting: { flex: 1, gap: space.xxs },
   content: { paddingHorizontal: layout.gutter, gap: gap.loose },
-  stack: { flex: 1, gap: gap.tight },
-  chips: { flexDirection: "row", gap: gap.tight },
-  row: { flexDirection: "row", alignItems: "center", gap: space.md },
   fill: { flexGrow: 1 },
   emptyBody: { marginTop: space.xs },
 });
