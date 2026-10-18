@@ -24,6 +24,7 @@ import { Lock } from "phosphor-react-native/src/icons/Lock";
 import { LockOpen } from "phosphor-react-native/src/icons/LockOpen";
 import { Microphone } from "phosphor-react-native/src/icons/Microphone";
 import { Plant } from "phosphor-react-native/src/icons/Plant";
+import { QrCode } from "phosphor-react-native/src/icons/QrCode";
 import { Play } from "phosphor-react-native/src/icons/Play";
 import { ShareNetwork } from "phosphor-react-native/src/icons/ShareNetwork";
 import { Sparkle } from "phosphor-react-native/src/icons/Sparkle";
@@ -67,6 +68,7 @@ const ICONS = {
   retry: ArrowClockwise, // try a challenge again
   hint: Lightbulb, // a hint after a missed check
   ai: Sparkle, // AI feedback — always with a label saying it's AI
+  qr: QrCode, // show the passport's QR code
   // skills without a logo (SkillLogo falls back to these)
   test: TestTube,
   chart: ChartBar,
