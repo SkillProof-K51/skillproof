@@ -1,7 +1,7 @@
 import { colors, radius, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import type { TodaysChallenge } from "../../lib/home";
+import type { TodaysChallenge } from "../../lib/challenges";
 import { Card, Icon, Text } from "../ui";
 
 const STEP = 30; // one step circle
