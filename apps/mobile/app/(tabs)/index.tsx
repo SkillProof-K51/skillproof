@@ -62,7 +62,7 @@ export default function HomeScreen() {
         {/* Today's challenge (Module 3) — the one strong CTA on this screen while it is to do */}
         {todaysChallenge ? (
           <>
-            <SectionHeader title="Today’s challenge" />
+            <SectionHeader title="Today’s challenge" mascot="wave" />
             <TodayCard challenge={todaysChallenge} onPress={openChallenges} />
             {unlock ? (
               <UnlockCard

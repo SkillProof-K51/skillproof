@@ -36,8 +36,9 @@ type Props = {
 };
 
 /**
- * Rule (docs/ui.md): one hero mascot on a module's first screen, at most one more inside a
- * card. Never on the filled Skill Passport or on task screens (Fix the bug, SQL live, Explain it).
+ * Rule (docs/ui.md): one mascot on a module's first screen — in the Hero or standing on the sheet
+ * edge (SectionHeader) — at most one more inside a card. Never on the filled Skill Passport or on
+ * task screens (Fix the bug, SQL live, Explain it).
  */
 export function Mascot({ pose = "wave", width, style }: Props) {
   const { width: w, height: h } = mascotSize(pose, width);
