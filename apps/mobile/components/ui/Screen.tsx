@@ -28,6 +28,10 @@ export function Screen({ children, contentStyle, aboveTabBar = true }: Props) {
       contentContainerStyle={[{ paddingBottom: (aboveTabBar ? tabBar : 0) + space.xl }, contentStyle]}
       showsVerticalScrollIndicator={false}
       contentInsetAdjustmentBehavior="never"
+      // forms: a tap on a button lands even while the keyboard is up, and iOS scrolls the focused
+      // field clear of the keyboard (Android resizes the window by itself)
+      keyboardShouldPersistTaps="handled"
+      automaticallyAdjustKeyboardInsets
     >
       {children}
     </ScrollView>
