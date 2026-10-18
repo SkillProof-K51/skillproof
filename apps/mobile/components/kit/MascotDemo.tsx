@@ -1,7 +1,7 @@
-import { colors, radius, space } from "@skillproof/tokens";
+import { space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import { GroundedMascot, Mascot, SpeechBubble, Text, type MascotPose } from "../ui";
+import { GroundedMascot, Mascot, SkyPanel, SpeechBubble, Text, type MascotPose } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const POSES: MascotPose[] = ["wave", "happy", "question", "idea", "checklist", "celebrate", "graduate", "laptop", "reading", "sleep"];
@@ -24,10 +24,10 @@ export function MascotDemo() {
         ))}
       </View>
       <KitLabel>GroundedMascot + SpeechBubble · how it stands in a Hero (with its ground shadow and idle bob)</KitLabel>
-      <View style={styles.sky}>
+      <SkyPanel style={styles.stage}>
         <SpeechBubble text="Ready for today’s challenge?" />
         <GroundedMascot pose="wave" width={HERO_WIDTH} />
-      </View>
+      </SkyPanel>
     </KitSection>
   );
 }
@@ -35,5 +35,5 @@ export function MascotDemo() {
 const styles = StyleSheet.create({
   grid: { flexDirection: "row", flexWrap: "wrap", gap: space.md, justifyContent: "center" },
   cell: { alignItems: "center", gap: space.xs, width: POSE_WIDTH + space.lg },
-  sky: { backgroundColor: colors.sky.base, borderRadius: radius.lg, padding: space.lg, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: space.md },
+  stage: { flexDirection: "row", justifyContent: "center" },
 });

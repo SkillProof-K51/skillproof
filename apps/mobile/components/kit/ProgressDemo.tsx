@@ -1,7 +1,7 @@
-import { colors, radius, space } from "@skillproof/tokens";
+import { space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import { Avatar, Chip, IconBadge, ProgressBar, ProgressDots, ProgressRing, SkillLogo, StatusBadge, Text } from "../ui";
+import { Avatar, Chip, IconBadge, ProgressBar, ProgressDots, ProgressRing, SkillLogo, SkyPanel, StatusBadge, Text } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const RING_SMALL = 64;
@@ -15,9 +15,9 @@ export function ProgressDemo() {
       <KitLabel>ProgressRing · full on cards, half gauge on the sky (Home)</KitLabel>
       <View style={styles.row}>
         <ProgressRing percent={72} size={RING_SMALL} />
-        <View style={[styles.sky, styles.flex]}>
+        <SkyPanel style={styles.flex}>
           <ProgressRing percent={72} size={RING_HALF} tone="sky" shape="half" caption="ready" />
-        </View>
+        </SkyPanel>
       </View>
       <KitLabel>ProgressBar · ProgressDots (challenges passed toward Practised)</KitLabel>
       <ProgressBar percent={72} />
@@ -51,9 +51,9 @@ export function ProgressDemo() {
       <KitLabel>Avatar · initials until photos arrive with the shared core</KitLabel>
       <View style={styles.row}>
         <Avatar initials="AS" />
-        <View style={styles.sky}>
+        <SkyPanel style={styles.tight}>
           <Avatar initials="AS" tone="surface" />
-        </View>
+        </SkyPanel>
         <Avatar initials="AS" size={RING_SMALL} />
       </View>
       <KitLabel>SkillLogo · the skill’s own mark, or an icon when it has none</KitLabel>
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", gap: space.md },
   wrap: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: space.sm },
   flex: { flex: 1, alignItems: "center" },
-  sky: { backgroundColor: colors.sky.base, borderRadius: radius.lg, padding: space.md },
+  tight: { padding: space.md },
   logo: { alignItems: "center", gap: space.xxs, width: RING_SMALL },
 });

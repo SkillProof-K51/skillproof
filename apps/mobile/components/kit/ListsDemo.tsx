@@ -1,8 +1,8 @@
-import { colors, radius, space } from "@skillproof/tokens";
+import { space } from "@skillproof/tokens";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Divider, ICON_BADGE_SIZE, IconBadge, IconButton, ListRow, SegmentedControl, SkillLogo, StatusBadge, Text, TopBar } from "../ui";
+import { Divider, ICON_BADGE_SIZE, IconBadge, IconButton, ListRow, SegmentedControl, SkillLogo, SkyPanel, StatusBadge, Text, TopBar } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const LEADING_INSET = ICON_BADGE_SIZE + space.md; // badge + the row gap: the divider lines up with the text
@@ -42,9 +42,9 @@ export function ListsDemo() {
         <IconButton icon="share" tone="subtle" accessibilityLabel="Share (disabled)" onPress={() => {}} disabled />
       </View>
       <KitLabel>TopBar · first thing in a compact Hero</KitLabel>
-      <View style={styles.sky}>
+      <SkyPanel style={styles.bar}>
         <TopBar title="Edit profile" onBack={() => {}} action={<IconButton icon="share" accessibilityLabel="Share" onPress={() => {}} />} />
-      </View>
+      </SkyPanel>
       <Text variant="caption" color="secondary">
         Back goes to the previous screen, or Home when there is none.
       </Text>
@@ -54,5 +54,5 @@ export function ListsDemo() {
 
 const styles = StyleSheet.create({
   buttons: { flexDirection: "row", gap: space.md },
-  sky: { backgroundColor: colors.sky.base, borderRadius: radius.lg, padding: space.md },
+  bar: { padding: space.md, alignItems: "stretch" },
 });

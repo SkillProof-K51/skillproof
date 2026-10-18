@@ -27,6 +27,7 @@ export { Select, type SelectOption } from "./Select";
 export { SegmentedControl } from "./SegmentedControl";
 export { SkillLogo } from "./SkillLogo";
 export { SkyBackdrop } from "./SkyBackdrop";
+export { SkyPanel } from "./SkyPanel";
 export { Stamp } from "./Stamp";
 export { Stat } from "./Stat";
 export { SpeechBubble } from "./SpeechBubble";
