@@ -1,11 +1,14 @@
 import type { Challenge, ChallengeKind } from "../../lib/challenges";
 import { Chip, IconBadge, ListRow, type IconName } from "../ui";
 
-/** Each kind's name and icon — the same everywhere a challenge appears (list, filter, result). */
-export const KINDS: Record<ChallengeKind, { label: string; icon: IconName }> = {
-  fix_bug: { label: "Fix the bug", icon: "bug" },
-  sql_live: { label: "SQL live", icon: "database" },
-  explain_it: { label: "Explain it", icon: "message" },
+/**
+ * Each kind's name and icon — the same everywhere a challenge appears (list, filter, result) — and
+ * what its graded parts are called on the Result screen.
+ */
+export const KINDS: Record<ChallengeKind, { label: string; icon: IconName; checks: string }> = {
+  fix_bug: { label: "Fix the bug", icon: "bug", checks: "Tests" },
+  sql_live: { label: "SQL live", icon: "database", checks: "Checks on your result" },
+  explain_it: { label: "Explain it", icon: "message", checks: "Rubric" },
 };
 
 type Props = {

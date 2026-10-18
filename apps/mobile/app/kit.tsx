@@ -7,6 +7,7 @@ import { FormsDemo } from "../components/kit/FormsDemo";
 import { ListsDemo } from "../components/kit/ListsDemo";
 import { MascotDemo } from "../components/kit/MascotDemo";
 import { ProgressDemo } from "../components/kit/ProgressDemo";
+import { ReferenceScreens } from "../components/kit/ReferenceScreens";
 import { ResultsDemo } from "../components/kit/ResultsDemo";
 import { Hero, Screen, Text, TopBar } from "../components/ui";
 
@@ -27,6 +28,7 @@ export default function KitScreen() {
         </View>
       </Hero>
       <View style={styles.content}>
+        <ReferenceScreens />
         <BasicsDemo />
         <FormsDemo />
         <ListsDemo />
