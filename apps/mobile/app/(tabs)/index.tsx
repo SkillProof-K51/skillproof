@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { ProjectCard } from "../../components/home/ProjectCard";
 import { ReadinessHero } from "../../components/home/ReadinessHero";
 import { TodayCard } from "../../components/home/TodayCard";
+import { UnlockCard } from "../../components/home/UnlockCard";
 import {
   Avatar,
   Card,
@@ -17,7 +18,7 @@ import {
   StatusBadge,
   Text,
 } from "../../components/ui";
-import { getHomeData, greetingFor } from "../../lib/home";
+import { getHomeData, greetingFor, nextUnlock } from "../../lib/home";
 
 // The slider: the top open matches, then the next locked one as a goal. Everything else → "See all".
 const SLIDER_OPEN = 3;
@@ -38,6 +39,7 @@ export default function HomeScreen() {
     ...microProjects.filter((p) => !p.lockedBy).slice(0, SLIDER_OPEN),
     ...microProjects.filter((p) => p.lockedBy).slice(0, SLIDER_LOCKED),
   ];
+  const unlock = nextUnlock(data);
   const openProjects = () => router.push("/projects");
   const openChallenges = () => router.push("/challenges");
 
@@ -60,7 +62,20 @@ export default function HomeScreen() {
 
       <View style={styles.content}>
         {/* Today's challenge (Module 3) — the one strong CTA on this screen while it is to do */}
-        {todaysChallenge ? <TodayCard challenge={todaysChallenge} onPress={openChallenges} /> : null}
+        {todaysChallenge ? (
+          <>
+            <SectionHeader title="Today’s challenge" />
+            <TodayCard challenge={todaysChallenge} onPress={openChallenges} />
+            {unlock ? (
+              <UnlockCard
+                challenge={todaysChallenge}
+                projectTitle={unlock.project.title}
+                remaining={unlock.remaining}
+                onPress={openProjects}
+              />
+            ) : null}
+          </>
+        ) : null}
 
         {/* Micro-projects (Module 4) */}
         {slider.length ? (

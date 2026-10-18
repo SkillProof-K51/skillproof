@@ -51,6 +51,17 @@ export function getHomeData(): HomeData | null {
   return isTestMode ? demoHome : null;
 }
 
+/**
+ * The project today's challenge works toward: the first micro-project locked by today's skill, and
+ * how many more passes that skill needs to reach Practised. Null when nothing is waiting on it.
+ */
+export function nextUnlock(data: HomeData): { project: MicroProject; remaining: number } | null {
+  const c = data.todaysChallenge;
+  if (!c || c.done) return null;
+  const project = data.microProjects.find((p) => p.lockedBy === c.skill);
+  return project ? { project, remaining: c.of - c.passed } : null;
+}
+
 /** "1 place left" / "3 places left". */
 export function placesLeftLabel(n: number): string {
   return `${n} ${n === 1 ? "place" : "places"} left`;
