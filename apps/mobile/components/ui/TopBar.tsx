@@ -7,7 +7,8 @@ import { IconButton } from "./IconButton";
 import { Text } from "./Text";
 
 type Props = {
-  title: string;
+  /** Leave out when the hero says the title in large type right below (sign up, log in). */
+  title?: string;
   /** Override the back action. Default: go back, or to Home when there's nothing to go back to. */
   onBack?: () => void;
   /** At the right: usually one IconButton (share, more). */
@@ -26,9 +27,13 @@ export function TopBar({ title, onBack, action }: Props) {
       <View style={styles.side}>
         <IconButton icon="chevron-left" accessibilityLabel="Back" onPress={back} />
       </View>
-      <Text variant="heading" align="center" numberOfLines={1} style={styles.title} accessibilityRole="header">
-        {title}
-      </Text>
+      {title ? (
+        <Text variant="heading" align="center" numberOfLines={1} style={styles.title} accessibilityRole="header">
+          {title}
+        </Text>
+      ) : (
+        <View style={styles.title} />
+      )}
       <View style={[styles.side, styles.end]}>{action}</View>
     </View>
   );

@@ -22,6 +22,7 @@ export { MascotShadow } from "./MascotShadow";
 export { ProgressBar } from "./ProgressBar";
 export { ProgressDots } from "./ProgressDots";
 export { ProgressRing } from "./ProgressRing";
+export { QrCode } from "./QrCode";
 export { Screen } from "./Screen";
 export { SectionHeader } from "./SectionHeader";
 export { Select, type SelectOption } from "./Select";

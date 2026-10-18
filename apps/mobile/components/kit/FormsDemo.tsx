@@ -23,7 +23,7 @@ export function FormsDemo() {
         helper="Your UTeM student address"
       />
       <TextField label="Password" icon="lock" secure placeholder="At least 8 characters" value={password} onChangeText={setPassword} />
-      <TextField label="Matric number" value="B0325" editable={false} error="Enter all 10 characters, e.g. B032520033" onChangeText={() => {}} />
+      <TextField label="Matric number" value="B0325" editable={false} error="Enter all 10 characters, e.g. B032510042" onChangeText={() => {}} />
       <TextField label="Faculty" value="FTMK" editable={false} helper="From your student record — can't be edited" onChangeText={() => {}} />
       <KitLabel>Checkbox</KitLabel>
       <Checkbox checked={agree} onChange={setAgree} label="I agree to the student terms" description="Your passport is private until you share it" />

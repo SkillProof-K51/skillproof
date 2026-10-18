@@ -1,7 +1,7 @@
 import { colors, gap, radius, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import type { TodaysChallenge } from "../../lib/home";
+import type { TodaysChallenge } from "../../lib/challenges";
 import { Button, Card, Chip, ProgressDots, Text } from "../ui";
 
 const LINE_NUMBER = 18; // width of the line-number column in the code peek

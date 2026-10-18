@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { PassportCard } from "../../components/home/PassportCard";
 import { ProjectCard } from "../../components/home/ProjectCard";
 import { ReadinessHero } from "../../components/home/ReadinessHero";
-import { TodayCard } from "../../components/home/TodayCard";
+import { TodayCard } from "../../components/challenges/TodayCard";
 import { UnlockCard } from "../../components/home/UnlockCard";
 import {
   Avatar,

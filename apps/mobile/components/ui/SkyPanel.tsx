@@ -5,6 +5,12 @@ import Svg, { Defs, LinearGradient, Rect, Stop } from "react-native-svg";
 
 type Props = {
   style?: ViewStyle;
+  /**
+   * What the sky fades into at the bottom: page (bg/app, the default — the panel melts into the
+   * page, for a panel among other content) or soft (accent/skySoft — the panel keeps its whole
+   * shape, for a panel that fills the screen).
+   */
+  fadeTo?: "page" | "soft";
   children: ReactNode;
 };
 
@@ -13,7 +19,7 @@ type Props = {
  * mascot or stamp needs the sky behind it without a full Hero. Sky at the top fading into the
  * page colour (Azim's pick, 18 Oct), so it sits lightly under the painted hero.
  */
-export function SkyPanel({ style, children }: Props) {
+export function SkyPanel({ style, fadeTo = "page", children }: Props) {
   const id = `sky${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
   // the gradient is drawn at the panel's measured size: percentage sizes don't fill on the web
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -27,7 +33,7 @@ export function SkyPanel({ style, children }: Props) {
         <Defs>
           <LinearGradient id={id} x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={colors.accent.sky} />
-            <Stop offset="1" stopColor={colors.bg.app} />
+            <Stop offset="1" stopColor={fadeTo === "soft" ? colors.accent.skySoft : colors.bg.app} />
           </LinearGradient>
         </Defs>
         <Rect x={0} y={0} width={size.width} height={size.height} fill={`url(#${id})`} />

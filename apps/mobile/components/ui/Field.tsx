@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
   },
   disabled: { backgroundColor: colors.bg.subtle },
   pressed: { opacity: opacity.pressed },
-  message: { flexDirection: "row", alignItems: "center", gap: space.xs },
+  message: { flexDirection: "row", alignItems: "flex-start", gap: space.xs }, // a 2-line message keeps the icon on line 1
   flex: { flex: 1 },
 });
