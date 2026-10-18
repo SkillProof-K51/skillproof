@@ -45,6 +45,10 @@
   --radius-full: 999px;
   --font-sans: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --text-display: 44px;
+  --text-display--line-height: 48px;
+  --text-display--letter-spacing: -1px;
+  --text-display--font-weight: 600;
   --text-title: 26px;
   --text-title--line-height: 28px;
   --text-title--letter-spacing: -0.4px;

@@ -134,6 +134,7 @@ export type TypeStyle = {
 };
 
 export const type = {
+  display: { family: "sans", weight: 600, size: 44, lineHeight: 48, letterSpacing: -1 }, // one hero number per screen (readiness gauge)
   title: { family: "sans", weight: 600, size: 26, lineHeight: 28, letterSpacing: -0.4 }, // "Good evening, Aina"
   heading: { family: "sans", weight: 500, size: 17, lineHeight: 24, letterSpacing: -0.2 }, // Figma "Heading"
   subheading: { family: "sans", weight: 500, size: 16, lineHeight: 24, letterSpacing: -0.2 }, // list-row titles

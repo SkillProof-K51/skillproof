@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import type { HomeData } from "../../lib/home";
 import { Chip, Icon, ProgressRing, SkillLogo, Text } from "../ui";
 
-const RING = 140; // the focal element of Home
+const RING = 260; // the focal element of Home — a half-ring gauge this wide
 
 type Props = {
   readiness: HomeData["readiness"];
@@ -18,7 +18,7 @@ type Props = {
 export function ReadinessHero({ readiness, onPressRoadmap }: Props) {
   return (
     <View style={styles.wrap}>
-      <ProgressRing percent={readiness.percent} size={RING} tone="sky" caption="ready" />
+      <ProgressRing percent={readiness.percent} size={RING} tone="sky" shape="half" caption="ready" />
       <View style={styles.text}>
         <Text variant="label" color="secondary" align="center">
           {readiness.roleLabel}
