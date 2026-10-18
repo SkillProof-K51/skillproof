@@ -7,6 +7,7 @@ const NAMED_COLORS = {
   primary: colors.text.primary,
   secondary: colors.text.secondary,
   inverse: colors.text.inverse,
+  gold: colors.passport.gold, // labels on the passport's navy cover
   verified: colors.status.verified.fg,
   practised: colors.status.practised.fg,
 } as const;

@@ -3,14 +3,16 @@ import { StyleSheet, View } from "react-native";
 
 import { Icon, type IconName } from "./Icon";
 
-type Tone = "blue" | "green" | "grey" | "butter";
+type Tone = "blue" | "green" | "grey" | "butter" | "gold";
 
-// Blue = in progress / projects · Green = verified / achievement · Grey = locked / neutral · Butter = energy / challenge
+// Blue = in progress / projects · Green = verified / achievement · Grey = locked / neutral · Butter = energy / challenge ·
+// Gold = the Skill Passport (on its navy cover)
 const TONES: Record<Tone, { bg: string; fg: string }> = {
   blue: { bg: colors.status.practised.bg, fg: colors.status.practised.fg },
   green: { bg: colors.status.verified.bg, fg: colors.status.verified.fg },
   grey: { bg: colors.bg.subtle, fg: colors.icon.default },
   butter: { bg: colors.accent.butter, fg: colors.text.primary },
+  gold: { bg: colors.passport.gold, fg: colors.passport.cover },
 };
 
 type Props = {

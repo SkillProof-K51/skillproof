@@ -52,6 +52,13 @@ export const colors = {
     practised: { fg: "#2a5db0", bg: "#dcebff" }, // blue = in progress (Module 3)
     notYet: { fg: "#5f6f84", bg: "#eef3f9" }, // grey = no evidence yet (text/secondary on bg/subtle)
   },
+  passport: {
+    // The Skill Passport looks like a real one: navy cover, gold foil (Azim, 18 Oct).
+    // Gold = the passport and credentials only — never decoration.
+    cover: "#0b1a35", // same navy as action.primaryStrong; as a surface it means "your passport"
+    gold: "#dcb253", // foil: labels, the ID tile, the chevron — 8.5:1 on the cover
+    goldLine: "rgba(220, 178, 83, 0.45)", // hairline border + divider on the cover
+  },
   glass: {
     // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
     veil: "rgba(255, 255, 255, 0.6)",

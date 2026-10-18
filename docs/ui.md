@@ -38,6 +38,7 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 | blue (`status.practised`) | Practised / in progress (M3) | Practised badges, project cards and badges |
 | butter (`accent.butter`) | energy | today's challenge only |
 | navy (`action.primaryStrong`) | the main action | the one primary button per screen |
+| navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page — gold never anywhere else |
 | brand blue (`accent.brand`) on soft sky (`accent.skySoft`) | where you are | the active tab in the bottom nav |
 Never use a status colour as decoration.
 
