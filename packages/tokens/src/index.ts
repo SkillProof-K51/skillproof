@@ -116,7 +116,7 @@ export const layout = {
   heroTall: 290, // Sky backdrop · Size=Tall
   heroCompact: 180, // Sky backdrop · Size=Compact
   skyLip: 32, // height of the sheet lip at the bottom of the sky
-  heroOverlap: 24, // the first card sits 24 px above the lip
+  sheetGap: 24, // the first card starts 24 below the sky's edge, on the sheet (Azim, 18 Oct)
 } as const;
 
 /**

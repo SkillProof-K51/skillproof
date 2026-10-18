@@ -13,7 +13,7 @@ type Props = {
  * Screen-top sky: a painted sky (Azim, 18 Oct), top-aligned so the clear blue sits behind the
  * header and the clouds drift in lower down, plus the sheet lip in bg/app — the same flat colour
  * <Screen> paints behind the content, so the lip reads as the top edge of the page.
- * Put it first inside a hero View of the same height. Content below overlaps the lip by 24.
+ * Put it first inside a hero View of the same height. Content below starts on the sheet, `layout.sheetGap` below the sky's edge.
  */
 export function SkyBackdrop({ size = "tall", height }: Props) {
   const h = height ?? (size === "tall" ? layout.heroTall : layout.heroCompact);

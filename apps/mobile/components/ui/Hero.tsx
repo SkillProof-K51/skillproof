@@ -14,9 +14,8 @@ const MASCOT_INSET_RIGHT = 20; // right-aligned mascot: 20 from the screen edge
 const MASCOT_LIFT = 62; // the mascot's feet sit 62 above the hero bottom (30 above the lip)
 const BUBBLE_DROP = 34; // a short speech bubble's top sits 34 below the mascot's top
 const DEFAULT_MASCOT_WIDTH = 142;
-// content in the hero ends this far above the hero's bottom edge: clear of the lip and of the
-// first card, which overlaps the hero by lip + 24
-const CONTENT_BOTTOM = layout.skyLip + layout.heroOverlap + space.lg;
+// content in the hero ends 24 above the sky's edge (the top of the lip)
+const CONTENT_BOTTOM = layout.skyLip + space.xl;
 
 type Props = {
   /** tall (290) = Home / Welcome / a module's first screen · compact (180) = sub-screens, auth, lists. */
@@ -37,7 +36,7 @@ type Props = {
 /**
  * Screen-top hero: sky backdrop + optional mascot and speech bubble + your content in normal flow.
  * The sky grows with the content (never shorter than `size`/`height`). Put it first in a <Screen>;
- * the content after it overlaps the sky's lip by 24 automatically.
+ * the content after it starts on the sheet, `layout.sheetGap` below the sky's edge, automatically.
  */
 export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, children }: Props) {
   const insets = useSafeAreaInsets();
@@ -65,7 +64,7 @@ export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASC
 
 const styles = StyleSheet.create({
   hero: {
-    marginBottom: -(layout.skyLip + layout.heroOverlap),
+    marginBottom: layout.sheetGap - layout.skyLip, // pulls the next content up under the lip, then down by sheetGap
     paddingHorizontal: layout.gutter,
     paddingBottom: CONTENT_BOTTOM,
   },
