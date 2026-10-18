@@ -6,6 +6,8 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { TestModeFrame } from "../components/TestModeFrame";
+import { ToastProvider } from "../components/ui";
 import { fontsToLoad } from "../components/ui/fonts";
 
 SplashScreen.preventAutoHideAsync();
@@ -22,10 +24,15 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg.app } }}>
-        <Stack.Screen name="(tabs)" />
-      </Stack>
+      <TestModeFrame>
+        <ToastProvider>
+          <StatusBar style="dark" />
+          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg.app } }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="kit" />
+          </Stack>
+        </ToastProvider>
+      </TestModeFrame>
     </SafeAreaProvider>
   );
 }
