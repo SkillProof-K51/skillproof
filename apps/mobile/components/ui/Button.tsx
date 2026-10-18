@@ -6,8 +6,11 @@ import { Text } from "./Text";
 
 type Props = Omit<PressableProps, "style" | "children"> & {
   label: string;
-  /** primary = the ONE main action on a screen; secondary = everything else. */
-  variant?: "primary" | "secondary";
+  /**
+   * primary = the ONE main action on a screen · secondary = everything else ·
+   * danger = the confirm button of a delete / remove dialog (red = can't be undone).
+   */
+  variant?: "primary" | "secondary" | "danger";
   icon?: IconName;
   /** Stretch to the container width (cards, sheets). */
   block?: boolean;
@@ -15,8 +18,8 @@ type Props = Omit<PressableProps, "style" | "children"> & {
 };
 
 export function Button({ label, variant = "primary", icon, block, style, disabled, ...rest }: Props) {
-  const primary = variant === "primary";
-  const fg = primary ? colors.action.onPrimaryStrong : colors.text.primary;
+  const filled = variant !== "secondary";
+  const fg = filled ? colors.action.onPrimaryStrong : colors.text.primary;
   return (
     <Pressable
       accessibilityRole="button"
@@ -25,7 +28,7 @@ export function Button({ label, variant = "primary", icon, block, style, disable
       {...rest}
       style={({ pressed }) => [
         styles.base,
-        primary ? styles.primary : styles.secondary,
+        styles[variant],
         block && styles.block,
         pressed && styles.pressed,
         disabled && styles.disabled,
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   primary: { backgroundColor: colors.action.primaryStrong },
+  danger: { backgroundColor: colors.feedback.error.fg },
   secondary: {
     backgroundColor: colors.bg.surface,
     borderWidth: 1,

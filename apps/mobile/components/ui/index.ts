@@ -7,7 +7,7 @@ export { Chip, CHIP_HEIGHT } from "./Chip";
 export { GroundedMascot } from "./GroundedMascot";
 export { Hero } from "./Hero";
 export { Icon, type IconName } from "./Icon";
-export { IconBadge } from "./IconBadge";
+export { IconBadge, ICON_BADGE_SIZE } from "./IconBadge";
 export { Mascot, type MascotPose } from "./Mascot";
 export { MascotShadow } from "./MascotShadow";
 export { ProgressBar } from "./ProgressBar";

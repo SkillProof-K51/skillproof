@@ -1,5 +1,7 @@
 import { colors } from "@skillproof/tokens";
 import { Briefcase } from "phosphor-react-native/src/icons/Briefcase";
+import { CaretDown } from "phosphor-react-native/src/icons/CaretDown";
+import { CaretLeft } from "phosphor-react-native/src/icons/CaretLeft";
 import { Bug } from "phosphor-react-native/src/icons/Bug";
 import { CaretRight } from "phosphor-react-native/src/icons/CaretRight";
 import { ChartBar } from "phosphor-react-native/src/icons/ChartBar";
@@ -11,8 +13,10 @@ import { Compass } from "phosphor-react-native/src/icons/Compass";
 import { Database } from "phosphor-react-native/src/icons/Database";
 import { Envelope } from "phosphor-react-native/src/icons/Envelope";
 import { Eye } from "phosphor-react-native/src/icons/Eye";
+import { EyeSlash } from "phosphor-react-native/src/icons/EyeSlash";
 import { House } from "phosphor-react-native/src/icons/House";
 import { IdentificationCard } from "phosphor-react-native/src/icons/IdentificationCard";
+import { Info } from "phosphor-react-native/src/icons/Info";
 import { Lightning } from "phosphor-react-native/src/icons/Lightning";
 import { Lock } from "phosphor-react-native/src/icons/Lock";
 import { Microphone } from "phosphor-react-native/src/icons/Microphone";
@@ -25,8 +29,8 @@ import { Warning } from "phosphor-react-native/src/icons/Warning";
 import { X } from "phosphor-react-native/src/icons/X";
 import { XCircle } from "phosphor-react-native/src/icons/XCircle";
 
-// Phosphor (MIT), 24 px grid — the same 23 glyphs as the Figma `icon/*` set, keyed by the
-// Figma name. Per-icon imports keep the bundle to the icons we use (the package index is 500 KB).
+// Phosphor (MIT), 24 px grid — the Figma `icon/*` set plus the few the kit needed since, keyed by
+// the Figma name. Per-icon imports keep the bundle to the icons we use (the package index is 500 KB).
 const ICONS = {
   home: House,
   zap: Lightning,
@@ -36,12 +40,16 @@ const ICONS = {
   mail: Envelope,
   lock: Lock,
   eye: Eye,
+  "eye-off": EyeSlash,
   check: Check,
   "chevron-right": CaretRight,
+  "chevron-left": CaretLeft,
+  "chevron-down": CaretDown,
   clock: Clock,
   seedling: Plant,
   share: ShareNetwork,
   alert: Warning,
+  info: Info,
   x: X,
   play: Play,
   bug: Bug,

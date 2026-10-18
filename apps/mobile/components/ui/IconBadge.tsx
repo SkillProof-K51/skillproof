@@ -31,7 +31,9 @@ export function IconBadge({ icon, tone = "blue", shape = "tile" }: Props) {
   );
 }
 
-const SIZE = 44; // Figma "Icon badge"
+/** The badge's width and height — e.g. to inset a Divider so it lines up with the text after one. */
+export const ICON_BADGE_SIZE = 44; // Figma "Icon badge"
+const SIZE = ICON_BADGE_SIZE;
 
 const styles = StyleSheet.create({
   badge: { width: SIZE, height: SIZE, alignItems: "center", justifyContent: "center" },

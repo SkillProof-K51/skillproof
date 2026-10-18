@@ -52,6 +52,13 @@ export const colors = {
     practised: { fg: "#2a5db0", bg: "#dcebff" }, // blue = in progress (Module 3)
     notYet: { fg: "#5f6f84", bg: "#eef3f9" }, // grey = no evidence yet (text/secondary on bg/subtle)
   },
+  feedback: {
+    // Outcome colours for toasts, field errors and inline messages. Success shares Verified's
+    // values today but has its own name, so skill status and "it worked" can part ways later.
+    success: { fg: "#1d7348", bg: "#d9f2e3" },
+    error: { fg: "#b42318", bg: "#fde8e6" },
+    info: { fg: "#2a5db0", bg: "#dcebff" },
+  },
   passport: {
     // The Skill Passport looks like a real one: navy cover, gold foil (Azim, 18 Oct).
     // Gold = the passport and credentials only — never decoration.
@@ -95,6 +102,17 @@ export const blur = {
   dock: 40,
 } as const;
 
+/**
+ * Motion (ms). Every animation in the kit uses these, and turns off when the phone's Reduce Motion
+ * setting is on (components/ui/motion.ts).
+ */
+export const motion = {
+  quick: 150, // closing, small state changes
+  standard: 250, // sheets and dialogs opening
+  toast: 3000, // how long a success / info toast stays (error toasts stay until closed)
+  breath: 2400, // one in-and-out of the mascot's idle bob
+} as const;
+
 /** Press feedback for anything tappable. */
 export const opacity = {
   pressed: 0.85,
@@ -103,6 +121,7 @@ export const opacity = {
 
 /** Corner radius (px). Figma has lg and xl both at 16 — kept so names match the inspector. */
 export const radius = {
+  control: 6, // checkboxes, small boxes
   tile: 14, // icon badge tiles
   lg: 16, // buttons
   xl: 16, // cards
@@ -146,6 +165,7 @@ export const type = {
   caption: { family: "sans", weight: 400, size: 12, lineHeight: 16, letterSpacing: 0 }, // Figma "Caption"
   captionStrong: { family: "sans", weight: 500, size: 12, lineHeight: 16, letterSpacing: 0 }, // chips, active tab label
   sectionLabel: { family: "sans", weight: 500, size: 12, lineHeight: 18, letterSpacing: 0.72, uppercase: true }, // "MICRO-PROJECTS FOR YOU"
+  stamp: { family: "sans", weight: 600, size: 24, lineHeight: 30, letterSpacing: 2.4, uppercase: true }, // the PRACTISED / VERIFIED stamp
   code: { family: "mono", weight: 400, size: 13, lineHeight: 20, letterSpacing: 0 },
 } as const satisfies Record<string, TypeStyle>;
 

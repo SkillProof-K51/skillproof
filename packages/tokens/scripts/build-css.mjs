@@ -8,7 +8,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as tokens from "../src/index.ts";
 
-const { colors, fontStack, gap, radius, space, type } = tokens;
+const { colors, fontStack, gap, radius, space, type } = tokens; // motion & co. go to tokens.json only
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const lines = [];
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
