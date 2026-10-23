@@ -1,8 +1,10 @@
-import { Alert } from "react-native";
+import { useState } from "react";
 
 import { Button, Hero, Screen, Text } from "../../components/ui";
 
 export default function ProfileScreen() {
+  const [message, setMessage] = useState("");
+
   return (
     <Screen>
       <Hero>
@@ -15,8 +17,10 @@ export default function ProfileScreen() {
       <Button
         label="Test Profile"
         block
-        onPress={() => Alert.alert("Profile", "Warm-up screen is working!")}
+        onPress={() => setMessage("Warm-up screen is working!")}
       />
+
+      {message ? <Text variant="small">{message}</Text> : null}
     </Screen>
   );
 }
