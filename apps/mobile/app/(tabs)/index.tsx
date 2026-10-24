@@ -70,7 +70,12 @@ export default function HomeScreen() {
         {todaysChallenge ? (
           <>
             <SectionHeader title="Today’s challenge" />
-            <TodayCard challenge={todaysChallenge} onPress={openChallenges} />
+            <TodayCard
+              challenge={todaysChallenge}
+              onPress={() =>
+                todaysChallenge.done ? openChallenges() : router.push({ pathname: "/challenges/[id]", params: { id: todaysChallenge.id } })
+              }
+            />
             {unlock ? (
               <UnlockCard
                 challenge={todaysChallenge}

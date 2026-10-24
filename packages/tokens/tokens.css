@@ -30,6 +30,12 @@
   --color-feedback-error-bg: #fde8e6;
   --color-feedback-info-fg: #2a5db0;
   --color-feedback-info-bg: #dcebff;
+  --color-kind-fix-bug-page: #ffe9d1;
+  --color-kind-fix-bug-ink: #b8540b;
+  --color-kind-sql-live-page: #d6f2ee;
+  --color-kind-sql-live-ink: #12766c;
+  --color-kind-explain-it-page: #fbe4f1;
+  --color-kind-explain-it-ink: #b4237a;
   --color-passport-cover: #0b1a35;
   --color-passport-gold: #dcb253;
   --color-passport-gold-line: rgba(220, 178, 83, 0.45);

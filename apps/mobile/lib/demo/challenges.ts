@@ -1,4 +1,4 @@
-import type { ChallengeResult, ChallengesData, TodaysChallenge } from "../challenges";
+import type { Challenge, ChallengeDetail, ChallengeResult, ChallengesData, SkillProgress, TodaysChallenge } from "../challenges";
 
 // Fictional persona (AGENTS.md rule 12): Aina Sofea, BITS student on the Web Developer path.
 // Scores are illustrative — the real ones come from the Module 3 challenge scorer.
@@ -124,3 +124,81 @@ export const demoResults: Record<string, ChallengeResult> = {
     ],
   },
 };
+
+// What each challenge's own page says before Aina starts it. Code is short and fictional; the
+// answers live in Module 3's grader, never here.
+const PAGES: Record<string, Pick<ChallengeDetail, "task" | "preview">> = {
+  "node-reduce-total": {
+    task: "total() should add up the prices in a basket, but it breaks on an empty one. Find the bug and fix it so all 3 tests pass.",
+    preview: demoToday.preview ?? [],
+  },
+  "node-missing-await": {
+    task: "This route replies before the user is loaded. Find what's missing and fix it.",
+    preview: [
+      "async function show(req, res) {",
+      "  const user = db.find(req.id);",
+      "  if (!user) {",
+      "    return res.sendStatus(404);",
+      "  }",
+      "  res.json(user);",
+      "}",
+    ],
+  },
+  "node-middleware": {
+    task: "Explain in your own words what this middleware does, and when it stops a request.",
+    preview: [
+      "function auth(req, res, next) {",
+      "  const token = req.get('token');",
+      "  if (!token) {",
+      "    return res.sendStatus(401);",
+      "  }",
+      "  req.user = verify(token);",
+      "  next();",
+      "}",
+    ],
+  },
+  "sql-no-orders": {
+    task: "List every customer who has never placed an order, with their name and email.",
+    preview: ["-- customers(id, name, email)", "-- orders(id, customer_id, total)", "SELECT name, email", "FROM customers"],
+  },
+  "sql-orders-per-customer": {
+    task: "Count how many orders each customer has placed, most orders first.",
+    preview: ["-- customers(id, name)", "-- orders(id, customer_id, total)", "SELECT c.name, COUNT(o.id)", "FROM customers c"],
+  },
+  "sql-top-products": {
+    task: "Find the 3 products with the highest total sales.",
+    preview: ["-- products(id, name)", "-- sales(product_id, qty, price)", "SELECT p.name", "FROM products p"],
+  },
+  "test-flaky": {
+    task: "This test passes on some runs and fails on others. Explain why.",
+    preview: [
+      'it("shows a name", async () => {',
+      "  render(<Profile id={7} />);",
+      "  await sleep(300);",
+      '  const name = getByText("Aina");',
+      "  expect(name).toBeVisible();",
+      "});",
+    ],
+  },
+  "test-date": {
+    task: "This test fails although formatDate() is right. Find the bug in the test and fix it.",
+    preview: [
+      'it("formats the date", () => {',
+      "  let d = new Date(2026, 10, 3);",
+      "  const s = formatDate(d);",
+      '  expect(s).toBe("3 Oct 2026");',
+      "});",
+    ],
+  },
+};
+
+const progressOf = (skill: string): SkillProgress =>
+  demoChallenges.inProgress.find((s) => s.skill === skill) ?? { skill, passed: 0, of: demoChallenges.passesToPractise };
+
+// today's challenge is a Fix the bug, not tried yet
+const todayAsChallenge: Challenge = { id: demoToday.id, title: demoToday.title, skill: demoToday.skill, kind: "fix_bug", minutes: demoToday.minutes };
+
+/** Each challenge's page, keyed by id. */
+export const demoDetails: Record<string, ChallengeDetail> = Object.fromEntries(
+  [todayAsChallenge, ...demoChallenges.challenges].map((c) => [c.id, { ...c, ...PAGES[c.id], progress: progressOf(c.skill) }]),
+);

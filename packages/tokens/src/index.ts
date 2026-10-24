@@ -61,6 +61,13 @@ export const colors = {
     error: { fg: "#b42318", bg: "#fde8e6" },
     info: { fg: "#2a5db0", bg: "#dcebff" },
   },
+  kind: {
+    // A challenge's own page is a pastel of its kind (BitePal's detail pages, Azim 25 Oct): a
+    // category, never a status — so no green, blue, purple or butter. ink = its icon on white.
+    fixBug: { page: "#ffe9d1", ink: "#b8540b" }, // apricot
+    sqlLive: { page: "#d6f2ee", ink: "#12766c" }, // teal
+    explainIt: { page: "#fbe4f1", ink: "#b4237a" }, // pink
+  },
   passport: {
     // The Skill Passport looks like a real one: navy cover, gold foil (Azim, 18 Oct).
     // Gold = the passport and credentials only — never decoration.

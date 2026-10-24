@@ -19,9 +19,8 @@ import {
   SegmentedControl,
   SkillLogo,
   Text,
-  useToast,
 } from "../../components/ui";
-import { getChallengesData, toPractisedLabel, type Challenge, type ChallengeKind } from "../../lib/challenges";
+import { getChallengesData, toPractisedLabel, type ChallengeKind } from "../../lib/challenges";
 
 const LOGO = 24; // skill logo in the progress rows
 const LOGO_INSET = LOGO + space.md; // logo + the row gap: dividers line up with the text
@@ -40,7 +39,6 @@ const FILTERS: { value: Filter; label: string }[] = [
  */
 export default function ChallengesScreen() {
   const router = useRouter();
-  const toast = useToast();
   const [filter, setFilter] = useState<Filter>("all");
   const data = getChallengesData();
 
@@ -48,12 +46,9 @@ export default function ChallengesScreen() {
   const { passesToPractise, today, inProgress, challenges } = data;
   const shown = filter === "all" ? challenges : challenges.filter((c) => c.kind === filter);
 
-  // fresh = straight after an attempt: the result opens on its celebration (passed) first
-  const openResult = (id: string, fresh = false) =>
-    router.push({ pathname: "/challenges/result", params: fresh ? { id, fresh: "1" } : { id } });
-  // TODO (Module 3, weeks 7–11): open the challenge itself; it routes to its result once graded.
-  const openChallenge = (c: Challenge) =>
-    c.best ? openResult(c.id) : toast({ message: "Challenge screens arrive with Module 3 (weeks 7–11)", tone: "info" });
+  // a challenge opens on its own page (Start is there); today's, once done, opens its result
+  const openChallenge = (id: string) => router.push({ pathname: "/challenges/[id]", params: { id } });
+  const openResult = (id: string) => router.push({ pathname: "/challenges/result", params: { id } });
 
   return (
     <Screen>
@@ -70,8 +65,7 @@ export default function ChallengesScreen() {
         {today ? (
           <>
             <SectionHeader title="Today’s challenge" />
-            {/* TEST MODE skips the challenge screen (not built yet) and shows today's result, as if passed */}
-            <TodayCard challenge={today} onPress={() => openResult(today.id, !today.done)} />
+            <TodayCard challenge={today} onPress={() => (today.done ? openResult(today.id) : openChallenge(today.id))} />
           </>
         ) : null}
 
@@ -101,7 +95,7 @@ export default function ChallengesScreen() {
             shown.map((c, i) => (
               <Fragment key={c.id}>
                 {i ? <Divider inset={BADGE_INSET} /> : null}
-                <ChallengeRow challenge={c} onPress={() => openChallenge(c)} />
+                <ChallengeRow challenge={c} onPress={() => openChallenge(c.id)} />
               </Fragment>
             ))
           ) : (

@@ -1,4 +1,4 @@
-import { demoChallenges, demoResults } from "./demo/challenges";
+import { demoChallenges, demoDetails, demoResults } from "./demo/challenges";
 import { isTestMode } from "./testMode";
 
 /**
@@ -70,6 +70,16 @@ export type ChallengeResult = {
   unlocked?: { id: string; title: string };
 };
 
+/** A challenge's own page, before the student starts it (Module 3). */
+export type ChallengeDetail = Challenge & {
+  /** What to do, in a sentence or two. */
+  task: string;
+  /** The code (Fix the bug, Explain it) or the tables (SQL live) — a teaser, never the answer. */
+  preview: string[];
+  /** The skill's passes so far, out of the passes that make it Practised. */
+  progress: SkillProgress;
+};
+
 /**
  * Returns the Challenges data, or null when there is nothing to show yet.
  * TODO (Module 3, weeks 7–11): read challenges and attempts from Supabase; keep the demo branch
@@ -85,6 +95,14 @@ export function getChallengesData(): ChallengesData | null {
  */
 export function getChallengeResult(challengeId: string): ChallengeResult | null {
   return isTestMode ? (demoResults[challengeId] ?? null) : null;
+}
+
+/**
+ * One challenge's page, or null when there is no such challenge.
+ * TODO (Module 3, weeks 7–11): read the challenge and the student's best attempt from Supabase.
+ */
+export function getChallengeDetail(challengeId: string): ChallengeDetail | null {
+  return isTestMode ? (demoDetails[challengeId] ?? null) : null;
 }
 
 /** "1 more to Practised" / "3 more to Practised". */

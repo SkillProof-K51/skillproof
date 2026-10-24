@@ -39,6 +39,7 @@ Each one shows a pattern end to end on demo data (TEST MODE). Open it from the t
 | Welcome | `app/(auth)/welcome.tsx` | onboarding: the mascot centred in a tall sky, steps, one strong button |
 | Sign up · Log in | `app/(auth)/sign-up.tsx` · `log-in.tsx` | any form — see **Forms** below |
 | Challenges | `app/(tabs)/challenges.tsx` | a module home: plain title, today's card, a progress list, `SegmentedControl` filter + list, `EmptyState` |
+| Challenge page | `app/challenges/[id].tsx` | a detail page: its kind's pastel fading down the page (`<Screen tint>`), a big icon on a white circle, cards, and the main action pinned at the bottom (`<Screen footer>`) |
 | Result | `app/challenges/result.tsx` | an outcome in two beats: the celebration (the skill's badge pops open: `<SkillBadge status="practised" from="not_yet">`), then the details. Module 4's Verified result is the same with `status="verified" from="practised"` |
 | Skill Passport | `app/(tabs)/passport.tsx` | a badge per roadmap skill (`SkillBadge` grid, data from `passportBadges()` in `lib/`), then settings with consequences: a `Switch` behind a consent `Dialog`, a `BottomSheet` of `Checkbox`es, save → toast, the share sheet, `QrCode` |
 
@@ -47,7 +48,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 
 | Group | Components |
 |---|---|
-| Layout | `Screen` · `Hero` (+ `SkyBackdrop`) · `TopBar` (title optional when the hero says it big) · `SectionHeader` · `TabBar` · `Card` · `Divider` |
+| Layout | `Screen` (`tint` = a pastel fading down the page · `footer` = an action pinned at the bottom) · `Hero` (+ `SkyBackdrop`) · `TopBar` (title optional when the hero says it big) · `SectionHeader` · `TabBar` · `Card` · `Divider` |
 | Text & actions | `Text` · `Button` (primary · secondary · danger · text) · `IconButton` · `Chip` · `Icon` |
 | Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
@@ -88,6 +89,7 @@ Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MOD
 | green (`status.verified`) | Verified by a mentor (M4) | Verified badges, Fit % chips, achievements |
 | blue (`status.practised`) | Practised / in progress (M3) | Practised badges, project cards and badges |
 | role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars, segments and dots |
+| apricot · teal · pink (`kind.*`) | a challenge's kind (Fix the bug · SQL live · Explain it) | its page tint and its icon — a category, never a status; read them through `KINDS` |
 | butter (`accent.butter`) | test mode | TEST MODE labels (the strip, "Demo grade") |
 | navy (`action.primaryStrong`) | the main action | the one primary button per screen |
 | navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page, and skill badges wherever they appear (`SkillBadge`) — gold never anywhere else |

@@ -1,14 +1,16 @@
+import { colors } from "@skillproof/tokens";
+
 import type { Challenge, ChallengeKind } from "../../lib/challenges";
 import { Chip, IconBadge, ListRow, type IconName } from "../ui";
 
 /**
- * Each kind's name and icon — the same everywhere a challenge appears (list, filter, result) — and
- * what its graded parts are called on the Result screen.
+ * Each kind's name, icon and colours — the same everywhere a challenge appears (list, filter, its
+ * page, result) — and what its graded parts are called on the Result screen.
  */
-export const KINDS: Record<ChallengeKind, { label: string; icon: IconName; checks: string }> = {
-  fix_bug: { label: "Fix the bug", icon: "bug", checks: "Tests" },
-  sql_live: { label: "SQL live", icon: "database", checks: "Checks on your result" },
-  explain_it: { label: "Explain it", icon: "message", checks: "Rubric" },
+export const KINDS: Record<ChallengeKind, { label: string; icon: IconName; checks: string; colours: { page: string; ink: string } }> = {
+  fix_bug: { label: "Fix the bug", icon: "bug", checks: "Tests", colours: colors.kind.fixBug },
+  sql_live: { label: "SQL live", icon: "database", checks: "Checks on your result", colours: colors.kind.sqlLive },
+  explain_it: { label: "Explain it", icon: "message", checks: "Rubric", colours: colors.kind.explainIt },
 };
 
 type Props = {
