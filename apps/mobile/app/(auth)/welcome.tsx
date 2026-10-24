@@ -1,51 +1,35 @@
 import { gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
-import { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Button, Card, Divider, Hero, ICON_BADGE_SIZE, IconBadge, ListRow, Screen, Text, type IconName } from "../../components/ui";
+import { Button, Hero, Screen, Text } from "../../components/ui";
 
-const SKY = 340; // taller than a module's sky: on Welcome the mascot is the whole hero
-const MASCOT = 170;
-const INSET = ICON_BADGE_SIZE + space.md; // dividers line up with the text after the badge
-
-// How SkillProof works, in the order a student lives it — each step in the colour it wears
-// everywhere else: blue = Practised (Module 3), green = Verified (Module 4), gold = the passport (Module 5).
-const STEPS: { icon: IconName; tone: "blue" | "green" | "gold"; title: string; body: string }[] = [
-  { icon: "zap", tone: "blue", title: "Practise", body: "Pass short challenges to make a skill Practised" },
-  { icon: "check-circle", tone: "green", title: "Get verified", body: "A mentor reviews your project and verifies the skill" },
-  { icon: "id-card", tone: "gold", title: "Share your passport", body: "One link or QR code for employers" },
-];
+const SCENE = require("../../assets/scenes/campus-garden.jpg");
 
 /**
- * Welcome (shared core, reference screen): the first screen a signed-out student sees. The mascot
- * waving in a tall sky, one line on what SkillProof does, the three steps, then one strong button
- * (Get started → sign up) and the way back in (log in).
+ * Welcome (shared core, reference screen): screen 1 of 12 — the first thing a signed-out student
+ * sees. Home's garden scene with the name on it, what SkillProof does in one line, then one strong
+ * button into onboarding and the way back in (log in). The redesign's onboarding tells the rest.
  */
 export default function WelcomeScreen() {
   const router = useRouter();
   return (
     <Screen aboveTabBar={false}>
-      <Hero height={SKY} mascot="wave" mascotWidth={MASCOT} mascotAlign="center">
-        <Text variant="heading" align="center">
-          SkillProof
-        </Text>
+      <Hero scene={SCENE}>
+        <Text variant="heading">SkillProof</Text>
       </Hero>
 
       <View style={styles.content}>
-        <Text variant="title" accessibilityRole="header">
-          Turn practice into proof
-        </Text>
-        <Card style={styles.list}>
-          {STEPS.map((s, i) => (
-            <Fragment key={s.title}>
-              {i ? <Divider inset={INSET} /> : null}
-              <ListRow title={s.title} subtitle={s.body} leading={<IconBadge icon={s.icon} tone={s.tone} />} />
-            </Fragment>
-          ))}
-        </Card>
+        <View style={styles.words}>
+          <Text variant="headline" align="center" accessibilityRole="header">
+            Turn practice into proof
+          </Text>
+          <Text variant="body" color="secondary" align="center">
+            Short challenges and real projects make your tech skills Verified, in a passport you can share with employers.
+          </Text>
+        </View>
         <View style={styles.actions}>
-          <Button label="Get started" block onPress={() => router.push("/sign-up")} />
+          <Button label="Get started" block onPress={() => router.push("/onboarding")} />
           <Button label="I have an account" variant="secondary" block onPress={() => router.push("/log-in")} />
         </View>
       </View>
@@ -54,7 +38,8 @@ export default function WelcomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  content: { paddingHorizontal: layout.gutter, gap: gap.loose },
-  list: { paddingVertical: space.xs },
-  actions: { gap: space.sm, marginTop: space.xs },
+  // the scene's overlap pulls this up over the ground; the panel starts on the page colour
+  content: { paddingHorizontal: layout.gutter, paddingTop: layout.sceneOverlap + space.lg, gap: gap.loose },
+  words: { gap: space.sm, paddingHorizontal: space.sm, marginBottom: space.lg },
+  actions: { gap: space.sm },
 });

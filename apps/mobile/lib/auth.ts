@@ -1,8 +1,15 @@
 import { demoRoles } from "./demo/auth";
+import type { OnboardingAnswers } from "./onboarding";
 import { isTestMode } from "./testMode";
 
 /** A role a student works towards (Module 1 defines them, with their skills and weights). */
-export type TargetRole = { id: string; label: string; description?: string };
+export type TargetRole = {
+  id: string;
+  label: string;
+  description?: string;
+  /** The skills on its roadmap, in order. */
+  roadmap: string[];
+};
 
 export type SignUpInput = { name: string; email: string; password: string; roleId?: string; consent: boolean };
 export type LogInInput = { email: string; password: string };
@@ -42,10 +49,12 @@ export function validateLogIn(v: LogInInput): FieldErrors<LogInInput> {
 export type AuthResult = { demo: boolean };
 
 /**
- * Creates the student's account.
- * TODO (shared core, weeks 6–7): supabase.auth.signUp + a profiles row (RLS: owner only).
+ * Creates the student's account, with what they answered in onboarding.
+ * TODO (shared core, weeks 6–7): supabase.auth.signUp + a profiles row (RLS: owner only); the
+ * answers go on the profile (Module 2), the skills they've used only pick the first challenges.
  */
-export async function signUp(input: SignUpInput): Promise<AuthResult> {
+export async function signUp(input: SignUpInput, answers?: OnboardingAnswers): Promise<AuthResult> {
+  void answers; // saved with the profile once the shared core exists
   if (isTestMode) return { demo: true };
   throw new Error(`Accounts arrive with the shared core in weeks 6–7, so ${input.email.trim() || "this email"} can’t sign up yet.`);
 }

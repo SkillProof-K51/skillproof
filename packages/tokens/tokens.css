@@ -39,6 +39,7 @@
   --color-passport-cover: #0b1a35;
   --color-passport-gold: #dcb253;
   --color-passport-gold-line: rgba(220, 178, 83, 0.45);
+  --color-passport-wash: #f7edd3;
   --color-glass-veil: rgba(226, 225, 232, 0.92);
   --color-code-bg: #1e1e1e;
   --color-code-text: #d4d4d4;
@@ -50,6 +51,8 @@
   --color-code-string: #ce9178;
   --color-code-number: #b5cea8;
   --color-code-comment: #6a9955;
+  --color-code-line-right: rgba(78, 201, 140, 0.24);
+  --color-code-line-wrong: rgba(244, 112, 103, 0.26);
   --color-overlay-scrim: rgba(51, 65, 85, 0.45);
   --color-shadow-ink: #334259;
   --spacing-xxs: 2px;

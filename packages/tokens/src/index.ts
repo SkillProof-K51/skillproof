@@ -74,6 +74,7 @@ export const colors = {
     cover: "#0b1a35", // same navy as action.primaryStrong; as a surface it means "your passport"
     gold: "#dcb253", // foil: labels, the ID tile, the chevron — 8.5:1 on the cover
     goldLine: "rgba(220, 178, 83, 0.45)", // hairline border + divider on the cover
+    wash: "#f7edd3", // a soft gold page tint where the passport is the subject (onboarding)
   },
   glass: {
     // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
@@ -91,6 +92,8 @@ export const colors = {
     string: "#ce9178",
     number: "#b5cea8",
     comment: "#6a9955",
+    lineRight: "rgba(78, 201, 140, 0.24)", // a tapped line that was the answer (onboarding warm-up)
+    lineWrong: "rgba(244, 112, 103, 0.26)", // a tapped line that wasn't
   },
   overlay: {
     scrim: "rgba(51, 65, 85, 0.45)", // Figma overlay/scrim = slate at 45 %
@@ -210,4 +213,6 @@ export const shadow = {
   // the bottom-nav dock: a faint shadow cast UP onto the content (CSS box-shadow, works on iOS,
   // Android and web with the New Architecture)
   dock: "0px -4px 16px rgba(51, 66, 89, 0.06)",
+  // the tilted cards on onboarding's pitch screens, floating over the page like BitePal's
+  art: "0px 12px 28px rgba(51, 66, 89, 0.12)",
 } as const;

@@ -53,7 +53,7 @@ export default function LogInScreen() {
 
   return (
     <Screen aboveTabBar={false}>
-      <Hero size="compact">
+      <Hero plain>
         <TopBar />
         <Text variant="title" accessibilityRole="header" style={styles.title}>
           Welcome back

@@ -1,5 +1,5 @@
 import { colors, radius, space } from "@skillproof/tokens";
-import { StyleSheet, View, type ViewStyle } from "react-native";
+import { Pressable, StyleSheet, View, type ViewStyle } from "react-native";
 
 import { Text } from "./Text";
 
@@ -72,17 +72,28 @@ type Props = {
   /** What the code is, for screen readers, e.g. "Preview of today's code". */
   accessibilityLabel?: string;
   style?: ViewStyle;
+  /** Makes every line tappable — "tap the line with the bug" (onboarding's warm-up). */
+  onPressLine?: (index: number) => void;
+  /** Lights lines up after a tap: right = the answer, wrong = not it. Keyed by line index. */
+  marks?: Record<number, "right" | "wrong">;
 };
 
 /**
  * Code as it looks in VS Code (Dark+ colours, Azim 25 Oct): dark block, grey line numbers,
  * keywords, names and strings coloured. Long lines are cut with "…", never wrapped.
  */
-export function CodeBlock({ lines, language = "javascript", numbered = true, accessibilityLabel, style }: Props) {
+export function CodeBlock({ lines, language = "javascript", numbered = true, accessibilityLabel, style, onPressLine, marks }: Props) {
   return (
     <View style={[styles.block, style]} accessibilityLabel={accessibilityLabel}>
       {lines.map((line, i) => (
-        <View key={i} style={styles.line}>
+        <Pressable
+          key={i}
+          disabled={!onPressLine}
+          onPress={() => onPressLine?.(i)}
+          accessibilityRole={onPressLine ? "button" : undefined}
+          accessibilityLabel={onPressLine ? `Line ${i + 1}: ${line.trim()}${marks?.[i] ? `, ${marks[i]}` : ""}` : undefined}
+          style={[styles.line, onPressLine && styles.tappable, marks?.[i] && { backgroundColor: MARK[marks[i]] }]}
+        >
           {numbered ? (
             <Text variant="code" color={colors.code.lineNumber} style={styles.lineNumber}>
               {i + 1}
@@ -96,15 +107,19 @@ export function CodeBlock({ lines, language = "javascript", numbered = true, acc
               </Text>
             ))}
           </Text>
-        </View>
+        </Pressable>
       ))}
     </View>
   );
 }
 
+const MARK = { right: colors.code.lineRight, wrong: colors.code.lineWrong } as const;
+
 const styles = StyleSheet.create({
   block: { backgroundColor: colors.code.bg, borderRadius: radius.tile, padding: space.md },
   line: { flexDirection: "row", gap: space.sm },
+  // a taller line is easier to hit; it bleeds into the padding so the code doesn't move
+  tappable: { paddingVertical: space.xs, marginHorizontal: -space.xs, paddingHorizontal: space.xs, borderRadius: radius.control },
   lineNumber: { width: LINE_NUMBER, textAlign: "right" },
   flex: { flex: 1 },
 });

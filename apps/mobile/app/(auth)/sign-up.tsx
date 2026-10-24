@@ -1,13 +1,15 @@
 import { gap, layout, space } from "@skillproof/tokens";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { StyleSheet, View, type TextInput } from "react-native";
 
 import { Button, Checkbox, Hero, Screen, Select, Text, TextField, TopBar, useToast } from "../../components/ui";
 import { getTargetRoles, MIN_PASSWORD, signUp, validateSignUp, type SignUpInput } from "../../lib/auth";
+import { parseAnswers } from "../../lib/onboarding";
 
 /**
- * Sign up (shared core, reference screen) — the form pattern: TextFields that hand focus on with
+ * Sign up (shared core, reference screen) — screen 12 of 12, after onboarding, whose answers arrive
+ * as `?answers=` (the role comes pre-picked) and are saved with the account. The form pattern: TextFields that hand focus on with
  * the keyboard's Next key, a Select, a consent Checkbox, one strong button. Errors appear under
  * each field after the first try, then update as the student types (rules: lib/auth.ts).
  */
@@ -15,7 +17,9 @@ export default function SignUpScreen() {
   const router = useRouter();
   const toast = useToast();
   const roles = getTargetRoles();
-  const [form, setForm] = useState<SignUpInput>({ name: "", email: "", password: "", consent: false });
+  const params = useLocalSearchParams<{ answers?: string }>();
+  const [answers] = useState(() => parseAnswers(params.answers));
+  const [form, setForm] = useState<SignUpInput>({ name: "", email: "", password: "", roleId: answers.roleId, consent: false });
   const [tried, setTried] = useState(false);
   const [busy, setBusy] = useState(false);
   const emailRef = useRef<TextInput>(null);
@@ -31,7 +35,7 @@ export default function SignUpScreen() {
     if (Object.keys(validateSignUp(form)).length) return;
     setBusy(true);
     try {
-      const { demo } = await signUp(form);
+      const { demo } = await signUp(form, answers);
       if (demo) toast({ message: "Test mode: no account was created" });
       // into the app with nothing behind it to go back to
       // TODO (shared core): guard routes on the session (Stack.Protected) instead
@@ -46,7 +50,7 @@ export default function SignUpScreen() {
 
   return (
     <Screen aboveTabBar={false}>
-      <Hero size="compact">
+      <Hero plain>
         <TopBar />
         <Text variant="title" accessibilityRole="header" style={styles.title}>
           Create your account

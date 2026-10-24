@@ -36,7 +36,8 @@ Each one shows a pattern end to end on demo data (TEST MODE). Open it from the t
 
 | Screen | File | Copy it for |
 |---|---|---|
-| Welcome | `app/(auth)/welcome.tsx` | onboarding: the mascot centred in a tall sky, steps, one strong button |
+| Welcome | `app/(auth)/welcome.tsx` | screen 1 of 12: Home's garden scene, a condensed headline, one strong button into onboarding |
+| Onboarding | `app/(auth)/onboarding.tsx` | a flow of steps (screens 2–11): a progress bar, a condensed headline per step that fades up (`<Reveal key={step}>`), a tint per step, `OptionList` questions, tilted pitch cards built from kit pieces, a tap-the-line warm-up (`CodeBlock onPressLine`), one centred Next pill (`<Screen footer>`); the answers ride on to Sign up |
 | Sign up · Log in | `app/(auth)/sign-up.tsx` · `log-in.tsx` | any form — see **Forms** below |
 | Challenges | `app/(tabs)/challenges.tsx` | a module home: plain title, today's card, a progress list, `SegmentedControl` filter + list, `EmptyState` |
 | Challenge page | `app/challenges/[id].tsx` | a detail page: its kind's pastel fading down the page (`<Screen tint>`), a big icon on a white circle, cards, and the main action pinned at the bottom (`<Screen footer>`) |
@@ -50,7 +51,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 |---|---|
 | Layout | `Screen` (`tint` = a pastel fading down the page · `footer` = an action pinned at the bottom) · `Hero` (+ `SkyBackdrop`) · `TopBar` (title optional when the hero says it big) · `SectionHeader` · `TabBar` · `Card` · `Divider` |
 | Text & actions | `Text` · `Button` (primary · secondary · danger · text) · `IconButton` · `Chip` · `Icon` |
-| Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
+| Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `OptionList` (a question on its own screen: big rows, one choice or `multiple`) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
 | Status & progress | `StatusBadge` · `SkillBadge` (a skill's hexagon: Verified / Practised / locked; `from` pops it open on a win) · `SegmentedProgress` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
 | Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `SkyPanel` (sky surface, for the kit's sky demos) |
@@ -61,7 +62,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 ## Feedback — which one when
 - **Something saved or synced** → `toast({ message, tone: "success" })`. **It failed** → `tone: "error"`: the toast stays until tapped, so a failure is never swallowed (AGENTS.md rule 11).
 - **A question that needs an answer before going on** → `<Dialog>`; if the answer can't be undone (remove, delete, withdraw) → `confirm={{ …, variant: "danger" }}`.
-- **Options, filters, a short form** → `<BottomSheet>`. **One choice inside a form** → `<Select>`. Several choices → `Checkbox` rows in a `BottomSheet`.
+- **Options, filters, a short form** → `<BottomSheet>`. **One choice inside a form** → `<Select>`; **a question with its own screen** → `<OptionList>`. Several choices → `Checkbox` rows in a `BottomSheet`.
 - **Nothing to show yet** → `<EmptyState>` that says what will fill the space and how.
 
 ## Forms
@@ -78,7 +79,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 - Values arrive computed and formatted (rule 2); these only draw them.
 
 ## Motion
-Durations are the `motion` tokens (quick · standard · toast · breath · pop). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components. The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
+Durations are the `motion` tokens (quick · standard · toast · breath · pop). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components: a step or a page part that appears fades up with `<Reveal>` (new `key` = play again). The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
 
 ## Demo data
 Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MODE · demo data** strip appears under the status bar on every screen by itself (rule 4) — never fake data without it.
