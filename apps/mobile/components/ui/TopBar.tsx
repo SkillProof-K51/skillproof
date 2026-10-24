@@ -19,7 +19,7 @@ type Props = {
 
 /**
  * The top of a sub-screen (Edit profile, a challenge, a project): back button, centred title,
- * optional action. Put it first inside <Hero size="compact">.
+ * optional action, and an optional subtitle under the title. Put it first inside <Hero>.
  */
 export function TopBar({ title, subtitle, onBack, action }: Props) {
   const router = useRouter();

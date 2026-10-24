@@ -44,7 +44,7 @@ export default function ChallengeScreen() {
         </View>
       }
     >
-      <Hero plain>
+      <Hero>
         <TopBar title={kind.label} subtitle={`${challenge.skill} · about ${challenge.minutes} min`} />
         <View style={styles.circle} accessible={false}>
           <Icon name={kind.icon} weight="duotone" size={KIND_ICON} color={kind.colours.ink} />
@@ -80,7 +80,7 @@ function NoChallenge() {
   const back = () => router.dismissTo("/challenges");
   return (
     <Screen aboveTabBar={false}>
-      <Hero plain>
+      <Hero>
         <TopBar title="Challenge" onBack={back} />
       </Hero>
       <View style={styles.content}>

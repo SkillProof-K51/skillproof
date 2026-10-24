@@ -43,11 +43,6 @@ export const colors = {
     butterSoft: "#fff6d6", // a butter card (kit demo)
     progress: "#7c5cf0", // readiness ring and bars, in the role colour
   },
-  sky: {
-    // The hero is a painted sky (assets/sky.jpg, Azim's own generation, 18 Oct); this is its top
-    // colour, shown while the image loads.
-    base: "#97cefd",
-  },
   status: {
     // Skill status colours carry meaning — never reuse them for decoration.
     verified: { fg: "#1d7348", bg: "#d9f2e3" }, // green = achievement (Module 4)
@@ -135,7 +130,6 @@ export const motion = {
   quick: 150, // closing, small state changes
   standard: 250, // sheets and dialogs opening
   toast: 3000, // how long a success / info toast stays (error toasts stay until closed)
-  breath: 2400, // one in-and-out of the mascot's idle bob
   pop: 700, // a badge opening on a win: squeeze, spring, sparks (Result)
 } as const;
 
@@ -159,10 +153,6 @@ export const radius = {
 export const layout = {
   designWidth: 390,
   gutter: 16, // screen side padding — cards run wide, BitePal-style
-  heroTall: 290, // Sky backdrop · Size=Tall
-  heroCompact: 180, // Sky backdrop · Size=Compact
-  skyLip: 32, // height of the sheet lip at the bottom of the sky
-  sheetGap: 24, // the first card starts 24 below the sky's edge, on the sheet (Azim, 18 Oct)
   sceneHeight: 330, // Home's illustrated scene (BitePal-style header)
   sceneOverlap: 56, // the first card slides this far up over the scene's bottom edge
 } as const;

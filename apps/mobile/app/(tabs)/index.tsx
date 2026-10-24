@@ -120,7 +120,7 @@ export default function HomeScreen() {
 function HomeEmpty() {
   return (
     <Screen>
-      <Hero plain>
+      <Hero>
         <Text variant="title">Nothing here yet</Text>
       </Hero>
       <View style={styles.content}>

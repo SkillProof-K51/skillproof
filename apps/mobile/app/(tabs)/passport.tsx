@@ -69,7 +69,7 @@ export default function PassportScreen() {
 
   return (
     <Screen>
-      <Hero plain>
+      <Hero>
         <View style={styles.heading}>
           <Text variant="title">Skill Passport</Text>
           <Text variant="small" color="secondary">
@@ -109,7 +109,7 @@ export default function PassportScreen() {
         ) : (
           <Card>
             <EmptyState
-              mascot="graduate"
+              icon="id-card"
               title="Your passport is empty for now"
               body="Pass challenges in a skill to add it as Practised. A mentor-reviewed project makes it Verified."
               action={{ label: "Go to challenges", variant: "primary", onPress: () => router.navigate("/challenges") }}

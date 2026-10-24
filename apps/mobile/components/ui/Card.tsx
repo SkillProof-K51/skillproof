@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.xl,
     padding: space.lg,
     alignSelf: "stretch",
-    overflow: "hidden", // clips anything that hangs past the rounded corners (Today card's mascot)
+    overflow: "hidden", // clips anything that hangs past the rounded corners
     zIndex: 0, // its own layer, so a child at zIndex -1 still sits inside the card, on web too
   },
   surface: { backgroundColor: colors.bg.surface },

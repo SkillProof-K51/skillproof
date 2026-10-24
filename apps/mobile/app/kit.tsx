@@ -5,7 +5,6 @@ import { BasicsDemo } from "../components/kit/BasicsDemo";
 import { FeedbackDemo } from "../components/kit/FeedbackDemo";
 import { FormsDemo } from "../components/kit/FormsDemo";
 import { ListsDemo } from "../components/kit/ListsDemo";
-import { MascotDemo } from "../components/kit/MascotDemo";
 import { ProgressDemo } from "../components/kit/ProgressDemo";
 import { ReferenceScreens } from "../components/kit/ReferenceScreens";
 import { ResultsDemo } from "../components/kit/ResultsDemo";
@@ -19,7 +18,7 @@ import { Hero, Screen, Text, TopBar } from "../components/ui";
 export default function KitScreen() {
   return (
     <Screen aboveTabBar={false}>
-      <Hero plain>
+      <Hero>
         <TopBar title="UI kit" />
         <View style={styles.heading}>
           <Text variant="small" color="secondary">
@@ -35,7 +34,6 @@ export default function KitScreen() {
         <FeedbackDemo />
         <ProgressDemo />
         <ResultsDemo />
-        <MascotDemo />
       </View>
     </Screen>
   );

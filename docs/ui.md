@@ -15,7 +15,7 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 ## A screen, top to bottom
 ```tsx
 <Screen>
-  <Hero plain>                                 {/* the title on the page, under the status bar */}
+  <Hero>                                       {/* the title on the page, under the status bar */}
     <Text variant="title">Challenges</Text>
   </Hero>
   <View style={styles.content}>                {/* paddingHorizontal: layout.gutter, gap: gap.loose */}
@@ -25,11 +25,11 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
   </View>
 </Screen>
 ```
-- **Hero first.** `plain` = no sky, the title on the page itself: the BitePal look. Every tab has it except Home (its illustrated `scene`); the auth screens move with the new onboarding. Until a screen moves: `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists; the first card starts on the sheet, `layout.sheetGap` (24) below the sky's edge, automatically.
-- **No mascot on new screens.** It was dropped in the redesign (Azim, 25 Oct); the ones still in the kit go in the mascot clean-up. A screen's moment comes from its content instead, like the badge popping open on a Result.
+- **Hero first.** Plain by default: the title on the page itself, the first card `space.xl` below (the BitePal look). Home and Welcome pass `scene` (the garden picture), and the first card slides up over its ground.
+- **No mascot.** It was dropped in the redesign (Azim, 25 Oct), with the painted sky. A screen's moment comes from its content instead, like the badge popping open on a Result.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
 - **Cards are flat**: white (`tone="surface"`) with big soft corners on the lavender page; the role tint (`tone="role"`) for today's challenge; blue for projects. No decoration on cards — no circles, borders or shadows.
-- **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label + a small navy arrow circle, like Today's challenge — and an `accessibilityLabel` that says what tapping does.
+- **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label that says what happens, or an arrow — and an `accessibilityLabel` that says what tapping does.
 
 ## Reference screens — start from one of these
 Each one shows a pattern end to end on demo data (TEST MODE). Open it from the top of `/kit`, read its file, and build your screen the same way.
@@ -49,15 +49,14 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 
 | Group | Components |
 |---|---|
-| Layout | `Screen` (`tint` = a pastel fading down the page · `footer` = an action pinned at the bottom) · `Hero` (+ `SkyBackdrop`) · `TopBar` (title optional when the hero says it big) · `SectionHeader` · `TabBar` · `Card` · `Divider` |
+| Layout | `Screen` (`tint` = a pastel fading down the page · `footer` = an action pinned at the bottom) · `Hero` (plain, or `scene`) · `TopBar` (title optional when the hero says it big) · `SectionHeader` · `TabBar` · `Card` · `Divider` |
 | Text & actions | `Text` · `Button` (primary · secondary · danger · text) · `IconButton` · `Chip` · `Icon` |
 | Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `OptionList` (a question on its own screen: big rows, one choice or `multiple`) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
 | Status & progress | `StatusBadge` · `SkillBadge` (a skill's hexagon: Verified / Practised / locked; `from` pops it open on a win) · `SegmentedProgress` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
-| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `SkyPanel` (sky surface, for the kit's sky demos) |
+| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) |
 | Sharing | `QrCode` (a link to scan — navy on white, never inverted) |
-| Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` |
-| Mascot | `Mascot` · `GroundedMascot` · `MascotShadow` · `SpeechBubble` |
+| Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` (an optional icon) · `Reveal` (a step fades up) |
 
 ## Feedback — which one when
 - **Something saved or synced** → `toast({ message, tone: "success" })`. **It failed** → `tone: "error"`: the toast stays until tapped, so a failure is never swallowed (AGENTS.md rule 11).
@@ -74,12 +73,12 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 
 ## Numbers and charts (report screens)
 - A headline number is a `<Stat>`: label, icon, value with its unit, optional signed `delta`. Two in a row on the page. A trend goes in a `<BarChart>` beside it, not inside the tile.
-- A series is a `<BarChart>`: **one hue** (blue), the highlighted column in brand blue, a faint track to the goal. Never two y-axes, never a pie.
+- A series is a `<BarChart>`: **one hue** (the role purple), the highlighted column a shade deeper, a faint track to the goal. Never two y-axes, never a pie.
 - The figure wears text ink. Meaning lives in the icon circle (green = Verified, blue = Practised) — never colour the number, and never colour alone: always icon + label.
 - Values arrive computed and formatted (rule 2); these only draw them.
 
 ## Motion
-Durations are the `motion` tokens (quick · standard · toast · breath · pop). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components: a step or a page part that appears fades up with `<Reveal>` (new `key` = play again). The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
+Durations are the `motion` tokens (quick · standard · toast · pop). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components: a step or a page part that appears fades up with `<Reveal>` (new `key` = play again). The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
 
 ## Demo data
 Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MODE · demo data** strip appears under the status bar on every screen by itself (rule 4) — never fake data without it.
@@ -92,9 +91,9 @@ Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MOD
 | role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars, segments and dots |
 | apricot · teal · pink (`kind.*`) | a challenge's kind (Fix the bug · SQL live · Explain it) | its page tint and its icon — a category, never a status; read them through `KINDS` |
 | butter (`accent.butter`) | test mode | TEST MODE labels (the strip, "Demo grade") |
-| navy (`action.primaryStrong`) | the main action | the one primary button per screen |
+| black (`action.primaryStrong`) | the main action | the one primary button per screen, a pill |
 | navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page, and skill badges wherever they appear (`SkillBadge`) — gold never anywhere else |
-| brand blue (`accent.brand`) on soft sky (`accent.skySoft`) | where you are | the active tab in the bottom nav |
+| near-black, filled icon (`text.primary`) | where you are | the active tab in the floating tab pill |
 | `feedback.success` / `error` / `info` | an outcome, just now | toasts, field errors, inline messages — never a skill status |
 Never use a status colour as decoration.
 

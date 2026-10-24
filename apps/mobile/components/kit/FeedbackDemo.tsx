@@ -40,7 +40,6 @@ export function FeedbackDemo() {
       </View>
       <Dialog
         visible={dialog === "submit"}
-        mascot="question"
         title="Submit for mentor review?"
         body="You can resubmit once if the mentor asks for changes."
         confirm={{ label: "Submit", onPress: () => setDialog("none") }}
@@ -81,7 +80,7 @@ export function FeedbackDemo() {
 
       <KitLabel>EmptyState · nothing yet, and the way forward</KitLabel>
       <EmptyState
-        mascot="question"
+        icon="briefcase"
         title="No micro-projects match yet"
         body="Projects unlock when the skills they need are Practised. Pass a few challenges and check back."
         action={{ label: "Practise a skill", onPress: () => {} }}

@@ -54,7 +54,7 @@ export default function ResultScreen() {
 
   return (
     <Screen aboveTabBar={false}>
-      <Hero plain>
+      <Hero>
         <TopBar title="Result" onBack={backToChallenges} />
         <View style={styles.summary}>
           <Text variant="heading">{result.title}</Text>
@@ -147,7 +147,7 @@ function FeedbackCard({ feedback }: { feedback: NonNullable<ChallengeResult["fee
 function NoResult({ onBack }: { onBack: () => void }) {
   return (
     <Screen aboveTabBar={false}>
-      <Hero plain>
+      <Hero>
         <TopBar title="Result" onBack={onBack} />
       </Hero>
       <View style={styles.content}>

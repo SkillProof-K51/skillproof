@@ -18,7 +18,7 @@ type Props = {
 
 /**
  * Under today's challenge (Azim, 18 Oct): what it unlocks. A path of steps — passed challenges
- * (navy ticks), today's (butter, numbered), the rest, then the locked micro-project at the end,
+ * (purple ticks), today's (the role tint, numbered), the rest, then the locked micro-project at the end,
  * plus one line on what unlocking means (you can apply — a place isn't promised).
  */
 export function UnlockCard({ challenge, projectTitle, remaining, onPress }: Props) {
@@ -45,7 +45,7 @@ export function UnlockCard({ challenge, projectTitle, remaining, onPress }: Prop
           <View key={i} style={styles.step}>
             <View style={[styles.dot, i < challenge.passed ? styles.done : i === challenge.passed ? styles.today : styles.todo]}>
               {i < challenge.passed ? (
-                <Icon name="check" size={TICK} color={colors.action.onPrimaryStrong} />
+                <Icon name="check" size={TICK} color={colors.text.inverse} />
               ) : (
                 <Text variant="captionStrong">{i + 1}</Text>
               )}
@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   track: { position: "absolute", top: (STEP - TRACK) / 2, height: TRACK, backgroundColor: colors.bg.subtle },
   step: { flex: 1, alignItems: "center", gap: space.xs },
   dot: { width: STEP, height: STEP, borderRadius: radius.full, alignItems: "center", justifyContent: "center" },
-  done: { backgroundColor: colors.action.primaryStrong },
-  today: { backgroundColor: colors.accent.butterSoft, borderWidth: TRACK, borderColor: colors.accent.butter },
+  // progress wears the role colour, like the dots and segments (Azim, 25 Oct; butter was the old theme)
+  done: { backgroundColor: colors.accent.progress },
+  today: { backgroundColor: colors.accent.skySoft, borderWidth: TRACK, borderColor: colors.accent.brand },
   todo: { backgroundColor: colors.bg.subtle },
 });

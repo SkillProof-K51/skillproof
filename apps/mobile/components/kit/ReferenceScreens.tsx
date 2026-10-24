@@ -11,13 +11,15 @@ type Reference = { title: string; subtitle: string; icon: IconName; href: Href }
 
 // One screen per pattern a module copies (docs/ui.md). Open one, read its file, build yours the same way.
 const SCREENS: Reference[] = [
-  { title: "Welcome", subtitle: "First screen: the mascot, three steps, get started", icon: "compass", href: "/welcome" },
+  { title: "Welcome", subtitle: "First screen: the scene, a headline, get started", icon: "compass", href: "/welcome" },
+  { title: "Onboarding", subtitle: "Steps: pitch cards, questions, a warm-up, the roadmap", icon: "rocket", href: "/onboarding" },
   { title: "Sign up", subtitle: "The form pattern: fields, a choice, consent, errors", icon: "user", href: "/sign-up" },
   { title: "Log in", subtitle: "Two fields, forgot password, the Go key submits", icon: "lock", href: "/log-in" },
   { title: "Challenges", subtitle: "Module home: today’s card, progress, a filtered list", icon: "zap", href: "/challenges" },
+  { title: "A challenge’s page", subtitle: "A detail page: its kind’s pastel, Start pinned at the bottom", icon: "bug", href: "/challenges/node-reduce-total" },
   {
     title: "Result: passed, now Practised",
-    subtitle: "Celebration with the stamp, then the details",
+    subtitle: "The badge pops open, then the details",
     icon: "check-circle",
     href: "/challenges/result?id=node-reduce-total&fresh=1",
   },
@@ -33,7 +35,7 @@ export function ReferenceScreens() {
     <View style={styles.section}>
       <SectionHeader title="Reference screens" />
       <Text variant="code" color="secondary">
-        app/(auth)/welcome.tsx · sign-up.tsx · log-in.tsx · app/(tabs)/challenges.tsx · app/challenges/result.tsx · app/(tabs)/passport.tsx
+        app/(auth)/welcome.tsx · onboarding.tsx · sign-up.tsx · log-in.tsx · app/(tabs)/challenges.tsx · app/challenges/[id].tsx · result.tsx · app/(tabs)/passport.tsx
       </Text>
       <Card style={styles.list}>
         {SCREENS.map((s, i) => (

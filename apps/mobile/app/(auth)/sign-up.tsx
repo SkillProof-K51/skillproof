@@ -50,7 +50,7 @@ export default function SignUpScreen() {
 
   return (
     <Screen aboveTabBar={false}>
-      <Hero plain>
+      <Hero>
         <TopBar />
         <Text variant="title" accessibilityRole="header" style={styles.title}>
           Create your account

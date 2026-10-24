@@ -180,7 +180,7 @@ export default function OnboardingScreen() {
         />
       }
     >
-      <Hero plain>
+      <Hero>
         <View style={styles.top}>
           <IconButton icon="chevron-left" accessibilityLabel={step ? "Back" : "Back to welcome"} onPress={back} />
           <View style={styles.flex} accessibilityLabel={`Step ${step + 2} of ${STEPS.length + 2}`}>
@@ -208,7 +208,7 @@ function NoOnboarding() {
   const router = useRouter();
   return (
     <Screen aboveTabBar={false}>
-      <Hero plain>
+      <Hero>
         <TopBar title="Get started" />
       </Hero>
       <View style={styles.content}>

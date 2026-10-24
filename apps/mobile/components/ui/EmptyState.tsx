@@ -2,15 +2,13 @@ import { space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
 import { Button } from "./Button";
-import { GroundedMascot } from "./GroundedMascot";
-import type { MascotPose } from "./Mascot";
+import type { IconName } from "./Icon";
+import { IconBadge } from "./IconBadge";
 import { Text } from "./Text";
 
-const MASCOT_WIDTH = 120;
-
 type Props = {
-  /** Leave out on task screens (no mascot there, docs/ui.md). */
-  mascot?: MascotPose;
+  /** A grey circle with an icon above the title, saying what will live here (e.g. "id-card"). */
+  icon?: IconName;
   title: string;
   /** Say what will fill this space and how — not just "nothing here". */
   body?: string;
@@ -18,11 +16,11 @@ type Props = {
   action?: { label: string; onPress: () => void; variant?: "primary" | "secondary" };
 };
 
-/** Nothing to show yet: a mascot, a line that explains, and the way forward. */
-export function EmptyState({ mascot, title, body, action }: Props) {
+/** Nothing to show yet: an icon, a line that explains, and the way forward. */
+export function EmptyState({ icon, title, body, action }: Props) {
   return (
     <View style={styles.wrap}>
-      {mascot ? <GroundedMascot pose={mascot} width={MASCOT_WIDTH} /> : null}
+      {icon ? <IconBadge icon={icon} tone="grey" shape="circle" /> : null}
       <Text variant="heading" align="center">
         {title}
       </Text>
