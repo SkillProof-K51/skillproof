@@ -23,8 +23,8 @@ type Props = {
 
 /**
  * A small single-series bar chart for the report screens: practice minutes per day, challenges
- * per week, demand per skill. One hue (blue), the highlighted bar in brand blue, a faint track to
- * the goal behind each bar. Values arrive computed (rule 2).
+ * per week, demand per skill. One hue: the highlighted bar in the role purple, the rest a lighter
+ * step of it (emphasis), a faint track to the goal behind each bar. Values arrive computed (rule 2).
  */
 export function BarChart({ values, labels, max, highlight, format, accessibilityLabel }: Props) {
   const top = max ?? Math.max(...values, 1);
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
   // the goal: a faint full-height track the bar fills from the bottom
   track: { width: BAR, height: HEIGHT, borderRadius: radius.full, backgroundColor: colors.bg.subtle, justifyContent: "flex-end", overflow: "hidden" },
   fill: { width: BAR, borderRadius: radius.full },
-  fillCool: { backgroundColor: colors.accent.progress },
-  fillHot: { backgroundColor: colors.accent.brand },
+  fillCool: { backgroundColor: colors.accent.sky },
+  fillHot: { backgroundColor: colors.accent.progress },
 });

@@ -26,6 +26,7 @@ const SCREENS: Reference[] = [
   { title: "Result: not passed yet", subtitle: "What was missed, a hint, try again", icon: "x-circle", href: "/challenges/result?id=sql-no-orders" },
   { title: "Result: graded by AI", subtitle: "Rubric and AI feedback, labelled as AI", icon: "ai", href: "/challenges/result?id=node-middleware" },
   { title: "Skill Passport", subtitle: "Credential, sharing with consent, QR code, evidence", icon: "id-card", href: "/passport" },
+  { title: "Progress", subtitle: "A report: a big number, a bar by kind, a line, the roadmap", icon: "chart", href: "/progress" },
 ];
 
 /** The top of /kit: the finished reference screens, each one tap away (TEST MODE data). */
@@ -35,7 +36,7 @@ export function ReferenceScreens() {
     <View style={styles.section}>
       <SectionHeader title="Reference screens" />
       <Text variant="code" color="secondary">
-        app/(auth)/welcome.tsx · onboarding.tsx · sign-up.tsx · log-in.tsx · app/(tabs)/challenges.tsx · app/challenges/[id].tsx · result.tsx · app/(tabs)/passport.tsx
+        app/(auth)/welcome.tsx · onboarding.tsx · sign-up.tsx · log-in.tsx · app/(tabs)/challenges.tsx · app/challenges/[id].tsx · result.tsx · app/(tabs)/passport.tsx · app/progress.tsx
       </Text>
       <Card style={styles.list}>
         {SCREENS.map((s, i) => (

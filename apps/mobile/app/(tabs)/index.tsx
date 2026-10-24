@@ -62,7 +62,7 @@ export default function HomeScreen() {
         <ReadinessCard
           readiness={readiness}
           pathLabel={student.pathLabel}
-          onPressRoadmap={() => router.push("/profile")}
+          onPressRoadmap={() => router.push("/progress")}
           onPressNext={openChallenges}
         />
 

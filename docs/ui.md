@@ -42,6 +42,7 @@ Each one shows a pattern end to end on demo data (TEST MODE). Open it from the t
 | Challenges | `app/(tabs)/challenges.tsx` | a module home: plain title, today's card, a progress list, `SegmentedControl` filter + list, `EmptyState` |
 | Challenge page | `app/challenges/[id].tsx` | a detail page: its kind's pastel fading down the page (`<Screen tint>`), a big icon on a white circle, cards, and the main action pinned at the bottom (`<Screen footer>`) |
 | Result | `app/challenges/result.tsx` | an outcome in two beats: the celebration (the skill's badge pops open: `<SkillBadge status="practised" from="not_yet">`), then the details. Module 4's Verified result is the same with `status="verified" from="practised"` |
+| Progress | `app/progress.tsx` | a report screen: a big number with a `StackedBar` by kind and its legend, a `LineChart` on its true scale with a reference line, then a list (from Home's "See all") |
 | Skill Passport | `app/(tabs)/passport.tsx` | a badge per roadmap skill (`SkillBadge` grid, data from `passportBadges()` in `lib/`), then settings with consequences: a `Switch` behind a consent `Dialog`, a `BottomSheet` of `Checkbox`es, save → toast, the share sheet, `QrCode` |
 
 ## Every component, live: `/kit`
@@ -54,7 +55,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 | Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `OptionList` (a question on its own screen: big rows, one choice or `multiple`) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
 | Status & progress | `StatusBadge` · `SkillBadge` (a skill's hexagon: Verified / Practised / locked; `from` pops it open on a win) · `SegmentedProgress` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
-| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) |
+| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `StackedBar` (parts of a whole + a legend) · `LineChart` (one series over time) |
 | Sharing | `QrCode` (a link to scan — navy on white, never inverted) |
 | Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` (an optional icon) · `Reveal` (a step fades up) |
 
@@ -73,8 +74,10 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 
 ## Numbers and charts (report screens)
 - A headline number is a `<Stat>`: label, icon, value with its unit, optional signed `delta`. Two in a row on the page. A trend goes in a `<BarChart>` beside it, not inside the tile.
-- A series is a `<BarChart>`: **one hue** (the role purple), the highlighted column a shade deeper, a faint track to the goal. Never two y-axes, never a pie.
+- A series is a `<BarChart>`: **one hue** — the highlighted column in the role purple, the rest a lighter step of it, a faint track to the goal. Never two y-axes, never a pie.
 - The figure wears text ink. Meaning lives in the icon circle (green = Verified, blue = Practised) — never colour the number, and never colour alone: always icon + label.
+- Parts of a whole → a `<StackedBar>` (2px gaps, a fixed order) with a legend that has every count. Over time → a `<LineChart>`: one series, its true scale (0–100 for a percentage, even if the line looks flat), solid hairline grid, a reference line when the scale has one (Ready at 70%), only the last point labelled. No donut for close values.
+- A chart's colours are checked, not eyeballed: the kinds' `mark` colours passed the dataviz validator (colour-blind separation ΔE ≥ 15.9 on white). Text stays in text colours, never the series colour; each chart's `accessibilityLabel` lists every value (its table view).
 - Values arrive computed and formatted (rule 2); these only draw them.
 
 ## Motion

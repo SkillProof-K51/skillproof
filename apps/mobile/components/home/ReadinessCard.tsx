@@ -16,6 +16,7 @@ type Props = {
   readiness: HomeData["readiness"];
   /** The role's roadmap title, e.g. "Web Developer path". */
   pathLabel: string;
+  /** "See all": the Progress screen, with every roadmap skill. */
   onPressRoadmap: () => void;
   onPressNext: () => void;
 };
