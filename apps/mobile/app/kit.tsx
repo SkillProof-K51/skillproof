@@ -19,7 +19,7 @@ import { Hero, Screen, Text, TopBar } from "../components/ui";
 export default function KitScreen() {
   return (
     <Screen aboveTabBar={false}>
-      <Hero size="compact">
+      <Hero plain>
         <TopBar title="UI kit" />
         <View style={styles.heading}>
           <Text variant="small" color="secondary">

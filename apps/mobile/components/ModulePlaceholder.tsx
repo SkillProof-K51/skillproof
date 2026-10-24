@@ -9,15 +9,16 @@ type Props = {
   title: string;
   module: string;
   owner: string;
-  pose: MascotPose;
+  /** No longer drawn: the plain header has no mascot (25 Oct). Goes with the mascot clean-up, after PR #3. */
+  pose?: MascotPose;
 };
 
 /** Stand-in first screen for a module tab until its owner builds it (weeks 7–11). */
-export function ModulePlaceholder({ title, module, owner, pose }: Props) {
+export function ModulePlaceholder({ title, module, owner }: Props) {
   const router = useRouter();
   return (
     <Screen>
-      <Hero mascot={pose}>
+      <Hero plain>
         <View style={styles.heading}>
           <Text variant="title">{title}</Text>
           <Text variant="small" color="secondary">

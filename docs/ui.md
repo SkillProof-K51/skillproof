@@ -15,7 +15,7 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 ## A screen, top to bottom
 ```tsx
 <Screen>
-  <Hero mascot="laptop">                       {/* sky + mascot + header slot; omit mascot on task screens */}
+  <Hero plain>                                 {/* the title on the page, under the status bar */}
     <Text variant="title">Challenges</Text>
   </Hero>
   <View style={styles.content}>                {/* paddingHorizontal: layout.gutter, gap: gap.loose */}
@@ -25,8 +25,8 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
   </View>
 </Screen>
 ```
-- **Hero first.** `plain` = no sky, the title on the page itself: the BitePal look every screen is moving to (Skill Passport and Result have it). Until a screen moves: `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists; the first card starts on the sheet, `layout.sheetGap` (24) below the sky's edge, automatically.
-- **One mascot per module home**: in the hero (`<Hero mascot>`) or standing on the sheet edge beside the first section (`<SectionHeader mascot>`, Home's choice); at most one more inside a card. No mascot on task screens (Fix the bug, SQL live, Explain it) or on the filled Skill Passport.
+- **Hero first.** `plain` = no sky, the title on the page itself: the BitePal look. Every tab has it except Home (its illustrated `scene`); the auth screens move with the new onboarding. Until a screen moves: `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists; the first card starts on the sheet, `layout.sheetGap` (24) below the sky's edge, automatically.
+- **No mascot on new screens.** It was dropped in the redesign (Azim, 25 Oct); the ones still in the kit go in the mascot clean-up. A screen's moment comes from its content instead, like the badge popping open on a Result.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
 - **Cards are flat**: white (`tone="surface"`) with big soft corners on the lavender page; the role tint (`tone="role"`) for today's challenge; blue for projects. No decoration on cards — no circles, borders or shadows.
 - **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label + a small navy arrow circle, like Today's challenge — and an `accessibilityLabel` that says what tapping does.
@@ -38,7 +38,7 @@ Each one shows a pattern end to end on demo data (TEST MODE). Open it from the t
 |---|---|---|
 | Welcome | `app/(auth)/welcome.tsx` | onboarding: the mascot centred in a tall sky, steps, one strong button |
 | Sign up · Log in | `app/(auth)/sign-up.tsx` · `log-in.tsx` | any form — see **Forms** below |
-| Challenges | `app/(tabs)/challenges.tsx` | a module home: hero + mascot, today's card, a progress list, `SegmentedControl` filter + list, `EmptyState` |
+| Challenges | `app/(tabs)/challenges.tsx` | a module home: plain title, today's card, a progress list, `SegmentedControl` filter + list, `EmptyState` |
 | Result | `app/challenges/result.tsx` | an outcome in two beats: the celebration (the skill's badge pops open: `<SkillBadge status="practised" from="not_yet">`), then the details. Module 4's Verified result is the same with `status="verified" from="practised"` |
 | Skill Passport | `app/(tabs)/passport.tsx` | a badge per roadmap skill (`SkillBadge` grid, data from `passportBadges()` in `lib/`), then settings with consequences: a `Switch` behind a consent `Dialog`, a `BottomSheet` of `Checkbox`es, save → toast, the share sheet, `QrCode` |
 
@@ -87,7 +87,7 @@ Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MOD
 |---|---|---|
 | green (`status.verified`) | Verified by a mentor (M4) | Verified badges, Fit % chips, achievements |
 | blue (`status.practised`) | Practised / in progress (M3) | Practised badges, project cards and badges |
-| role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars and segments |
+| role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars, segments and dots |
 | butter (`accent.butter`) | test mode | TEST MODE labels (the strip, "Demo grade") |
 | navy (`action.primaryStrong`) | the main action | the one primary button per screen |
 | navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page, and skill badges wherever they appear (`SkillBadge`) — gold never anywhere else |

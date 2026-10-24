@@ -57,7 +57,7 @@ export default function ChallengesScreen() {
 
   return (
     <Screen>
-      <Hero mascot="laptop">
+      <Hero plain>
         <View style={styles.heading}>
           <Text variant="title">Challenges</Text>
           <Text variant="small" color="secondary">
