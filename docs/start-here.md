@@ -21,7 +21,24 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 ---
 
-## 1. Before you start: checklist
+## 1. Before you start
+
+### What you need (accounts and apps)
+
+| What | Who | When | Notes |
+|---|---|---|---|
+| GitHub account with the repo invite accepted | everyone | now | all four of us are in |
+| Git · Node.js 24 LTS (`corepack enable` gives you pnpm) · VS Code | everyone | now | [CONTRIBUTING › One-time setup](../CONTRIBUTING.md#one-time-setup-about-20-minutes). On Windows, run `corepack enable` in a terminal opened **as administrator** |
+| **Expo Go** on your phone, from the App Store / Play Store | anyone opening the app on a phone | now | It runs SDK 58, the same as our app. No phone? Press `w` and use the browser; that's enough for most work |
+| **A free Expo account** ([expo.dev](https://expo.dev/signup)) | iPhone users | now | On an iPhone, Expo Go only opens the project when it and your laptop are signed in to the **same** account: run `npx expo login` on the laptop, then sign in inside Expo Go (top-right icon) |
+| Phone and laptop on the **same Wi-Fi** | phone users | now | Campus Wi-Fi often blocks this. Then `cd apps/mobile` → `npx expo start --tunnel` (say yes if it offers to install `@expo/ngrok`), or use your phone's hotspot |
+| Google Drive: `05 Team Shared` | everyone | now | Iskandar's job-ad sheet goes there |
+| A **Gemini API key** of your own ([Google AI Studio](https://aistudio.google.com/apikey), free tier) | M2, M4 (the AI features) | weeks 7–11 | Server-side only: `apps/web/.env.local` → `GEMINI_API_KEY`. Never in the app, a commit or a prompt |
+| An AI coding tool | optional | any time | [`prompts.md`](prompts.md) |
+
+**Not needed:** a Supabase account (Azim applies every migration; anyone invited to the Supabase project can read its secret key, so access stays with him), the Supabase values to run on demo data (paste them when Azim says a screen reads real data), Android Studio, Xcode, Docker, anything paid.
+
+### Checklist
 
 - [ ] **Setup works** ([CONTRIBUTING › One-time setup](../CONTRIBUTING.md#one-time-setup-about-20-minutes)). `pnpm dev:mobile` runs and the app opens: scan the QR code with Expo Go, or press `w` to open it in the browser at `localhost:8081`. You should see the yellow **TEST MODE** strip.
 - [ ] **Your warm-up PR is merged** ([CONTRIBUTING › Your first PR](../CONTRIBUTING.md#your-first-pr-the-warm-up-do-this-before-any-module-work)). Name your migration with the UTC date and time: `YYYYMMDDHHMMSS_warmup_<yourname>.sql`.

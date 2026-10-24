@@ -34,7 +34,7 @@ The full rule list (for people and for AI tools) is in [`AGENTS.md`](AGENTS.md).
    cp apps/web/.env.example apps/web/.env.local
    cp apps/mobile/.env.example apps/mobile/.env
    ```
-   Ask Azim for the two Supabase values and paste them into both files. Then `pnpm dev:web` (opens http://localhost:3000) and `pnpm dev:mobile` (scan the QR code with Expo Go on your phone). If both run, setup is done.
+   Ask Azim for the two Supabase values and paste them into both files (demo data runs without them). Then `pnpm dev:web` (opens http://localhost:3000) and `pnpm dev:mobile` (install **Expo Go** from the App Store / Play Store and scan the QR code, or press `w` for the browser). **iPhone:** Expo Go also needs a free Expo account, signed in on the phone and on the laptop (`npx expo login`). **Campus Wi-Fi** blocking the phone? `cd apps/mobile` → `npx expo start --tunnel`, or use your phone's hotspot. If both run, setup is done. Full list of what you need: [`docs/start-here.md`](docs/start-here.md#what-you-need-accounts-and-apps).
 
 ---
 
