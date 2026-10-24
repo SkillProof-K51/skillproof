@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     gap: space.sm,
     paddingHorizontal: space.xl,
     paddingVertical: space.md,
-    borderRadius: radius.lg,
+    borderRadius: radius.full, // pill buttons, BitePal-style (Azim, 24 Oct)
     alignSelf: "flex-start",
   },
   primary: { backgroundColor: colors.action.primaryStrong },

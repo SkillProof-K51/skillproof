@@ -28,7 +28,7 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 - **Hero first.** `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists. The first card starts on the sheet, `layout.sheetGap` (24) below the sky's edge, automatically.
 - **One mascot per module home**: in the hero (`<Hero mascot>`) or standing on the sheet edge beside the first section (`<SectionHeader mascot>`, Home's choice); at most one more inside a card. No mascot on task screens (Fix the bug, SQL live, Explain it) or on the filled Skill Passport.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
-- **Cards are flat**: white (`tone="surface"`), butter for energy (today's challenge), blue for projects. No decoration on cards — no circles, borders or shadows (Azim, 18 Oct).
+- **Cards are flat**: white (`tone="surface"`) with big soft corners on the lavender page; the role tint (`tone="role"`) for today's challenge; blue for projects. No decoration on cards — no circles, borders or shadows.
 - **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label + a small navy arrow circle, like Today's challenge — and an `accessibilityLabel` that says what tapping does.
 
 ## Reference screens — start from one of these
@@ -87,7 +87,8 @@ Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MOD
 |---|---|---|
 | green (`status.verified`) | Verified by a mentor (M4) | Verified badges, Fit % chips, achievements |
 | blue (`status.practised`) | Practised / in progress (M3) | Practised badges, project cards and badges |
-| butter (`accent.butter`) | energy | today's challenge — and TEST MODE labels (the strip, "Demo grade") |
+| role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars and segments |
+| butter (`accent.butter`) | test mode | TEST MODE labels (the strip, "Demo grade") |
 | navy (`action.primaryStrong`) | the main action | the one primary button per screen |
 | navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page — gold never anywhere else |
 | brand blue (`accent.brand`) on soft sky (`accent.skySoft`) | where you are | the active tab in the bottom nav |

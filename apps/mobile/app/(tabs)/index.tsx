@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 import { PassportCard } from "../../components/home/PassportCard";
 import { ProjectCard } from "../../components/home/ProjectCard";
-import { ReadinessHero } from "../../components/home/ReadinessHero";
+import { ReadinessCard } from "../../components/home/ReadinessCard";
 import { TodayCard } from "../../components/challenges/TodayCard";
 import { UnlockCard } from "../../components/home/UnlockCard";
 import {
@@ -18,13 +18,17 @@ import {
 } from "../../components/ui";
 import { getHomeData, greetingFor, nextUnlock } from "../../lib/home";
 
+// Home's illustrated scene (ChatGPT image, Azim's account, 24 Oct — see docs/ai-use-log.md).
+const SCENE = require("../../assets/scenes/campus-garden.jpg");
+
 // The slider: the top open matches, then the next locked one as a goal. Everything else → "See all".
 const SLIDER_OPEN = 3;
 const SLIDER_LOCKED = 1;
 
 /**
- * Home (Azim, 18 Oct): the goal is the hero — readiness for the target role and the skills still
- * missing — then today's challenge (the one strong CTA), micro-projects, passport.
+ * Home (BitePal-style, Azim 24 Oct): an illustrated scene with the greeting, then cards sliding up
+ * over it — readiness for the target role first, then today's challenge (the one strong CTA),
+ * micro-projects, passport.
  */
 export default function HomeScreen() {
   const router = useRouter();
@@ -43,26 +47,29 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <Hero>
+      <Hero scene={SCENE}>
         <View style={styles.header}>
           <View style={styles.greeting}>
             <Text variant="title">
               {greetingFor(new Date())}, {student.firstName}
             </Text>
-            <Text variant="small" color="secondary">
-              {student.pathLabel}
-            </Text>
           </View>
           <Avatar initials={student.initials} tone="surface" />
         </View>
-        <ReadinessHero readiness={readiness} onPressRoadmap={() => router.push("/profile")} />
       </Hero>
 
       <View style={styles.content}>
+        <ReadinessCard
+          readiness={readiness}
+          pathLabel={student.pathLabel}
+          onPressRoadmap={() => router.push("/profile")}
+          onPressNext={openChallenges}
+        />
+
         {/* Today's challenge (Module 3) — the one strong CTA on this screen while it is to do */}
         {todaysChallenge ? (
           <>
-            <SectionHeader title="Today’s challenge" mascot="wave" />
+            <SectionHeader title="Today’s challenge" />
             <TodayCard challenge={todaysChallenge} onPress={openChallenges} />
             {unlock ? (
               <UnlockCard

@@ -12,34 +12,36 @@
  */
 
 export const colors = {
+  // BitePal-style theme (Azim, 24 Oct): lavender-grey pages, white cards, near-black ink and
+  // pill buttons, the role colour (Web Developer purple) for progress and selection.
   text: {
-    primary: "#334155", // slate — headings, body
-    secondary: "#5f6f84", // captions, labels, inactive tabs
-    inverse: "#ffffff", // text on primary-strong buttons
+    primary: "#1c1d21", // near-black — headings, body, big numbers
+    secondary: "#73747f", // labels, units, sub-lines (4.6:1 on white)
+    inverse: "#ffffff", // text on the black pill
   },
   bg: {
-    app: "#f3f8fe", // the page AND the sky's sheet lip — one flat surface (Figma bg/app)
-    surface: "#ffffff", // cards, sheets, speech bubbles
-    subtle: "#eef3f9", // neutral chips, grey icon badges
+    app: "#edecf2", // the lavender-grey page behind every screen
+    surface: "#ffffff", // cards, sheets
+    subtle: "#f4f3f7", // neutral chips, code blocks, tracks inside cards
   },
   border: {
-    default: "#e8eff8", // secondary button outline, progress tracks
+    default: "#e4e3ea", // secondary pill outline, dividers between list rows
   },
   icon: {
-    default: "#64748b", // Regular-weight glyphs, chevrons
-    muted: "#8492a6",
+    default: "#5f616c", // glyphs, chevrons
+    muted: "#9b9ba6", // idle tabs
   },
   action: {
-    primaryStrong: "#0b1a35", // the ONE strong CTA per screen — dark navy (Azim, 18 Oct; 16.6:1 with white)
+    primaryStrong: "#1d1e21", // the ONE strong action per screen — a black pill (16:1 with white)
     onPrimaryStrong: "#ffffff",
   },
   accent: {
-    sky: "#bfdbfe", // brand / avatars / sky top
-    skySoft: "#dbeafe", // the active tab's pill in the bottom nav
-    brand: "#2f6fdc", // the brand blue: active tab icon + label
-    butter: "#ffe9a8", // energy — today's challenge tag, butter icon badges
-    butterSoft: "#fff6d6", // Figma butter/100 — today's challenge card
-    progress: "#6fa8f5", // readiness ring fill
+    sky: "#c9b8ff", // avatars; the light step of a segmented bar (Practised)
+    skySoft: "#efeaff", // the role tint: a selected option, today's challenge card (Azim, 25 Oct)
+    brand: "#7c5cf0", // the role colour (Web Developer): selected options, links, active marks
+    butter: "#ffe9a8", // the TEST MODE strip and labels, butter icon badges
+    butterSoft: "#fff6d6", // a butter card (kit demo)
+    progress: "#7c5cf0", // readiness ring and bars, in the role colour
   },
   sky: {
     // The hero is a painted sky (assets/sky.jpg, Azim's own generation, 18 Oct); this is its top
@@ -68,7 +70,20 @@ export const colors = {
   },
   glass: {
     // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
-    veil: "rgba(255, 255, 255, 0.6)",
+    veil: "rgba(226, 225, 232, 0.92)", // the soft grey of the floating tab pill
+  },
+  code: {
+    // Code shown in the app wears VS Code's Dark+ theme (Azim, 25 Oct), so it reads like an editor.
+    bg: "#1e1e1e",
+    text: "#d4d4d4", // punctuation, operators, SQL names
+    lineNumber: "#858585",
+    keyword: "#569cd6", // const, function, SELECT …
+    control: "#c586c0", // return, if, await …
+    fn: "#dcdcaa", // a name being called
+    variable: "#9cdcfe",
+    string: "#ce9178",
+    number: "#b5cea8",
+    comment: "#6a9955",
   },
   overlay: {
     scrim: "rgba(51, 65, 85, 0.45)", // Figma overlay/scrim = slate at 45 %
@@ -119,12 +134,12 @@ export const opacity = {
   disabled: 0.5,
 } as const;
 
-/** Corner radius (px). Figma has lg and xl both at 16 — kept so names match the inspector. */
+/** Corner radius (px). */
 export const radius = {
   control: 6, // checkboxes, small boxes
   tile: 14, // icon badge tiles
-  lg: 16, // buttons
-  xl: 16, // cards
+  lg: 16, // option rows, inputs
+  xl: 26, // cards — big and soft, BitePal-style (Azim, 24 Oct)
   sheet: 28, // top corners of a sheet: the sky's lip, the bottom-nav dock
   full: 999,
 } as const;
@@ -132,21 +147,23 @@ export const radius = {
 /** Fixed layout numbers from the Figma frames (390-wide artboards). */
 export const layout = {
   designWidth: 390,
-  gutter: 24, // screen side padding
+  gutter: 16, // screen side padding — cards run wide, BitePal-style
   heroTall: 290, // Sky backdrop · Size=Tall
   heroCompact: 180, // Sky backdrop · Size=Compact
   skyLip: 32, // height of the sheet lip at the bottom of the sky
   sheetGap: 24, // the first card starts 24 below the sky's edge, on the sheet (Azim, 18 Oct)
+  sceneHeight: 330, // Home's illustrated scene (BitePal-style header)
+  sceneOverlap: 56, // the first card slides this far up over the scene's bottom edge
 } as const;
 
 /**
- * Type scale. `family` + `weight` map to a loaded font on each platform:
- * mobile → Lexend_400Regular / _500Medium / _600SemiBold, RobotoMono_400Regular
- * web    → the `--font-sans` / `--font-mono` stacks in tokens.css
+ * Type scale (Sofia Sans, Azim 24 Oct). `family` + `weight` map to a loaded font on each platform:
+ * mobile → SofiaSans_<weight>, SofiaSansCondensed_800ExtraBold (display), RobotoMono_400Regular
+ * web    → the `--font-sans` / `--font-display` / `--font-mono` stacks in tokens.css
  */
 export type TypeStyle = {
-  family: "sans" | "mono";
-  weight: 400 | 500 | 600;
+  family: "sans" | "display" | "mono";
+  weight: 400 | 500 | 600 | 700 | 800 | 900;
   size: number;
   lineHeight: number;
   letterSpacing: number;
@@ -154,18 +171,20 @@ export type TypeStyle = {
 };
 
 export const type = {
-  display: { family: "sans", weight: 600, size: 44, lineHeight: 48, letterSpacing: -1 }, // one hero number per screen (readiness gauge)
-  title: { family: "sans", weight: 600, size: 26, lineHeight: 28, letterSpacing: -0.4 }, // "Good evening, Aina"
-  heading: { family: "sans", weight: 500, size: 17, lineHeight: 24, letterSpacing: -0.2 }, // Figma "Heading"
-  subheading: { family: "sans", weight: 500, size: 16, lineHeight: 24, letterSpacing: -0.2 }, // list-row titles
-  bodyStrong: { family: "sans", weight: 500, size: 15, lineHeight: 22, letterSpacing: -0.1 }, // Figma "Body Strong", button labels
-  body: { family: "sans", weight: 400, size: 15, lineHeight: 22, letterSpacing: -0.1 },
-  label: { family: "sans", weight: 500, size: 13, lineHeight: 18, letterSpacing: 0 }, // Figma "Label", badges, tags
-  small: { family: "sans", weight: 400, size: 13, lineHeight: 18, letterSpacing: 0 }, // speech bubble, sub-lines
-  caption: { family: "sans", weight: 400, size: 12, lineHeight: 16, letterSpacing: 0 }, // Figma "Caption"
-  captionStrong: { family: "sans", weight: 500, size: 12, lineHeight: 16, letterSpacing: 0 }, // chips, active tab label
-  sectionLabel: { family: "sans", weight: 500, size: 12, lineHeight: 18, letterSpacing: 0.72, uppercase: true }, // "MICRO-PROJECTS FOR YOU"
-  stamp: { family: "sans", weight: 600, size: 24, lineHeight: 30, letterSpacing: 2.4, uppercase: true }, // the PRACTISED / VERIFIED stamp
+  display: { family: "sans", weight: 900, size: 40, lineHeight: 44, letterSpacing: -0.8 }, // the big number on a card ("72%")
+  headline: { family: "display", weight: 800, size: 34, lineHeight: 36, letterSpacing: -0.2 }, // condensed: onboarding questions, a win ("Node.js, proven!")
+  title: { family: "sans", weight: 900, size: 30, lineHeight: 34, letterSpacing: -0.4 }, // a screen's title ("Progress"), Home's name
+  heading: { family: "sans", weight: 800, size: 17, lineHeight: 22, letterSpacing: -0.1 }, // card titles
+  subheading: { family: "sans", weight: 700, size: 16, lineHeight: 22, letterSpacing: -0.1 }, // list-row titles
+  bodyStrong: { family: "sans", weight: 700, size: 15, lineHeight: 21, letterSpacing: 0 }, // button labels
+  body: { family: "sans", weight: 500, size: 15, lineHeight: 21, letterSpacing: 0 },
+  label: { family: "sans", weight: 600, size: 13, lineHeight: 18, letterSpacing: 0 }, // a card's grey label, badges, tags
+  small: { family: "sans", weight: 500, size: 13, lineHeight: 18, letterSpacing: 0 }, // sub-lines
+  caption: { family: "sans", weight: 500, size: 12, lineHeight: 16, letterSpacing: 0 },
+  captionStrong: { family: "sans", weight: 700, size: 12, lineHeight: 16, letterSpacing: 0 }, // chips
+  sectionLabel: { family: "sans", weight: 600, size: 13, lineHeight: 18, letterSpacing: 0 }, // grey, sentence case ("Micro-projects for you")
+  overline: { family: "sans", weight: 700, size: 12, lineHeight: 16, letterSpacing: 0.8, uppercase: true }, // small caps label over a value ("UP NEXT")
+  stamp: { family: "display", weight: 800, size: 24, lineHeight: 30, letterSpacing: 1.2, uppercase: true }, // the PRACTISED / VERIFIED stamp
   code: { family: "mono", weight: 400, size: 13, lineHeight: 20, letterSpacing: 0 },
 } as const satisfies Record<string, TypeStyle>;
 
@@ -173,7 +192,8 @@ export type TypeVariant = keyof typeof type;
 
 /** CSS font stacks for the web portal. */
 export const fontStack = {
-  sans: "'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif",
+  sans: "'Sofia Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
+  display: "'Sofia Sans Condensed', 'Sofia Sans', system-ui, sans-serif",
   mono: "'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
 } as const;
 

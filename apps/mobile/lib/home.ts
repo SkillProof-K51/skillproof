@@ -19,10 +19,8 @@ export type HomeData = {
   readiness: {
     /** 0–100 integer from the Module 2 fit engine. */
     percent: number;
-    /** One line under the gauge, e.g. "2 skills left on your roadmap". Never claim "job-ready" here —
-     *  that is Module 2's threshold to define. */
-    headline: string;
-    focusSkills: string[];
+    /** The role's roadmap, in order, with each skill's status (Modules 3 and 4 write it; Home reads). */
+    skills: { name: string; status: "not_yet" | "practised" | "verified" }[];
   };
   /** null = Module 3 has no challenge for today; the card is hidden. */
   todaysChallenge: TodaysChallenge | null;

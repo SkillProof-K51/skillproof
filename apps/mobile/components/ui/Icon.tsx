@@ -1,5 +1,6 @@
 import { colors } from "@skillproof/tokens";
 import { ArrowClockwise } from "phosphor-react-native/src/icons/ArrowClockwise";
+import { ArrowRight } from "phosphor-react-native/src/icons/ArrowRight";
 import { Briefcase } from "phosphor-react-native/src/icons/Briefcase";
 import { CaretDown } from "phosphor-react-native/src/icons/CaretDown";
 import { CaretLeft } from "phosphor-react-native/src/icons/CaretLeft";
@@ -72,6 +73,7 @@ const ICONS = {
   // skills without a logo (SkillLogo falls back to these)
   test: TestTube,
   chart: ChartBar,
+  "arrow-right": ArrowRight, // "See all →", "Up next →" on the dark progress card
 } as const;
 
 export type IconName = keyof typeof ICONS;

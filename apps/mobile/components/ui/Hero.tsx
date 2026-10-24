@@ -1,4 +1,5 @@
 import { layout, space } from "@skillproof/tokens";
+import { Image, type ImageSource } from "expo-image";
 import { useState, type ReactNode } from "react";
 import { StyleSheet, useWindowDimensions, View, type LayoutChangeEvent } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -29,6 +30,11 @@ type Props = {
   mascotAlign?: "right" | "center";
   /** Short speech bubble to the left of the mascot. One line, ~40 characters. */
   bubble?: string;
+  /**
+   * An illustrated scene across the top instead of the sky (Home, BitePal-style, Azim 24 Oct). It
+   * is `layout.sceneHeight` tall and the first card slides `layout.sceneOverlap` up over its bottom.
+   */
+  scene?: ImageSource | number;
   /** The hero's content (greeting, title, and anything else), laid out top-down under the status bar. */
   children?: ReactNode;
 };
@@ -38,7 +44,23 @@ type Props = {
  * The sky grows with the content (never shorter than `size`/`height`). Put it first in a <Screen>;
  * the content after it starts on the sheet, `layout.sheetGap` below the sky's edge, automatically.
  */
-export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, children }: Props) {
+export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, scene, children }: Props) {
+  if (scene) return <SceneHero scene={scene}>{children}</SceneHero>;
+  return <SkyHero {...{ size, height, mascot, mascotWidth, mascotAlign, bubble }}>{children}</SkyHero>;
+}
+
+/** The illustrated scene: the picture fills the top, anchored to its ground line at the bottom. */
+function SceneHero({ scene, children }: { scene: ImageSource | number; children?: ReactNode }) {
+  const insets = useSafeAreaInsets();
+  return (
+    <View style={[styles.scene, { paddingTop: insets.top + HEADER_BELOW_STATUS_BAR }]}>
+      <Image source={scene} style={StyleSheet.absoluteFill} contentFit="cover" contentPosition="bottom" accessible={false} />
+      {children}
+    </View>
+  );
+}
+
+function SkyHero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, children }: Omit<Props, "scene">) {
   const insets = useSafeAreaInsets();
   const { width: screenWidth } = useWindowDimensions();
   const minHeight = height ?? (size === "tall" ? layout.heroTall : layout.heroCompact);
@@ -67,6 +89,11 @@ const styles = StyleSheet.create({
     marginBottom: layout.sheetGap - layout.skyLip, // pulls the next content up under the lip, then down by sheetGap
     paddingHorizontal: layout.gutter,
     paddingBottom: CONTENT_BOTTOM,
+  },
+  scene: {
+    minHeight: layout.sceneHeight,
+    marginBottom: -layout.sceneOverlap, // the first card slides up over the scene's ground
+    paddingHorizontal: layout.gutter,
   },
   absolute: { position: "absolute" },
   bubble: { left: layout.gutter },

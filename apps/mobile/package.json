@@ -5,6 +5,8 @@
   "dependencies": {
     "@expo-google-fonts/lexend": "^0.4.1",
     "@expo-google-fonts/roboto-mono": "^0.4.2",
+    "@expo-google-fonts/sofia-sans": "^0.4.3",
+    "@expo-google-fonts/sofia-sans-condensed": "^0.4.2",
     "@skillproof/tokens": "workspace:*",
     "@supabase/supabase-js": "^2.117.3",
     "expo": "~57.0.30",

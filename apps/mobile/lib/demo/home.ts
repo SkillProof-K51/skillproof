@@ -8,8 +8,15 @@ export const demoHome: HomeData = {
   bubble: "Ready for today’s challenge, Aina?",
   readiness: {
     percent: 72,
-    headline: "2 skills left on your roadmap",
-    focusSkills: ["Node.js", "Testing"],
+    // the same statuses as the passport demo: 3 Verified, 2 Practised, Node.js still to practise
+    skills: [
+      { name: "HTML and CSS", status: "verified" },
+      { name: "JavaScript", status: "verified" },
+      { name: "Git", status: "verified" },
+      { name: "React", status: "practised" },
+      { name: "TypeScript", status: "practised" },
+      { name: "Node.js", status: "not_yet" },
+    ],
   },
   todaysChallenge: demoToday,
   microProjects: [
