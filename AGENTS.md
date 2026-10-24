@@ -1,7 +1,7 @@
 # SkillProof — rules for every coding agent (Claude Code, Codex, Gemini, ChatGPT, Copilot, Cursor)
 
 BITU3923 Workshop II · Group K51 · Supervisor: Ts. Dr. Farah Nadia Azman.
-Read `docs/spec.md` (what we build, by module) before writing code. `docs/progress.md` says what is done and what is next — update it when you finish a step.
+Read `docs/spec.md` (what we build, by module) before writing code. `docs/progress.md` says what is done and what is next — update it when you finish a step. Starting on a module: `docs/start-here.md` (checklist, the five steps of every feature, first tasks); for chat tools that can't read the repo: `docs/prompts.md`.
 
 ## Stack (fixed — agreed by the team and approved by the supervisor; don't swap)
 - **Mobile app (students)**: Expo SDK 58 (React Native 0.88) + TypeScript → `apps/mobile` — the SDK the App Store / Play Store Expo Go runs; when Expo Go moves to the next SDK, one upgrade PR follows (`npx expo install expo@^<n> --fix`)

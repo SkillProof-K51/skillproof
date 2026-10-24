@@ -4,6 +4,8 @@ A short guide for the team. You only need to learn **one loop**. Everything happ
 
 > Our repo is **public** until the course ends. Anyone on the internet can read it. That's fine for code, but it makes rule 1 very important.
 
+**New to the project? Read [`docs/start-here.md`](docs/start-here.md) first**: what to have ready, how every feature is built, and your first task. Prompts for your AI tool: [`docs/prompts.md`](docs/prompts.md).
+
 The full rule list (for people and for AI tools) is in [`AGENTS.md`](AGENTS.md). The five that matter most on GitHub:
 
 1. **Never commit secrets.** Keys, passwords, `.env` and `.env.local` stay on your laptop (they are gitignored, so Git will not even offer them). If one slips through, **tell the team straight away**: deleting the file is not enough, the key stays in history and has to be replaced.
@@ -105,11 +107,15 @@ AI is allowed and is part of our proposal (form E), but you are responsible for 
 
 | Module | Owner | App | Folder |
 |---|---|---|---|
-| 1 Industry Standards & Curriculum Alignment | Iskandar | web | `apps/web/src/app/(portal)/standards/` |
-| 2 Profile, Skill Gap & AI Matching | Insyirah | mobile | `apps/mobile/app/(student)/profile/` |
-| 3 AI Skill Challenges | Azim | mobile | `apps/mobile/app/(student)/challenges/` |
-| 4 Micro-Projects & Mentor Verification | Fiona | web | `apps/web/src/app/(portal)/projects/` |
-| 5 Skill Passport & Talent Analytics | Azim | mobile + web | `apps/mobile/app/(student)/passport/`, `apps/web/src/app/(portal)/analytics/` |
-| Shared core (auth, users, skills, status) | Azim | both | `apps/*/lib/`, `supabase/migrations/` |
+Mobile paths are inside `apps/mobile/`: a tab screen in `app/(tabs)/`, its other screens in `app/<area>/`, their parts in `components/<area>/`, data in `lib/<area>.ts` with demo data in `lib/demo/<area>.ts`.
 
-Folder names are the plan; the first PR that creates a folder fixes its name.
+| Module | Owner | App | Folders |
+|---|---|---|---|
+| 1 Industry Standards & Curriculum Alignment | Iskandar | web | `apps/web/src/app/(portal)/standards/` (after the portal shell) |
+| 2 Profile, Skill Gap & AI Matching | Insyirah | mobile | `app/(tabs)/profile.tsx`, `app/profile/`, `components/profile/`, `lib/profile.ts`, `lib/fitEngine.ts` |
+| 3 AI Skill Challenges | Azim | mobile | `app/(tabs)/challenges.tsx`, `app/challenges/`, `components/challenges/`, `lib/challenges.ts` |
+| 4 Micro-Projects & Mentor Verification | Fiona | mobile + web | students: `app/(tabs)/projects.tsx`, `app/projects/`, `components/projects/`, `lib/projects.ts` · mentors: `apps/web/src/app/(portal)/projects/` (after the portal shell) |
+| 5 Skill Passport & Talent Analytics | Azim | mobile + web | `app/(tabs)/passport.tsx`, `components/passport/`, `lib/passport.ts`, `app/progress.tsx` · `apps/web/src/app/(portal)/analytics/` |
+| Shared core (auth, users, skills, status) | Azim | both | `app/(auth)/`, `lib/auth.ts`, `lib/onboarding.ts`, Home, `components/ui/`, `packages/tokens/`, the core tables in `supabase/migrations/` |
+
+Web folder names are still the plan; the first PR that creates a folder fixes its name.
