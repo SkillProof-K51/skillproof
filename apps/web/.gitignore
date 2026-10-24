@@ -32,6 +32,8 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# …except the template every clone copies (names only, never values — AGENTS.md rule 5)
+!.env.example
 
 # vercel
 .vercel

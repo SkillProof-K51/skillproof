@@ -70,7 +70,7 @@ One screen + one table. It proves your setup works and teaches the loop while no
 
 1. Branch: `feat/warmup-<yourname>`.
 2. **One screen** in your module's app: students' modules (M2, M3, M5) → `apps/mobile`; company/mentor/admin modules (M1, M4) → `apps/web`. A heading, a short line of text, one button that shows an alert is enough. Keep it under 50 lines.
-3. **One table**: copy `supabase/migrations/0001_warmup_notes.sql` to `0002_warmup_<yourname>.sql`, rename the table (`warmup_<yourname>`), change one column. Keep the Row Level Security block exactly as it is: that pattern is rule 1 of `AGENTS.md` and every real table will follow it.
+3. **One table**: copy `supabase/migrations/0001_warmup_notes.sql` to a new file named with the current UTC date and time, `YYYYMMDDHHMMSS_warmup_<yourname>.sql` (e.g. `20261026093000_warmup_fiona.sql` — the time keeps two people's files from ever clashing), rename the table (`warmup_<yourname>`), change one column. Keep the Row Level Security block exactly as it is: that pattern is rule 1 of `AGENTS.md` and every real table will follow it.
 4. `pnpm check` green → commit → push → PR → explain your code in the template → request Azim as reviewer.
 5. Azim reviews within a day and merges. Then you're ready for your module.
 

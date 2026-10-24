@@ -17,7 +17,7 @@ Read `docs/spec.md` (what we build, by module) before writing code. `docs/progre
 | `apps/mobile/` | Expo app — `app/` screens, `components/ui/` (the kit), `components/<area>/` (screen parts), `lib/` (data access) |
 | `packages/tokens/` | design tokens: edit `src/index.ts`, then `pnpm --filter @skillproof/tokens build` |
 | `apps/web/src/` | Next.js — `app/` routes, `components/`, `lib/` (data access, server actions) |
-| `supabase/migrations/` | database schema, one file per change; `supabase/seed.sql` demo data |
+| `supabase/migrations/` | database schema, one file per change, named `YYYYMMDDHHMMSS_<what>.sql` (UTC — branches never clash; `0001`/`0002` stay as they are); `supabase/seed.sql` demo data |
 | `docs/` | `spec.md`, `progress.md`, `ui.md`, `ai-use-log.md`, `data-contracts.md` |
 
 ## Rules
