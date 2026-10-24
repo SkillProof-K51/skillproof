@@ -16,6 +16,8 @@ export type PassportData = {
   student: { name: string; pathLabel: string };
   /** Verified first, then Practised, newest first within each. */
   skills: PassportSkill[];
+  /** The role's roadmap skills in order (Module 2) — one badge each, locked until Practised. */
+  roadmap: string[];
   /** isPublic = anyone with the link can open the passport. */
   share: { isPublic: boolean; link: string };
 };
@@ -26,6 +28,16 @@ export type PassportData = {
  */
 export function getPassportData(): PassportData | null {
   return isTestMode ? demoPassport : null;
+}
+
+/** A badge on the passport: one skill and how far it has come. */
+export type PassportBadge = { skill: string; status: PassportSkill["status"] | "not_yet" };
+
+/** One badge per roadmap skill in roadmap order, then any proven skill that isn't on the roadmap. */
+export function passportBadges(data: PassportData): PassportBadge[] {
+  const status = new Map(data.skills.map((s) => [s.skill, s.status]));
+  const offRoadmap = data.skills.map((s) => s.skill).filter((skill) => !data.roadmap.includes(skill));
+  return [...data.roadmap, ...offRoadmap].map((skill) => ({ skill, status: status.get(skill) ?? "not_yet" }));
 }
 
 const NBSP = "\u00a0"; // keeps "rated 4 of 5" and "best 85%" whole when a line wraps

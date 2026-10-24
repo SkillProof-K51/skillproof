@@ -35,6 +35,11 @@ type Props = {
    * is `layout.sceneHeight` tall and the first card slides `layout.sceneOverlap` up over its bottom.
    */
   scene?: ImageSource | number;
+  /**
+   * No sky: the title sits on the page itself, BitePal-style (tab screens, Azim 25 Oct). The first
+   * card follows `space.xl` below the hero's content.
+   */
+  plain?: boolean;
   /** The hero's content (greeting, title, and anything else), laid out top-down under the status bar. */
   children?: ReactNode;
 };
@@ -44,9 +49,16 @@ type Props = {
  * The sky grows with the content (never shorter than `size`/`height`). Put it first in a <Screen>;
  * the content after it starts on the sheet, `layout.sheetGap` below the sky's edge, automatically.
  */
-export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, scene, children }: Props) {
+export function Hero({ size = "tall", height, mascot, mascotWidth = DEFAULT_MASCOT_WIDTH, mascotAlign = "right", bubble, scene, plain, children }: Props) {
   if (scene) return <SceneHero scene={scene}>{children}</SceneHero>;
+  if (plain) return <PlainHero>{children}</PlainHero>;
   return <SkyHero {...{ size, height, mascot, mascotWidth, mascotAlign, bubble }}>{children}</SkyHero>;
+}
+
+/** Just the content, under the status bar, on the page colour. */
+function PlainHero({ children }: { children?: ReactNode }) {
+  const insets = useSafeAreaInsets();
+  return <View style={[styles.plain, { paddingTop: insets.top + HEADER_BELOW_STATUS_BAR }]}>{children}</View>;
 }
 
 /** The illustrated scene: the picture fills the top, anchored to its ground line at the bottom. */
@@ -90,6 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.gutter,
     paddingBottom: CONTENT_BOTTOM,
   },
+  plain: { paddingHorizontal: layout.gutter, paddingBottom: space.xl },
   scene: {
     minHeight: layout.sceneHeight,
     marginBottom: -layout.sceneOverlap, // the first card slides up over the scene's ground

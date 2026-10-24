@@ -15,8 +15,8 @@ type Props = {
 };
 
 /**
- * A rounded sky surface inside the page — the celebration beat of a Result screen, or anywhere a
- * mascot or stamp needs the sky behind it without a full Hero. Sky at the top fading into the
+ * A rounded sky surface inside the page — anywhere a mascot or a sky-toned piece needs the sky
+ * behind it without a full Hero (the kit's demos). Sky at the top fading into the
  * page colour (Azim's pick, 18 Oct), so it sits lightly under the painted hero.
  */
 export function SkyPanel({ style, fadeTo = "page", children }: Props) {

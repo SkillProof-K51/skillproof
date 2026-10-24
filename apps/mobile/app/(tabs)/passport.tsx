@@ -4,16 +4,17 @@ import { useState } from "react";
 import { Share, StyleSheet, View } from "react-native";
 
 import { ModulePlaceholder } from "../../components/ModulePlaceholder";
+import { PassportBadges } from "../../components/passport/PassportBadges";
 import { PassportCover } from "../../components/passport/PassportCover";
 import { QrSheet } from "../../components/passport/QrSheet";
 import { SharingCard } from "../../components/passport/SharingCard";
 import { ShownSkillsSheet } from "../../components/passport/ShownSkillsSheet";
 import { SkillEvidenceList } from "../../components/passport/SkillEvidenceList";
 import { Card, Dialog, EmptyState, Hero, Screen, SectionHeader, Text, useToast } from "../../components/ui";
-import { getPassportData, savePassportSharing } from "../../lib/passport";
+import { getPassportData, passportBadges, savePassportSharing } from "../../lib/passport";
 
 /**
- * Skill Passport (Module 5 home, reference screen): the open passport on the sky, who can see it
+ * Skill Passport (Module 5 home, reference screen): the open passport, its badges, who can see it
  * (public switch with consent, skills shown, Share link, QR code), then every skill with its evidence.
  * Saves show a toast; failures an error toast that stays (rule 11).
  */
@@ -68,19 +69,20 @@ export default function PassportScreen() {
 
   return (
     <Screen>
-      <Hero>
+      <Hero plain>
         <View style={styles.heading}>
           <Text variant="title">Skill Passport</Text>
           <Text variant="small" color="secondary">
             Your proven skills, ready to share
           </Text>
         </View>
-        <PassportCover student={data.student} verified={verified.length} practised={practised.length} share={{ ...data.share, isPublic }} />
       </Hero>
 
       <View style={styles.content}>
+        <PassportCover student={data.student} verified={verified.length} practised={practised.length} share={{ ...data.share, isPublic }} />
         {skills.length ? (
           <>
+            <PassportBadges badges={passportBadges(data)} onUnlockMore={() => router.navigate("/challenges")} />
             <SectionHeader title="Sharing" />
             <SharingCard
               isPublic={isPublic}
@@ -132,6 +134,6 @@ export default function PassportScreen() {
 }
 
 const styles = StyleSheet.create({
-  heading: { gap: space.xxs, marginBottom: space.lg },
+  heading: { gap: space.xxs },
   content: { paddingHorizontal: layout.gutter, gap: gap.loose },
 });

@@ -12,5 +12,7 @@ export const demoPassport: PassportData = {
     { skill: "React", status: "practised", evidence: { kind: "challenges", passed: 3, best: 92 }, shown: true },
     { skill: "TypeScript", status: "practised", evidence: { kind: "challenges", passed: 3, best: 85 }, shown: false },
   ],
+  // Home's roadmap, in the same order: Node.js is the one still locked
+  roadmap: ["HTML and CSS", "JavaScript", "Git", "React", "TypeScript", "Node.js"],
   share: { isPublic: true, link: "skillproof.test/p/aina-sofea" },
 };

@@ -1,13 +1,12 @@
-import { layout, space } from "@skillproof/tokens";
+import { colors, layout, radius, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import type { ChallengeResult } from "../../lib/challenges";
-import { Button, GroundedMascot, SkillLogo, SkyPanel, Stamp, Text } from "../ui";
+import { toPractisedLabel, type ChallengeResult } from "../../lib/challenges";
+import { Button, SegmentedProgress, SkillBadge, Text, type SegmentFill } from "../ui";
 
-const MASCOT = 220; // the celebrate pose, big: this beat is the moment (sharp up to ~240 on a 3× phone)
-const LIFT = 48; // the group sits a little above the middle — the optical centre
-const LOGO = 22; // the skill's logo beside its name under the stamp
+const BADGE = 176; // the skill's badge, big: this beat is the moment
+const LIFT = 32; // the group sits a little above the middle — the optical centre
 
 type Props = {
   result: ChallengeResult;
@@ -16,37 +15,59 @@ type Props = {
 };
 
 /**
- * Beat 1 of a passed Result: the celebration. A full-height sky panel (sky → soft sky, so it keeps
- * its whole shape — Azim's pick, 19 Oct) with the celebrating mascot, then the stamp slams down —
- * PRACTISED when this pass made the skill Practised, PASSED otherwise (both blue: a pass counts
- * toward Practised) — and the skill's count. One button: on to the details.
+ * Beat 1 of a passed Result: the celebration. The skill's badge is the moment (Azim, 25 Oct — it
+ * replaced the mascot and the stamp): when this pass made the skill Practised, the badge pops open
+ * from locked; otherwise it stays locked and the passes so far fill in under it. One button: on
+ * to the details.
  */
 export function ResultCelebration({ result, onContinue }: Props) {
   const insets = useSafeAreaInsets();
   const { progress, nowPractised } = result;
+  const passes: SegmentFill[] = Array.from({ length: progress.of }, (_, i) => (i < progress.passed ? "strong" : "empty"));
   return (
     <View style={[styles.page, { paddingTop: insets.top + space.lg, paddingBottom: insets.bottom + space.xl }]}>
-      <SkyPanel fadeTo="soft" style={styles.panel}>
-        <GroundedMascot pose="celebrate" width={MASCOT} />
-        <Stamp status="practised" label={nowPractised ? undefined : "Passed"} slam />
+      <View style={styles.panel}>
+        {nowPractised ? (
+          <SkillBadge skill={progress.skill} status="practised" from="not_yet" size={BADGE} />
+        ) : (
+          <SkillBadge skill={progress.skill} status="not_yet" size={BADGE} />
+        )}
         <View style={styles.caption}>
-          <View style={styles.skill}>
-            <SkillLogo skill={progress.skill} size={LOGO} />
-            <Text variant="heading">{nowPractised ? `${progress.skill} is Practised` : progress.skill}</Text>
-          </View>
+          <Text variant="headline" align="center">
+            {nowPractised ? `${progress.skill}, Practised!` : "Passed!"}
+          </Text>
           <Text variant="body" color="secondary" align="center">
-            {progress.passed} of {progress.of} challenges passed
+            {nowPractised
+              ? "Badge unlocked. A mentor-reviewed project makes it Verified."
+              : `${progress.passed} of ${progress.of} ${progress.skill} challenges passed`}
           </Text>
         </View>
-      </SkyPanel>
+        {nowPractised ? null : (
+          <View style={styles.passes}>
+            <SegmentedProgress segments={passes} accessibilityLabel={`${progress.passed} of ${progress.of} challenges passed`} />
+            <Text variant="label" color="secondary" align="center">
+              {toPractisedLabel(progress)}
+            </Text>
+          </View>
+        )}
+      </View>
       <Button label="See your result" block onPress={onContinue} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, paddingHorizontal: layout.gutter, gap: space.lg },
-  panel: { flex: 1, justifyContent: "center", gap: space.xl, paddingBottom: LIFT },
-  caption: { alignItems: "center", gap: space.xxs },
-  skill: { flexDirection: "row", alignItems: "center", gap: space.sm },
+  page: { flex: 1, paddingHorizontal: layout.gutter, gap: space.lg, backgroundColor: colors.bg.app },
+  panel: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: space.xl,
+    paddingHorizontal: space.xl,
+    paddingBottom: LIFT,
+    borderRadius: radius.xl,
+    backgroundColor: colors.bg.surface,
+  },
+  caption: { alignItems: "center", gap: space.sm },
+  passes: { width: BADGE, gap: space.sm },
 });

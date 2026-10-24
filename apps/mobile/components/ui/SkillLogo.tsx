@@ -28,18 +28,29 @@ const BY_SKILL: Record<string, SkillLogoKey | SkillLogoKey[] | { icon: IconName 
 };
 const FALLBACK: IconName = "seedling";
 
+/** The skill's logo keys, or the icon it shows instead. */
+function lookup(skill: string): { keys: SkillLogoKey[] } | { icon: IconName } {
+  const match = BY_SKILL[skill.trim().toLowerCase()];
+  if (!match) return { icon: FALLBACK };
+  if (typeof match === "object" && !Array.isArray(match)) return match;
+  return { keys: Array.isArray(match) ? match : [match] };
+}
+
+/** How many logos sit side by side: 2 for a combined skill ("HTML and CSS"), else 1. */
+export function skillLogoCount(skill: string): number {
+  const logo = lookup(skill);
+  return "keys" in logo ? logo.keys.length : 1;
+}
+
 type Props = { skill: string; size?: number };
 
 /** The skill's own logo in its brand colour (Simple Icons), or a matching icon when it has none. */
 export function SkillLogo({ skill, size = 14 }: Props) {
-  const match = BY_SKILL[skill.trim().toLowerCase()];
-  if (!match || (typeof match === "object" && !Array.isArray(match))) {
-    return <Icon name={match ? (match as { icon: IconName }).icon : FALLBACK} size={size} color={colors.icon.default} />;
-  }
-  const keys = Array.isArray(match) ? match : [match];
+  const logo = lookup(skill);
+  if ("icon" in logo) return <Icon name={logo.icon} size={size} color={colors.icon.default} />;
   return (
     <View style={styles.row}>
-      {keys.map((key) => {
+      {logo.keys.map((key) => {
         const logo = SKILL_LOGOS[key];
         return (
           <Svg key={key} width={size} height={size} viewBox="0 0 24 24" accessibilityLabel={`${logo.title} logo`}>

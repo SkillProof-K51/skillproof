@@ -1,45 +1,32 @@
 import { colors, radius, space } from "@skillproof/tokens";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { BarChart, GroundedMascot, SkillLogo, SkyPanel, Stamp, Stat, Text } from "../ui";
+import { BarChart, Button, SkillBadge, Stat, Text } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
-const MASCOT = 110;
-const LOGO = 22; // the skill's logo beside its name under the stamp
+const POP = 120; // a win's badge, smaller than on the Result so two fit side by side
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MINUTES = [7, 5, 17, 8, 4, 12, 9]; // practice minutes per day
 const GOAL = 15; // minutes a day
 
-/** Results & reports: the Stamp for the Result screens; BarChart and Stat tiles for the report screens. */
+/** Results & reports: SkillBadge for the Passport and a Result's win; BarChart and Stat tiles for the report screens. */
 export function ResultsDemo() {
+  const [run, setRun] = useState(0); // a new key replays the pop
   return (
-    <KitSection title="Results & reports" components="Stamp · SkyPanel · BarChart · Stat">
-      <KitLabel>Stamp on a SkyPanel · the celebration beat of a Result: Module 3 stamps Practised, Module 4 stamps Verified</KitLabel>
-      <SkyPanel>
-        <GroundedMascot pose="celebrate" width={MASCOT} />
-        <Stamp status="practised" />
-        <View style={styles.caption}>
-          <View style={styles.skill}>
-            <SkillLogo skill="Node.js" size={LOGO} />
-            <Text variant="heading">Node.js</Text>
-          </View>
-          <Text variant="body" color="secondary" align="center">
-            3 of 3 challenges passed
-          </Text>
-        </View>
-      </SkyPanel>
-      <SkyPanel>
-        <Stamp status="verified" />
-        <View style={styles.caption}>
-          <View style={styles.skill}>
-            <SkillLogo skill="HTML and CSS" size={LOGO} />
-            <Text variant="heading">HTML and CSS</Text>
-          </View>
-          <Text variant="body" color="secondary" align="center">
-            Mentor rated 4 of 5
-          </Text>
-        </View>
-      </SkyPanel>
+    <KitSection title="Results & reports" components="SkillBadge · BarChart · Stat">
+      <KitLabel>SkillBadge · one per skill on the Passport: Verified, Practised, locked</KitLabel>
+      <View style={styles.badges}>
+        <SkillBadge skill="HTML and CSS" status="verified" />
+        <SkillBadge skill="React" status="practised" />
+        <SkillBadge skill="Node.js" status="not_yet" />
+      </View>
+      <KitLabel>SkillBadge from · a Result’s win: Module 3 pops not_yet → practised, Module 4 practised → verified</KitLabel>
+      <View style={styles.badges}>
+        <SkillBadge key={`practised${run}`} skill="Node.js" status="practised" from="not_yet" size={POP} />
+        <SkillBadge key={`verified${run}`} skill="JavaScript" status="verified" from="practised" size={POP} />
+      </View>
+      <Button label="Play again" icon="retry" variant="secondary" onPress={() => setRun((n) => n + 1)} />
 
       <KitLabel>BarChart · one series, one hue; the highlighted column is today; the track is the goal</KitLabel>
       <View style={styles.well}>
@@ -86,8 +73,7 @@ export function ResultsDemo() {
 }
 
 const styles = StyleSheet.create({
-  caption: { alignItems: "center", gap: space.xxs, marginTop: space.xs },
-  skill: { flexDirection: "row", alignItems: "center", gap: space.sm },
+  badges: { flexDirection: "row", justifyContent: "space-around", alignItems: "center" },
   well: { gap: space.lg, padding: space.md, borderRadius: radius.xl, backgroundColor: colors.bg.app },
   report: { flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" },
   hero: { flexDirection: "row", alignItems: "baseline", gap: space.xs },

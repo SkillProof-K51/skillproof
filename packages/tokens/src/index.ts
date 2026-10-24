@@ -126,6 +126,7 @@ export const motion = {
   standard: 250, // sheets and dialogs opening
   toast: 3000, // how long a success / info toast stays (error toasts stay until closed)
   breath: 2400, // one in-and-out of the mascot's idle bob
+  pop: 700, // a badge opening on a win: squeeze, spring, sparks (Result)
 } as const;
 
 /** Press feedback for anything tappable. */
@@ -184,7 +185,6 @@ export const type = {
   captionStrong: { family: "sans", weight: 700, size: 12, lineHeight: 16, letterSpacing: 0 }, // chips
   sectionLabel: { family: "sans", weight: 600, size: 13, lineHeight: 18, letterSpacing: 0 }, // grey, sentence case ("Micro-projects for you")
   overline: { family: "sans", weight: 700, size: 12, lineHeight: 16, letterSpacing: 0.8, uppercase: true }, // small caps label over a value ("UP NEXT")
-  stamp: { family: "display", weight: 800, size: 24, lineHeight: 30, letterSpacing: 1.2, uppercase: true }, // the PRACTISED / VERIFIED stamp
   code: { family: "mono", weight: 400, size: 13, lineHeight: 20, letterSpacing: 0 },
 } as const satisfies Record<string, TypeStyle>;
 

@@ -25,7 +25,7 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
   </View>
 </Screen>
 ```
-- **Hero first.** `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists. The first card starts on the sheet, `layout.sheetGap` (24) below the sky's edge, automatically.
+- **Hero first.** `plain` = no sky, the title on the page itself: the BitePal look every screen is moving to (Skill Passport and Result have it). Until a screen moves: `size="tall"` (290) on a module's first screen, `"compact"` (180) on sub-screens, auth and lists; the first card starts on the sheet, `layout.sheetGap` (24) below the sky's edge, automatically.
 - **One mascot per module home**: in the hero (`<Hero mascot>`) or standing on the sheet edge beside the first section (`<SectionHeader mascot>`, Home's choice); at most one more inside a card. No mascot on task screens (Fix the bug, SQL live, Explain it) or on the filled Skill Passport.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
 - **Cards are flat**: white (`tone="surface"`) with big soft corners on the lavender page; the role tint (`tone="role"`) for today's challenge; blue for projects. No decoration on cards — no circles, borders or shadows.
@@ -39,8 +39,8 @@ Each one shows a pattern end to end on demo data (TEST MODE). Open it from the t
 | Welcome | `app/(auth)/welcome.tsx` | onboarding: the mascot centred in a tall sky, steps, one strong button |
 | Sign up · Log in | `app/(auth)/sign-up.tsx` · `log-in.tsx` | any form — see **Forms** below |
 | Challenges | `app/(tabs)/challenges.tsx` | a module home: hero + mascot, today's card, a progress list, `SegmentedControl` filter + list, `EmptyState` |
-| Result | `app/challenges/result.tsx` | an outcome in two beats: the celebration (`SkyPanel fadeTo="soft"` + `Stamp slam`), then the details. Module 4's Verified result is the same with `status="verified"` |
-| Skill Passport | `app/(tabs)/passport.tsx` | settings with consequences: a `Switch` behind a consent `Dialog`, a `BottomSheet` of `Checkbox`es, save → toast, the share sheet, `QrCode` |
+| Result | `app/challenges/result.tsx` | an outcome in two beats: the celebration (the skill's badge pops open: `<SkillBadge status="practised" from="not_yet">`), then the details. Module 4's Verified result is the same with `status="verified" from="practised"` |
+| Skill Passport | `app/(tabs)/passport.tsx` | a badge per roadmap skill (`SkillBadge` grid, data from `passportBadges()` in `lib/`), then settings with consequences: a `Switch` behind a consent `Dialog`, a `BottomSheet` of `Checkbox`es, save → toast, the share sheet, `QrCode` |
 
 ## Every component, live: `/kit`
 Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placeholder tab in a dev build. Every variant and state is there on the real tokens — plan your module's screens from it.
@@ -51,8 +51,8 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 | Text & actions | `Text` · `Button` (primary · secondary · danger · text) · `IconButton` · `Chip` · `Icon` |
 | Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
-| Status & progress | `StatusBadge` · `Stamp` (`slam` on a celebration) · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
-| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `SkyPanel` (sky surface; `fadeTo="soft"` when it fills the screen) |
+| Status & progress | `StatusBadge` · `SkillBadge` (a skill's hexagon: Verified / Practised / locked; `from` pops it open on a win) · `SegmentedProgress` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
+| Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `SkyPanel` (sky surface, for the kit's sky demos) |
 | Sharing | `QrCode` (a link to scan — navy on white, never inverted) |
 | Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` |
 | Mascot | `Mascot` · `GroundedMascot` · `MascotShadow` · `SpeechBubble` |
@@ -77,7 +77,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 - Values arrive computed and formatted (rule 2); these only draw them.
 
 ## Motion
-Durations are the `motion` tokens (quick · standard · toast · breath). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components. The one motion moment of a Result is the stamp landing (`<Stamp slam />`).
+Durations are the `motion` tokens (quick · standard · toast · breath · pop). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components. The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
 
 ## Demo data
 Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MODE · demo data** strip appears under the status bar on every screen by itself (rule 4) — never fake data without it.
@@ -90,13 +90,13 @@ Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MOD
 | role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars and segments |
 | butter (`accent.butter`) | test mode | TEST MODE labels (the strip, "Demo grade") |
 | navy (`action.primaryStrong`) | the main action | the one primary button per screen |
-| navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page — gold never anywhere else |
+| navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page, and skill badges wherever they appear (`SkillBadge`) — gold never anywhere else |
 | brand blue (`accent.brand`) on soft sky (`accent.skySoft`) | where you are | the active tab in the bottom nav |
 | `feedback.success` / `error` / `info` | an outcome, just now | toasts, field errors, inline messages — never a skill status |
 Never use a status colour as decoration.
 
 ## Text
-Always `<Text variant="…">` (display · title · heading · subheading · bodyStrong · body · label · small · caption · captionStrong · sectionLabel · stamp · code). Never set `fontFamily` or `fontSize` yourself.
+Always `<Text variant="…">` (display · headline · title · heading · subheading · bodyStrong · body · label · small · caption · captionStrong · sectionLabel · overline · code). Never set `fontFamily` or `fontSize` yourself.
 
 ## When something needs to change
 - **A value is wrong everywhere** (a colour, a gap) → change it in `packages/tokens/src/index.ts`, run `pnpm --filter @skillproof/tokens build` (CI fails if you forget). Tokens are shared core — Azim reviews the PR.
