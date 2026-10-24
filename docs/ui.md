@@ -76,7 +76,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 - A headline number is a `<Stat>`: label, icon, value with its unit, optional signed `delta`. Two in a row on the page. A trend goes in a `<BarChart>` beside it, not inside the tile.
 - A series is a `<BarChart>`: **one hue** — the highlighted column in the role purple, the rest a lighter step of it, a faint track to the goal. Never two y-axes, never a pie.
 - The figure wears text ink. Meaning lives in the icon circle (green = Verified, blue = Practised) — never colour the number, and never colour alone: always icon + label.
-- Parts of a whole → a `<StackedBar>` (2px gaps, a fixed order) with a legend that has every count. Over time → a `<LineChart>`: one series, its true scale (0–100 for a percentage, even if the line looks flat), solid hairline grid, a reference line when the scale has one (Ready at 70%), only the last point labelled. No donut for close values.
+- Parts of a whole → a `<StackedBar>` (2px gaps, a fixed order) with a legend that has every count. Over time → a `<LineChart>` (Azim's pick, 25 Oct): one series, the scale zoomed to where it moves (snapped to tens, three labelled ticks — fine for a line, never for bars, which start at zero), a hollow dot per point on a faint day line, solid hairline grid, a reference line when the scale has one (Ready at 70%), only the last point labelled. No donut for close values.
 - A chart's colours are checked, not eyeballed: the kinds' `mark` colours passed the dataviz validator (colour-blind separation ΔE ≥ 15.9 on white). Text stays in text colours, never the series colour; each chart's `accessibilityLabel` lists every value (its table view).
 - Values arrive computed and formatted (rule 2); these only draw them.
 

@@ -6,7 +6,8 @@ import { Card, LineChart, Text } from "../ui";
 
 /**
  * Progress's second card: readiness now (from Module 2's fit engine), its change this week, and the
- * week as a line on the true 0–100 scale with the Ready line. Only the last point is labelled.
+ * week as a dotted line (Azim's pick of 3 styles) zoomed to where it moves, with the Ready line.
+ * Only the last point is labelled.
  */
 export function ReadinessTrendCard({ readiness }: { readiness: ProgressData["readiness"] }) {
   const { days, readyAt, role } = readiness;

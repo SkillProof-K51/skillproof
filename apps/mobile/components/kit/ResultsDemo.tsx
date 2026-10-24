@@ -65,7 +65,7 @@ export function ResultsDemo() {
         ]}
         accessibilityLabel="12 challenges: Fix the bug 5, SQL live 4, Explain it 3"
       />
-      <KitLabel>LineChart · one series over time on its true scale, a reference line, only the end labelled</KitLabel>
+      <KitLabel>LineChart · one series over time: zoomed to where it moves, a dot per point, a reference line, only the end labelled</KitLabel>
       <LineChart
         values={[64, 64, 66, 68, 68, 70, 72]}
         labels={["S", "M", "T", "W", "T", "F", "S"]}
