@@ -37,7 +37,7 @@ export function useTabBarHeight(): number {
  * accessibility label. The material is Liquid Glass on iOS 26, a frosted blur elsewhere, solid
  * when "Reduce Transparency" is on.
  */
-export function TabBar({ state, descriptors, navigation }: TabBarProps) {
+export function TabBar({ state, descriptors, emitter, navigateToTab }: TabBarProps) {
   const insets = useSafeAreaInsets();
   return (
     <View pointerEvents="box-none" style={[styles.dock, { paddingBottom: Math.max(insets.bottom, space.md) }]}>
@@ -50,8 +50,9 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
           const { options } = descriptors[route.key];
           const label = typeof options.title === "string" ? options.title : route.name;
           const onPress = () => {
-            const event = navigation.emit({ type: "tabPress", target: route.key, canPreventDefault: true });
-            if (!focused && !event.defaultPrevented) navigation.navigate(route.name, route.params);
+            // the same as expo-router's own tab bar (SDK 58): tell listeners, then switch unless one said no
+            const event = emitter.emit({ type: "tabPress", target: route.key, canPreventDefault: true });
+            if (!focused && !event.defaultPrevented) navigateToTab(route.key);
           };
           return (
             <Pressable

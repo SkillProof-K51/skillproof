@@ -1,7 +1,7 @@
 import { gap, layout, space } from "@skillproof/tokens";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import { StyleSheet, View, type TextInput } from "react-native";
+import { StyleSheet, View, type TextInputInstance } from "react-native";
 
 import { Button, Checkbox, Hero, Screen, Select, Text, TextField, TopBar, useToast } from "../../components/ui";
 import { getTargetRoles, MIN_PASSWORD, signUp, validateSignUp, type SignUpInput } from "../../lib/auth";
@@ -22,8 +22,8 @@ export default function SignUpScreen() {
   const [form, setForm] = useState<SignUpInput>({ name: "", email: "", password: "", roleId: answers.roleId, consent: false });
   const [tried, setTried] = useState(false);
   const [busy, setBusy] = useState(false);
-  const emailRef = useRef<TextInput>(null);
-  const passwordRef = useRef<TextInput>(null);
+  const emailRef = useRef<TextInputInstance>(null);
+  const passwordRef = useRef<TextInputInstance>(null);
   const errors = tried ? validateSignUp(form) : {};
   const set =
     <K extends keyof SignUpInput>(key: K) =>

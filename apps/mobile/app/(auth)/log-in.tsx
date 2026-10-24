@@ -1,7 +1,7 @@
 import { gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import { StyleSheet, View, type TextInput } from "react-native";
+import { StyleSheet, View, type TextInputInstance } from "react-native";
 
 import { Button, Hero, Screen, Text, TextField, TopBar, useToast } from "../../components/ui";
 import { logIn, sendPasswordReset, validateLogIn, type LogInInput } from "../../lib/auth";
@@ -16,7 +16,7 @@ export default function LogInScreen() {
   const [form, setForm] = useState<LogInInput>({ email: "", password: "" });
   const [tried, setTried] = useState(false);
   const [busy, setBusy] = useState(false);
-  const passwordRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInputInstance>(null);
   const errors = tried ? validateLogIn(form) : {};
   const set = (key: keyof LogInInput) => (value: string) => setForm((f) => ({ ...f, [key]: value }));
   const fail = (e: unknown) => toast({ message: e instanceof Error ? e.message : "Something went wrong. Try again.", tone: "error" });

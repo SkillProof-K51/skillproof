@@ -1,6 +1,6 @@
 import { colors, type } from "@skillproof/tokens";
 import { useState, type Ref } from "react";
-import { Pressable, StyleSheet, TextInput, type TextInputProps } from "react-native";
+import { Pressable, StyleSheet, TextInput, type TextInputInstance, type TextInputProps } from "react-native";
 
 import { FieldFrame } from "./Field";
 import { fontFamilyFor } from "./fonts";
@@ -19,7 +19,7 @@ type Props = Omit<TextInputProps, "style" | "secureTextEntry" | "placeholderText
   /** Leading glyph inside the field. */
   icon?: IconName;
   /** To move focus here from the field before (returnKeyType="next" + onSubmitEditing). */
-  ref?: Ref<TextInput>;
+  ref?: Ref<TextInputInstance>;
 };
 
 /**

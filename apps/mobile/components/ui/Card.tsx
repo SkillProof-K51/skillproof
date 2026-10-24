@@ -1,5 +1,5 @@
 import { colors, opacity, radius, space } from "@skillproof/tokens";
-import { Pressable, StyleSheet, View, type PressableProps, type ViewProps, type ViewStyle } from "react-native";
+import { Pressable, StyleSheet, View, type PressableProps, type StyleProp, type ViewProps, type ViewStyle } from "react-native";
 
 type Tone = "surface" | "role" | "butter" | "blue" | "passport";
 
@@ -12,7 +12,7 @@ type Props = ViewProps & {
   tone?: Tone;
   /** Makes the card tappable — the whole card is the button. */
   onPress?: PressableProps["onPress"];
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 };
 
 /** Flat card: big soft corners (radius.xl), padding 16, no border, no shadow, no decoration. */

@@ -4,7 +4,7 @@ BITU3923 Workshop II · Group K51 · Supervisor: Ts. Dr. Farah Nadia Azman.
 Read `docs/spec.md` (what we build, by module) before writing code. `docs/progress.md` says what is done and what is next — update it when you finish a step.
 
 ## Stack (fixed — agreed by the team and approved by the supervisor; don't swap)
-- **Mobile app (students)**: Expo SDK 57 (React Native) + TypeScript → `apps/mobile` — 57 because the store Expo Go still runs 57; one upgrade PR to 58 when it moves (`docs/progress.md`)
+- **Mobile app (students)**: Expo SDK 58 (React Native 0.88) + TypeScript → `apps/mobile` — the SDK the App Store / Play Store Expo Go runs; when Expo Go moves to the next SDK, one upgrade PR follows (`npx expo install expo@^<n> --fix`)
 - **Design system**: `packages/tokens` (`@skillproof/tokens` — colours, type, spacing) + the UI kit in `apps/mobile/components/ui` → how to use them: `docs/ui.md`. **The code is the design source of truth**; the Figma file was the starting sketch and is no longer updated — don't copy values from it.
 - **Web portal (companies, mentors, university coordinators, admin)**: Next.js 16 App Router + TypeScript + Tailwind CSS 4 → `apps/web`
 - **Backend**: one Supabase project — Postgres, Auth, Storage, Row Level Security → `supabase/`
