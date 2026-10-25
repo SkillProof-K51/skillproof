@@ -32,7 +32,7 @@ export function ProjectCard({ project, eyebrow, onView, onPractise, style }: Pro
 
   return (
     <Card
-      style={StyleSheet.flatten([styles.card, style])}
+      style={[styles.card, style]}
       accessibilityLabel={locked ? `${project.title}, locked until ${project.lockedBy} is Practised` : undefined}
     >
       <View style={styles.top}>

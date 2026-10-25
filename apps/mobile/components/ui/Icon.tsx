@@ -1,5 +1,8 @@
 import { colors } from "@skillproof/tokens";
+import { ArrowClockwise } from "phosphor-react-native/src/icons/ArrowClockwise";
+import { ArrowRight } from "phosphor-react-native/src/icons/ArrowRight";
 import { Briefcase } from "phosphor-react-native/src/icons/Briefcase";
+import { Browser } from "phosphor-react-native/src/icons/Browser";
 import { CaretDown } from "phosphor-react-native/src/icons/CaretDown";
 import { CaretLeft } from "phosphor-react-native/src/icons/CaretLeft";
 import { Bug } from "phosphor-react-native/src/icons/Bug";
@@ -11,18 +14,26 @@ import { CheckCircle } from "phosphor-react-native/src/icons/CheckCircle";
 import { Clock } from "phosphor-react-native/src/icons/Clock";
 import { Compass } from "phosphor-react-native/src/icons/Compass";
 import { Database } from "phosphor-react-native/src/icons/Database";
+import { DeviceMobile } from "phosphor-react-native/src/icons/DeviceMobile";
 import { Envelope } from "phosphor-react-native/src/icons/Envelope";
 import { Eye } from "phosphor-react-native/src/icons/Eye";
 import { EyeSlash } from "phosphor-react-native/src/icons/EyeSlash";
+import { GraduationCap } from "phosphor-react-native/src/icons/GraduationCap";
 import { House } from "phosphor-react-native/src/icons/House";
 import { IdentificationCard } from "phosphor-react-native/src/icons/IdentificationCard";
 import { Info } from "phosphor-react-native/src/icons/Info";
+import { Lightbulb } from "phosphor-react-native/src/icons/Lightbulb";
 import { Lightning } from "phosphor-react-native/src/icons/Lightning";
 import { Lock } from "phosphor-react-native/src/icons/Lock";
+import { LockOpen } from "phosphor-react-native/src/icons/LockOpen";
 import { Microphone } from "phosphor-react-native/src/icons/Microphone";
 import { Plant } from "phosphor-react-native/src/icons/Plant";
+import { QrCode } from "phosphor-react-native/src/icons/QrCode";
 import { Play } from "phosphor-react-native/src/icons/Play";
+import { Rocket } from "phosphor-react-native/src/icons/Rocket";
 import { ShareNetwork } from "phosphor-react-native/src/icons/ShareNetwork";
+import { Sparkle } from "phosphor-react-native/src/icons/Sparkle";
+import { Star } from "phosphor-react-native/src/icons/Star";
 import { TestTube } from "phosphor-react-native/src/icons/TestTube";
 import { User } from "phosphor-react-native/src/icons/User";
 import { Warning } from "phosphor-react-native/src/icons/Warning";
@@ -59,9 +70,21 @@ const ICONS = {
   "x-circle": XCircle,
   "check-circle": CheckCircle,
   compass: Compass,
+  unlock: LockOpen, // a micro-project just opened (Result)
+  retry: ArrowClockwise, // try a challenge again
+  hint: Lightbulb, // a hint after a missed check
+  ai: Sparkle, // AI feedback — always with a label saying it's AI
+  qr: QrCode, // show the passport's QR code
   // skills without a logo (SkillLogo falls back to these)
   test: TestTube,
   chart: ChartBar,
+  "arrow-right": ArrowRight, // "See all →", "Up next →" on the dark progress card
+  // onboarding: the roles, the aims, the programme question, a mentor's rating
+  browser: Browser,
+  mobile: DeviceMobile,
+  rocket: Rocket,
+  graduation: GraduationCap,
+  star: Star,
 } as const;
 
 export type IconName = keyof typeof ICONS;

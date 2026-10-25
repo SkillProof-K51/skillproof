@@ -34,5 +34,13 @@ Proposed numbers (owners may refine, then update here): Readiness = Σ weight ×
 3. **Weeks 7–11**: each module on top of the core, in its own app and `lib/` folder.
 4. **Weeks 10–12**: integration + testing → Progress III live demo. Poster weeks 11–12. Showcase week 14.
 
+## Additions beyond the proposal
+Features the approved proposal didn't list, agreed later. They are in scope now — build and keep them like everything above. Add a row when one is agreed.
+
+| Date | Module | Addition | Asked by | Why |
+|---|---|---|---|---|
+| 19 Oct 2026 | 5 (Azim) | QR code for the public passport, in a sheet from the Sharing card — only while the passport is public | Azim | Employers scan it face to face, at career fairs and interviews |
+| 25 Oct 2026 | shared core + 3 (Azim) | A 12-screen onboarding: four "why SkillProof" screens, the sign-up questions (role, programme and year, skills used — only to pick the first challenges), a 30-second tap-the-bug warm-up before sign-up, the student's roadmap | Azim | The old onboarding was too short; long onboardings that personalise and let you try the product first (BitePal, Duolingo) keep students going |
+
 ## Out of scope
 Contracts and payments, non-technical skills, hosted lessons, official certification, voice answers (future work).

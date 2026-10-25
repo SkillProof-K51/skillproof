@@ -1,7 +1,7 @@
-import { space } from "@skillproof/tokens";
+import { colors, radius, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import { Avatar, Chip, IconBadge, ProgressBar, ProgressDots, ProgressRing, SkillLogo, SkyPanel, StatusBadge, Text } from "../ui";
+import { Avatar, Chip, IconBadge, ProgressBar, ProgressDots, ProgressRing, SkillLogo, StatusBadge, Text } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const RING_SMALL = 64;
@@ -12,12 +12,10 @@ const SKILLS = ["Node.js", "JavaScript", "TypeScript", "React", "HTML and CSS", 
 export function ProgressDemo() {
   return (
     <KitSection title="Progress & status" components="ProgressRing · ProgressBar · ProgressDots · StatusBadge · Chip · IconBadge · Avatar · SkillLogo">
-      <KitLabel>ProgressRing · full on cards, half gauge on the sky (Home)</KitLabel>
+      <KitLabel>ProgressRing · full, or a half gauge with a caption</KitLabel>
       <View style={styles.row}>
         <ProgressRing percent={72} size={RING_SMALL} />
-        <SkyPanel style={styles.flex}>
-          <ProgressRing percent={72} size={RING_HALF} tone="sky" shape="half" caption="ready" />
-        </SkyPanel>
+        <ProgressRing percent={72} size={RING_HALF} shape="half" caption="ready" />
       </View>
       <KitLabel>ProgressBar · ProgressDots (challenges passed toward Practised)</KitLabel>
       <ProgressBar percent={72} />
@@ -51,9 +49,10 @@ export function ProgressDemo() {
       <KitLabel>Avatar · initials until photos arrive with the shared core</KitLabel>
       <View style={styles.row}>
         <Avatar initials="AS" />
-        <SkyPanel style={styles.tight}>
+        {/* white, for a picture behind it (Home's scene) */}
+        <View style={styles.tight}>
           <Avatar initials="AS" tone="surface" />
-        </SkyPanel>
+        </View>
         <Avatar initials="AS" size={RING_SMALL} />
       </View>
       <KitLabel>SkillLogo · the skill’s own mark, or an icon when it has none</KitLabel>
@@ -74,7 +73,6 @@ export function ProgressDemo() {
 const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", gap: space.md },
   wrap: { flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: space.sm },
-  flex: { flex: 1, alignItems: "center" },
-  tight: { padding: space.md },
+  tight: { padding: space.md, borderRadius: radius.xl, backgroundColor: colors.bg.app },
   logo: { alignItems: "center", gap: space.xxs, width: RING_SMALL },
 });

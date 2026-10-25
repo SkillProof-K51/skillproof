@@ -27,6 +27,7 @@ for (const [k, v] of Object.entries(space)) lines.push(`  --spacing-${k}: ${v}px
 for (const [k, v] of Object.entries(gap)) lines.push(`  --spacing-gap-${k}: ${v}px;`);
 for (const [k, v] of Object.entries(radius)) lines.push(`  --radius-${k}: ${v}px;`);
 lines.push(`  --font-sans: ${fontStack.sans};`);
+lines.push(`  --font-display: ${fontStack.display};`);
 lines.push(`  --font-mono: ${fontStack.mono};`);
 for (const [k, v] of Object.entries(type)) {
   lines.push(`  --text-${kebab(k)}: ${v.size}px;`);

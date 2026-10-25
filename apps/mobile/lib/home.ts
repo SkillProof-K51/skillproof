@@ -1,3 +1,4 @@
+import type { TodaysChallenge } from "./challenges";
 import { demoHome } from "./demo/home";
 import { isTestMode } from "./testMode";
 
@@ -11,20 +12,6 @@ export type MicroProject = {
   lockedBy?: string;
 };
 
-/** One challenge per day, picked by Module 3. */
-export type TodaysChallenge = {
-  title: string;
-  /** First few lines of today's code or query — a teaser for Home, never the answer. */
-  preview?: string[];
-  skill: string;
-  /** Passed challenges in this skill so far, out of `of` (3 = Practised). */
-  passed: number;
-  of: number;
-  minutes: number;
-  /** True once today's challenge is passed — the card switches to "Done for today". */
-  done?: boolean;
-};
-
 /** What the Home screen displays. Every number is computed elsewhere (rule 2) — Home only shows it. */
 export type HomeData = {
   student: { firstName: string; initials: string; pathLabel: string };
@@ -32,10 +19,8 @@ export type HomeData = {
   readiness: {
     /** 0–100 integer from the Module 2 fit engine. */
     percent: number;
-    /** One line under the gauge, e.g. "2 skills left on your roadmap". Never claim "job-ready" here —
-     *  that is Module 2's threshold to define. */
-    headline: string;
-    focusSkills: string[];
+    /** The role's roadmap, in order, with each skill's status (Modules 3 and 4 write it; Home reads). */
+    skills: { name: string; status: "not_yet" | "practised" | "verified" }[];
   };
   /** null = Module 3 has no challenge for today; the card is hidden. */
   todaysChallenge: TodaysChallenge | null;

@@ -1,6 +1,6 @@
 import { colors, type } from "@skillproof/tokens";
-import { useState } from "react";
-import { Pressable, StyleSheet, TextInput, type TextInputProps } from "react-native";
+import { useState, type Ref } from "react";
+import { Pressable, StyleSheet, TextInput, type TextInputInstance, type TextInputProps } from "react-native";
 
 import { FieldFrame } from "./Field";
 import { fontFamilyFor } from "./fonts";
@@ -18,6 +18,8 @@ type Props = Omit<TextInputProps, "style" | "secureTextEntry" | "placeholderText
   secure?: boolean;
   /** Leading glyph inside the field. */
   icon?: IconName;
+  /** To move focus here from the field before (returnKeyType="next" + onSubmitEditing). */
+  ref?: Ref<TextInputInstance>;
 };
 
 /**
@@ -25,7 +27,7 @@ type Props = Omit<TextInputProps, "style" | "secureTextEntry" | "placeholderText
  * brand-blue border while focused, red with an error. Pass any TextInput prop
  * (keyboardType, autoCapitalize, autoComplete…). For a choice from a list, use <Select>.
  */
-export function TextField({ label, helper, error, secure, icon, editable = true, ...input }: Props) {
+export function TextField({ label, helper, error, secure, icon, editable = true, ref, ...input }: Props) {
   const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(!!secure);
   return (
@@ -33,6 +35,7 @@ export function TextField({ label, helper, error, secure, icon, editable = true,
       {icon ? <Icon name={icon} size={ICON} color={focused ? colors.accent.brand : colors.icon.default} /> : null}
       <TextInput
         {...input}
+        ref={ref}
         editable={editable}
         secureTextEntry={hidden}
         placeholderTextColor={colors.text.secondary}

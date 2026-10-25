@@ -6,17 +6,18 @@ const DOT = 8;
 type Props = {
   done: number;
   of: number;
-  /** butter = on the butter (today's challenge) card; default elsewhere. */
-  tone?: "default" | "butter";
+  /** role = on the role-tinted card (today's challenge), where the empty dots are a lighter purple. */
+  tone?: "default" | "role";
 };
 
-/** "2 of 3" as dots — e.g. challenges passed toward Practised. Filled dots are navy. */
+/** "2 of 3" as dots — e.g. challenges passed toward Practised. Filled dots are the role colour (your path). */
 export function ProgressDots({ done, of, tone = "default" }: Props) {
-  const off = tone === "butter" ? colors.accent.butter : colors.border.default;
+  const off = tone === "role" ? colors.accent.sky : colors.border.default;
+  const on = colors.accent.progress;
   return (
     <View style={styles.row} accessibilityLabel={`${done} of ${of}`} accessibilityRole="progressbar">
       {Array.from({ length: of }, (_, i) => (
-        <View key={i} style={[styles.dot, { backgroundColor: i < done ? colors.action.primaryStrong : off }]} />
+        <View key={i} style={[styles.dot, { backgroundColor: i < done ? on : off }]} />
       ))}
     </View>
   );
