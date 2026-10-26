@@ -6,18 +6,18 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 ---
 
-## 0. Where the project is (25 Oct)
+## 0. Where the project is (27 Oct)
 
 **Built, on demo data** (open them at `localhost:8081/kit` → Reference screens):
 - The UI kit (`apps/mobile/components/ui`) in the new look: lavender pages, white cards, black pill buttons, Sofia Sans.
 - Reference screens to copy from: Welcome, the 12-screen onboarding, Sign up, Log in, Challenges, a challenge's page, Result, Skill Passport, Progress.
 - Expo SDK 58: the app opens in the **Expo Go** you get from the App Store or Play Store today.
 
-**Landing on `main` this week**: the reference screens, the new look and SDK 58 (they are in review). **Azim posts in the group when they are in.** Until then the kit on `main` still has the old sky-and-mascot look, so **don't build screens yet**. Do the parts of your first task that aren't screens (data, tables, calculations).
+**On `main` since 25 Oct** (PR #4): the reference screens, the new look and SDK 58. Pull `main` before you start a branch and you have them, so screens in `apps/mobile` can be built now, on demo data.
 
 **Not built yet** (Azim, weeks 6–7): signing in, the `profiles` / `skills` / `student_skills` tables, and the **web portal** (its layout, menu and components). Until they exist:
 - the mobile app runs on **demo data behind TEST MODE**, which is how every reference screen works;
-- web pages (M1, and M4's mentor side) wait for the portal. Plan and prepare them, but don't build them yet.
+- web pages (M1, and M4's mentor side) wait for the portal. Plan and prepare them, but don't build them yet. The one exception is your warm-up page.
 
 ---
 
