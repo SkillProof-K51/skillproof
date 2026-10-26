@@ -1,9 +1,7 @@
 # Progress
-
 Update this when you finish a step. Newest at the top of each list.
 
 ## Done
-
 - 2026-10-23 — Insyirah: warm-up PR screen (`apps/mobile/app/(tabs)/profile.tsx`) and personal migration (`supabase/migrations/0002_warmup_insyirah.sql`) with owner-based RLS; lint and typecheck passed.
 - 2026-10-18 — **UI kit Step 2** (branch `feat/ui-kit-foundation`): forms (`TextField`, `Select`, `Checkbox`, `Switch`, `SegmentedControl`), lists & navigation (`ListRow`, `Divider`, `TopBar`, `IconButton`), feedback (`Toast`, `Dialog`, `BottomSheet`, `EmptyState`), results (`Stamp`, `Stat`), tokens (`feedback` colours, `motion`, `stamp` type, `radius.control`), Reduce Motion everywhere, the mascot's idle bob, the **TEST MODE strip** (rule 4 back in force), and the **`/kit` screen** showing every component live. Report pieces after Azim's reference: `Stat` tiles, `BarChart`, `SkyPanel` (airy sky). `docs/ui.md` updated. Reference screens → next PR.
 - 2026-10-18 — Home review round 3 (Azim + a ChatGPT critique he brought): gauge 230 + "Your career goal" heading + "2 skills left on your roadmap" (no "job-ready" claim — Module 2's threshold) · unlock card with named steps and "your readiness goes up and you can apply" · Today card: full-width navy Start challenge, code peek (`preview`), no mascot · Skill Passport card styled like a passport — new `passport` tone (navy cover, gold foil; gold = passport only) · `PassportCard` with recently verified skill + empty state.
@@ -14,21 +12,17 @@ Update this when you finish a step. Newest at the top of each list.
 - 2026-10-16 — Repo scaffolded: pnpm workspace, `apps/web` (Next.js 16), `apps/mobile` (Expo SDK 58), AGENTS.md, CI, PR template, warm-up migration.
 
 ## Next
-
 - [ ] Azim: open the kit PR → team message → reference screens (Welcome, auth, M3 Challenges, M3 Result, M5 Passport) in the next PR → tag `design-v1`.
 - [ ] Azim: upgrade to Expo SDK 58 once the store Expo Go supports it (one PR; the new Expo Go drops SDK 57).
 - [ ] Everyone: clone, `pnpm install`, `pnpm dev:web` and `pnpm dev:mobile` run on your machine.
 - [ ] Everyone except Insyirah: warm-up PR — one screen in your module's app + one table copied from `supabase/migrations/0001_warmup_notes.sql`.
-- [ ] Insyirah: finish warm-up PR — run `pnpm check`, review changes, commit, push, open PR and request Azim as reviewer.
 - [ ] Everyone: plan your module's screens from the coded kit (`docs/ui.md`; every component is live at `/kit`). The Figma file is no longer updated (Azim, 18 Oct) — sketch anywhere, but build only with the kit.
 - [ ] Azim: Supabase project values into `.env.local` / `.env`; `supabase/` linked to the project.
 - [ ] Azim (weeks 6–7): shared core — auth, profiles, skills, student_skills, seed.
 
 ## Ideas for later
-
 - M3 (Azim): a streak line on Today's challenge ("🔥 3-day streak"). Needs Module 3 to keep a daily pass log. Agreed 18 Oct; not in the first build.
 
 ## Blocked / decisions needed
-
 - Micro-project count at launch (Azim + Fiona).
 - Pass marks: Practised 3 × ≥ 70 % (M3), Verified ≥ 3/5 (M4), Ready ≥ 70 % (M2) — confirm.
