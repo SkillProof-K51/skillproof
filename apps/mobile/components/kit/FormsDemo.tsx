@@ -17,7 +17,7 @@ export function FormsDemo() {
       <TextField
         label="Student email"
         icon="mail"
-        placeholder="you@student.utem.edu.my"
+        placeholder="you@example.com"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
