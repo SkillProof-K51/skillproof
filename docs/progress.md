@@ -3,6 +3,7 @@
 Update this when you finish a step. Newest at the top of each list.
 
 ## Done
+- 2026-10-27 — **Shared core** (branch `feat/shared-core`, Azim; picks 1a 2a 3a 4a + any email): one migration, `20261027083000_shared_core.sql` — `profiles` (all five user types; role and status never written by the user), `student_profiles` (sign-up's answers; M2 owns it now), `programmes` / `skills` / `job_roles` / `job_role_skills` (anyone reads, admin writes; M1 owns the last three now), `student_skills` (forward only, verified only after practised, no app writes) and a sign-up trigger that only lets sign-up choose student, company or mentor. `supabase/seed.sql`: the demo catalogue (placeholder weights summing to 100 per role, placeholder programmes). `pnpm db:check` (in `pnpm check` and CI): every migration + the seed on PGlite, then the access matrix as two students, a company, an admin and a visitor. Mobile: the session stays on the phone (AsyncStorage), `Stack.Protected` splits signed-out from signed-in screens, real sign-up / log-in / log out with Supabase's errors in plain words, onboarding loads roles and programmes from the database, any email. Home greets the signed-in student from their profile. Applied to the Supabase project with the four warm-ups; signed up, logged in and read back on the web. `docs/data-contracts.md` + start-here updated.
 - 2026-10-27 — Iskandar: **M1 warm-up** — `apps/web/src/app/warmup-iskandar/page.tsx` (a client page: a button shows a message in a `role="status"` line) and `warmup_iskandar` in `20261027024500_warmup_iskandar.sql` (owner column + owner-only RLS, from `0001`). Review fixes pushed by Azim to save time: the migration renamed off the clashing `0001`, `body` → `standard`.
 - 2026-10-23 — Insyirah: warm-up PR screen (`apps/mobile/app/(tabs)/profile.tsx`) and personal migration (`supabase/migrations/0002_warmup_insyirah.sql`) with owner-based RLS; lint and typecheck passed.
 - 2026-10-27 — **Markdown no longer reformats on save** (`.vscode/settings.json`): Prettier re-padded the tables in `docs/` on every save, which buried real changes in whole-table diffs and made two people's new rows always conflict. Code still formats on save. `docs/start-here.md` › Where the project is: the new look and SDK 58 are on `main` (PR #4), and the warm-up page is the one web page to build before the portal.
@@ -34,14 +35,16 @@ Update this when you finish a step. Newest at the top of each list.
 - [ ] Everyone: clone, `pnpm install`, `pnpm dev:web` and `pnpm dev:mobile` run on your machine.
 - [ ] Everyone: warm-up PR — one screen in your module's app + one table copied from `supabase/migrations/0001_warmup_notes.sql`.
 - [ ] Everyone: plan your module's screens from the coded kit (`docs/ui.md`; every component is live at `/kit`). The Figma file is no longer updated (Azim, 18 Oct) — sketch anywhere, but build only with the kit.
-- [ ] Azim: Supabase project values into `.env.local` / `.env`; `supabase/` linked to the project.
-- [ ] Azim (weeks 6–7): shared core — auth, profiles, skills, student_skills, seed.
+- [ ] Azim: shared core on an iPhone (sign up, close the app, open it: still signed in; log out → Welcome), then merge.
+- [ ] Azim: the web portal shell — layout, menu, sign-in for companies / mentors / coordinators / admin, admin approves companies, the "choose a new password" page (mobile's reset link opens there).
+- [ ] Azim: turn Supabase's **Confirm email** back on before the Progress III demo (off while we build: the built-in email allows only a few sends an hour).
+- [ ] Insyirah: OK the Log out button added to the Profile tab (shared core, in your screen).
 
 ## Ideas for later
 - M3 (Azim): a streak line on Today's challenge ("🔥 3-day streak"). Needs Module 3 to keep a daily pass log. Agreed 18 Oct; not in the first build.
 
 ## Blocked / decisions needed
 - Onboarding's aim question (internship · first job · freelance): Insyirah (M2) to agree to store it on the profile — until then it's asked but nothing saves it, and it isn't in `spec.md` › Additions yet.
-- Onboarding's programme list is a placeholder (`lib/demo/onboarding.ts`): the faculty's real programmes come with the profiles schema.
+- The programme list is a placeholder (`programmes` in `supabase/seed.sql`, the same five in `lib/demo/onboarding.ts`): the faculty's real list replaces both.
 - Micro-project count at launch (Azim + Fiona).
 - Pass marks: Practised 3 × ≥ 70 % (M3), Verified ≥ 3/5 (M4), Ready ≥ 70 % (M2) — confirm.

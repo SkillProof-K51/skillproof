@@ -15,9 +15,9 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 **On `main` since 25 Oct** (PR #4): the reference screens, the new look and SDK 58. Pull `main` before you start a branch and you have them, so screens in `apps/mobile` can be built now, on demo data.
 
-**Not built yet** (Azim, weeks 6–7): signing in, the `profiles` / `skills` / `student_skills` tables, and the **web portal** (its layout, menu and components). Until they exist:
-- the mobile app runs on **demo data behind TEST MODE**, which is how every reference screen works;
-- web pages (M1, and M4's mentor side) wait for the portal. Plan and prepare them, but don't build them yet. The one exception is your warm-up page.
+**The shared core is in** (27 Oct): signing up and in on the app, and the tables every module builds on: `profiles`, `student_profiles`, `skills`, `job_roles` + their weights, `programmes`, `student_skills`. Who reads and writes each one, and how your tables point at them: [`data-contracts.md`](data-contracts.md). Screens are still built on **demo data behind TEST MODE**, as before; real data is one line in `.env` away.
+
+**Not built yet** (Azim, next): the **web portal** (its layout, menu, sign-in and components). Web pages (M1, and M4's mentor side) wait for it. Plan and prepare them, but don't build them yet.
 
 ---
 
@@ -53,7 +53,7 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 | # | Step | Where | Copy this |
 |---|---|---|---|
-| 1 | **The table**: owner column + Row Level Security in the **same** migration (rule 1) | `supabase/migrations/YYYYMMDDHHMMSS_<what>.sql` | `0001_warmup_notes.sql` |
+| 1 | **The table**: owner column + Row Level Security in the **same** migration (rule 1), pointing at the core's tables ([`data-contracts.md`](data-contracts.md)); your two-account checks in `scripts/db-check.mjs`, then `pnpm db:check` | `supabase/migrations/YYYYMMDDHHMMSS_<what>.sql` | `0001_warmup_notes.sql` |
 | 2 | **The data**: types + a `get…()` that returns demo data in TEST MODE (Supabase later). A save that isn't built yet **throws a clear error**, never pretends (rule 11) | `apps/mobile/lib/<area>.ts` + `lib/demo/<area>.ts` | `lib/passport.ts`, `lib/demo/passport.ts` |
 | 3 | **The calculation**: one function, integers (percent 0–100), in `lib/`. Screens only show its result (rule 2) | `apps/mobile/lib/` | `practiceTotal()` in `lib/progress.ts` |
 | 4 | **The screen**: built only from kit components and tokens (no colours, fonts or sizes typed by hand; `pnpm lint` fails). Under ~300 lines; its parts go in `components/<area>/` | `apps/mobile/app/…` | the closest reference screen ([table in ui.md](ui.md#reference-screens--start-from-one-of-these)) |
