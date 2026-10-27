@@ -152,11 +152,12 @@ export async function logOut(): Promise<AuthResult> {
 }
 
 /**
- * Emails a password-reset link.
- * TODO (web portal shell): the link opens a "choose a new password" page on the web portal, so
- * this waits for it (supabase.auth.resetPasswordForEmail with that page as redirectTo).
+ * Emails a password-reset link. It opens the web portal's "choose a new password" page (Supabase's
+ * Site URL + our Reset Password email template, docs/portal.md); then the student logs in here.
  */
 export async function sendPasswordReset(email: string): Promise<AuthResult> {
   if (isTestMode) return { demo: true };
-  throw new Error(`Password reset comes with the web portal, where its link opens (${email.trim() || "no email given"}).`);
+  const { error } = await supabase().auth.resetPasswordForEmail(email.trim());
+  if (error) throw authError(error);
+  return { demo: false };
 }
