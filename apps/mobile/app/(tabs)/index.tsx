@@ -9,6 +9,7 @@ import { TodayCard } from "../../components/challenges/TodayCard";
 import { UnlockCard } from "../../components/home/UnlockCard";
 import {
   Avatar,
+  Button,
   Card,
   Carousel,
   Hero,
@@ -16,7 +17,9 @@ import {
   SectionHeader,
   Text,
 } from "../../components/ui";
+import { getMyAccount } from "../../lib/auth";
 import { getHomeData, greetingFor, nextUnlock } from "../../lib/home";
+import { useLoad } from "../../lib/useLoad";
 
 // Home's illustrated scene (ChatGPT image, Azim's account, 24 Oct — see docs/ai-use-log.md).
 const SCENE = require("../../assets/scenes/campus-garden.jpg");
@@ -116,20 +119,36 @@ export default function HomeScreen() {
   );
 }
 
-/** Shown when there is no signed-in student yet (and TEST MODE is off). */
+/**
+ * Outside TEST MODE until Modules 2–4 fill Home: who is signed in, read back from the database —
+ * proof that sign-up made their profile — and what will appear here.
+ */
 function HomeEmpty() {
+  const { data: account, error, reload } = useLoad(getMyAccount);
   return (
     <Screen>
       <Hero>
-        <Text variant="title">Nothing here yet</Text>
+        <Text variant="title">{account ? `Hi, ${account.firstName}` : "Welcome"}</Text>
       </Hero>
       <View style={styles.content}>
         <Card>
-          <Text variant="heading">Home fills up once you log in</Text>
-          <Text variant="small" color="secondary" style={styles.emptyBody}>
-            Auth, profiles and skills arrive with the shared core (weeks 6–7). To preview with demo data, set
-            EXPO_PUBLIC_TEST_MODE=1 in apps/mobile/.env and restart the dev server.
-          </Text>
+          {error ? (
+            <>
+              <Text variant="heading">Couldn’t load your profile</Text>
+              <Text variant="small" color="secondary" style={styles.emptyBody}>
+                {error}
+              </Text>
+              <Button label="Try again" variant="secondary" onPress={reload} style={styles.emptyAction} />
+            </>
+          ) : (
+            <>
+              <Text variant="heading">{account?.jobRole ? `Working towards ${account.jobRole}` : "You’re in"}</Text>
+              <Text variant="small" color="secondary" style={styles.emptyBody}>
+                Your readiness, today’s challenge and projects appear here as Modules 2–4 are built. To preview them
+                with demo data, set EXPO_PUBLIC_TEST_MODE=1 in apps/mobile/.env and restart the dev server.
+              </Text>
+            </>
+          )}
         </Card>
       </View>
     </Screen>
@@ -142,4 +161,5 @@ const styles = StyleSheet.create({
   content: { paddingHorizontal: layout.gutter, gap: gap.loose },
   fill: { flexGrow: 1 },
   emptyBody: { marginTop: space.xs },
+  emptyAction: { marginTop: space.md, alignSelf: "flex-start" },
 });

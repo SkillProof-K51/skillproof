@@ -49,6 +49,32 @@ export async function getTargetRoles(): Promise<TargetRole[]> {
   }));
 }
 
+/** The signed-in user, as the database's sign-up trigger made them. */
+export type Account = { fullName: string; firstName: string; role: string; jobRole?: string };
+
+type AccountRow = { full_name: string; role: string; student_profiles: { job_roles: { name: string } | null } | null };
+
+/** Who is signed in (their own profile row — RLS lets them read nothing else), or null if nobody. */
+export async function getMyAccount(): Promise<Account | null> {
+  if (isTestMode) return null;
+  const { data: auth } = await supabase().auth.getSession();
+  const id = auth.session?.user.id;
+  if (!id) return null;
+  const { data, error } = await supabase()
+    .from("profiles")
+    .select("full_name, role, student_profiles (job_roles (name))")
+    .eq("id", id)
+    .single()
+    .overrideTypes<AccountRow, { merge: false }>();
+  if (error) throw new Error("Couldn’t load your profile. Check your connection and try again.");
+  return {
+    fullName: data.full_name,
+    firstName: data.full_name.split(" ")[0],
+    role: data.role,
+    jobRole: data.student_profiles?.job_roles?.name,
+  };
+}
+
 /** Sign-up rules, in one place: every message says what to do. */
 export function validateSignUp(v: SignUpInput): FieldErrors<SignUpInput> {
   const e: FieldErrors<SignUpInput> = {};
