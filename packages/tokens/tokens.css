@@ -69,14 +69,6 @@
   --color-code-line-wrong: rgba(244, 112, 103, 0.26);
   --color-overlay-scrim: rgba(51, 65, 85, 0.45);
   --color-shadow-ink: #334259;
-  --spacing-xxs: 2px;
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 16px;
-  --spacing-xl: 24px;
-  --spacing-gap-tight: 6px;
-  --spacing-gap-loose: 14px;
   --radius-control: 6px;
   --radius-tile: 14px;
   --radius-lg: 16px;
@@ -145,4 +137,15 @@
   --text-code--line-height: 20px;
   --text-code--letter-spacing: 0px;
   --text-code--font-weight: 400;
+}
+
+:root {
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-gap-tight: 6px;
+  --space-gap-loose: 14px;
 }
