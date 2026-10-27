@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { View } from "react-native";
+import { layout } from "@skillproof/tokens";
 
 import { Button, Hero, Screen, Text } from "../../components/ui";
 
@@ -14,13 +16,15 @@ export default function ProfileScreen() {
         </Text>
       </Hero>
 
-      <Button
-        label="Test Profile"
-        block
-        onPress={() => setMessage("Warm-up screen is working!")}
-      />
+      <View style={{ paddingHorizontal: layout.gutter }}>
+        <Button
+          label="Test Profile"
+          block
+          onPress={() => setMessage("Warm-up screen is working!")}
+        />
 
-      {message ? <Text variant="small">{message}</Text> : null}
+        {message ? <Text variant="small">{message}</Text> : null}
+      </View>
     </Screen>
   );
 }
