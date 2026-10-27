@@ -28,7 +28,7 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 | What | Who | When | Notes |
 |---|---|---|---|
 | GitHub account with the repo invite accepted | everyone | now | all four of us are in |
-| Git · Node.js 24 LTS (`corepack enable` gives you pnpm) · VS Code | everyone | now | [CONTRIBUTING › One-time setup](../CONTRIBUTING.md#one-time-setup-about-20-minutes). On Windows, run `corepack enable` in a terminal opened **as administrator** |
+| Git · Node.js 24 LTS (`npm install -g pnpm@12.10.1` gives you pnpm) · VS Code | everyone | now | [CONTRIBUTING › One-time setup](../CONTRIBUTING.md#one-time-setup-about-20-minutes). Windows: Command Prompt uses `copy` (not `cp`); PowerShell may need `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once |
 | **Expo Go** on your phone, from the App Store / Play Store | anyone opening the app on a phone | now | It runs SDK 58, the same as our app. No phone? Press `w` and use the browser; that's enough for most work |
 | **A free Expo account** ([expo.dev](https://expo.dev/signup)) | iPhone users | now | On an iPhone, Expo Go only opens the project when it and your laptop are signed in to the **same** account: run `npx expo login` on the laptop, then sign in inside Expo Go (top-right icon) |
 | Phone and laptop on the **same Wi-Fi** | phone users | now | Campus Wi-Fi often blocks this. Then `cd apps/mobile` → `npx expo start --tunnel` (say yes if it offers to install `@expo/ngrok`), or use your phone's hotspot |
