@@ -19,7 +19,7 @@ export default function RootLayout() {
     if (fontsLoaded || fontError) SplashScreen.hideAsync();
   }, [fontsLoaded, fontError]);
 
-  // Keep the splash up until Lexend is ready, so no screen ever flashes the system font.
+  // Keep the splash up until the fonts are ready, so no screen ever flashes the system font.
   if (!fontsLoaded && !fontError) return null;
 
   return (

@@ -1,8 +1,8 @@
-import { space } from "@skillproof/tokens";
+import { colors, radius, space } from "@skillproof/tokens";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Divider, ICON_BADGE_SIZE, IconBadge, IconButton, ListRow, SegmentedControl, SkillLogo, SkyPanel, StatusBadge, Text, TopBar } from "../ui";
+import { Divider, ICON_BADGE_SIZE, IconBadge, IconButton, ListRow, SegmentedControl, SkillLogo, StatusBadge, Text, TopBar } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const LEADING_INSET = ICON_BADGE_SIZE + space.md; // badge + the row gap: the divider lines up with the text
@@ -41,10 +41,10 @@ export function ListsDemo() {
         <IconButton icon="x" tone="subtle" accessibilityLabel="Close" onPress={() => {}} />
         <IconButton icon="share" tone="subtle" accessibilityLabel="Share (disabled)" onPress={() => {}} disabled />
       </View>
-      <KitLabel>TopBar · first thing in a compact Hero</KitLabel>
-      <SkyPanel style={styles.bar}>
-        <TopBar title="Edit profile" onBack={() => {}} action={<IconButton icon="share" accessibilityLabel="Share" onPress={() => {}} />} />
-      </SkyPanel>
+      <KitLabel>TopBar · first thing in a Hero; a subtitle is optional</KitLabel>
+      <View style={styles.bar}>
+        <TopBar title="Fix the bug" subtitle="Node.js · about 3 min" onBack={() => {}} action={<IconButton icon="share" accessibilityLabel="Share" onPress={() => {}} />} />
+      </View>
       <Text variant="caption" color="secondary">
         Back goes to the previous screen, or Home when there is none.
       </Text>
@@ -54,5 +54,6 @@ export function ListsDemo() {
 
 const styles = StyleSheet.create({
   buttons: { flexDirection: "row", gap: space.md },
-  bar: { padding: space.md, alignItems: "stretch" },
+  // the page colour behind it, as on a real screen
+  bar: { padding: space.md, borderRadius: radius.xl, backgroundColor: colors.bg.app },
 });

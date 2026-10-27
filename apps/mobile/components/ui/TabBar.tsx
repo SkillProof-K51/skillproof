@@ -1,4 +1,4 @@
-import { blur, colors, radius, shadow, space, type } from "@skillproof/tokens";
+import { blur, colors, radius, shadow, space } from "@skillproof/tokens";
 import { BlurView } from "expo-blur";
 import { GlassView, isLiquidGlassAvailable } from "expo-glass-effect";
 import type { Tabs } from "expo-router";
@@ -7,7 +7,6 @@ import { AccessibilityInfo, Platform, Pressable, StyleSheet, View } from "react-
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Icon, type IconName } from "./Icon";
-import { Text } from "./Text";
 
 // Exactly what expo-router's <Tabs tabBar={…}> passes — derived from Tabs so the type can never
 // drift from the @react-navigation version expo-router bundles.
@@ -22,40 +21,38 @@ const TAB_ICONS: Record<string, IconName> = {
   profile: "user",
 };
 
-const BAR_PAD_X = 14;
-const ITEM_WIDTH = 70; // 5 items fit a 390 screen with the bar padding
-const ICON_ACTIVE = 24; // outline, a touch bigger
-const ICON_IDLE = 22; // outline
-const ACTIVE = colors.accent.brand; // brand-blue outline icon + label on the soft-sky pill
-// dock height above the home indicator: top padding + one tab (padding + icon + gap + label)
-const BAR_CONTENT_HEIGHT = space.sm + 2 * space.sm + ICON_ACTIVE + space.xs + type.captionStrong.lineHeight;
+const PILL_HEIGHT = 62; // BitePal's floating tab pill
+const ITEM = 48; // round touch target per tab
+const ICON = 24;
 
-/** Height the floating dock covers at the bottom of the screen — <Screen> pads its content by it. */
+/** Height the floating pill covers at the bottom of the screen — <Screen> pads its content by it. */
 export function useTabBarHeight(): number {
   const insets = useSafeAreaInsets();
-  return BAR_CONTENT_HEIGHT + Math.max(insets.bottom, space.md);
+  return PILL_HEIGHT + Math.max(insets.bottom, space.md) + space.sm;
 }
 
 /**
- * Bottom navigation (Azim, 18 Oct): a dock that floats over the content, made of glass — real
- * Liquid Glass on iOS 26, a frosted blur elsewhere, solid white when "Reduce Transparency" is on.
- * The active tab sits in a soft-sky pill with a brand-blue outline icon and label.
+ * Bottom navigation (BitePal-style, Azim 24 Oct): a soft grey pill floating over the content,
+ * icons only — the active one dark and filled, the rest grey. Each tab keeps its name as the
+ * accessibility label. The material is Liquid Glass on iOS 26, a frosted blur elsewhere, solid
+ * when "Reduce Transparency" is on.
  */
-export function TabBar({ state, descriptors, navigation }: TabBarProps) {
+export function TabBar({ state, descriptors, emitter, navigateToTab }: TabBarProps) {
   const insets = useSafeAreaInsets();
   return (
-    <View style={styles.dock}>
-      <View style={styles.clip}>
-        <DockMaterial />
-      </View>
-      <View style={[styles.row, { paddingBottom: Math.max(insets.bottom, space.md) }]}>
+    <View pointerEvents="box-none" style={[styles.dock, { paddingBottom: Math.max(insets.bottom, space.md) }]}>
+      <View style={styles.pill}>
+        <View style={styles.clip}>
+          <DockMaterial />
+        </View>
         {state.routes.map((route, index) => {
           const focused = state.index === index;
           const { options } = descriptors[route.key];
           const label = typeof options.title === "string" ? options.title : route.name;
           const onPress = () => {
-            const event = navigation.emit({ type: "tabPress", target: route.key, canPreventDefault: true });
-            if (!focused && !event.defaultPrevented) navigation.navigate(route.name, route.params);
+            // the same as expo-router's own tab bar (SDK 58): tell listeners, then switch unless one said no
+            const event = emitter.emit({ type: "tabPress", target: route.key, canPreventDefault: true });
+            if (!focused && !event.defaultPrevented) navigateToTab(route.key);
           };
           return (
             <Pressable
@@ -64,19 +61,14 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
               accessibilityState={focused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel ?? label}
               onPress={onPress}
-              style={[styles.item, focused && styles.itemActive]}
+              style={styles.item}
             >
-              <View style={styles.slot}>
-                <Icon
-                  name={TAB_ICONS[route.name] ?? "compass"}
-                  size={focused ? ICON_ACTIVE : ICON_IDLE}
-                  weight="regular"
-                  color={focused ? ACTIVE : colors.icon.default}
-                />
-              </View>
-              <Text variant={focused ? "captionStrong" : "caption"} color={focused ? ACTIVE : "secondary"}>
-                {label}
-              </Text>
+              <Icon
+                name={TAB_ICONS[route.name] ?? "compass"}
+                size={ICON}
+                weight={focused ? "fill" : "bold"}
+                color={focused ? colors.text.primary : colors.icon.muted}
+              />
             </Pressable>
           );
         })}
@@ -107,42 +99,19 @@ function DockMaterial() {
 }
 
 const styles = StyleSheet.create({
-  // floats over the screen so the glass has content behind it
-  dock: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderTopLeftRadius: radius.sheet,
-    borderTopRightRadius: radius.sheet,
+  // a row across the bottom that only holds the centred pill; touches pass through around it
+  dock: { position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center" },
+  pill: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: PILL_HEIGHT,
+    paddingHorizontal: space.sm,
+    gap: space.xs,
+    borderRadius: radius.full,
     boxShadow: shadow.dock,
   },
-  clip: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderTopLeftRadius: radius.sheet,
-    borderTopRightRadius: radius.sheet,
-    overflow: "hidden",
-  },
+  clip: { position: "absolute", top: 0, right: 0, bottom: 0, left: 0, borderRadius: radius.full, overflow: "hidden" },
   solid: { backgroundColor: colors.bg.surface },
   veil: { backgroundColor: colors.glass.veil },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: BAR_PAD_X,
-    paddingTop: space.sm,
-  },
-  // the pill: the whole tab is the touch target, so it's big and easy to hit
-  item: {
-    width: ITEM_WIDTH,
-    alignItems: "center",
-    gap: space.xs,
-    paddingVertical: space.sm,
-    borderRadius: radius.lg,
-  },
-  itemActive: { backgroundColor: colors.accent.skySoft },
-  slot: { height: ICON_ACTIVE, justifyContent: "center" },
+  item: { width: ITEM, height: ITEM, alignItems: "center", justifyContent: "center" },
 });

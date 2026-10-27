@@ -29,9 +29,10 @@ pnpm check          # lint + typecheck + build, same as CI
 
 ## Working here
 - New here? **[`CONTRIBUTING.md`](CONTRIBUTING.md)** — setup, the branch → PR loop, and your first (warm-up) PR, step by step.
+- Starting your module? **[`docs/start-here.md`](docs/start-here.md)** — the checklist, how every feature is built, your first task · prompts for your AI tool: [`docs/prompts.md`](docs/prompts.md).
 - **[`AGENTS.md`](AGENTS.md)** — the rules, for people and AI tools alike.
 - One branch per task, one PR per change, the module owner approves. The PR template asks you to explain your code.
 - AI use goes in [`docs/ai-use-log.md`](docs/ai-use-log.md).
 
 ## Stack
-Expo SDK 57 (mobile) · Next.js 16 (web) · Supabase (Postgres, Auth, Storage, RLS) · Gemini API (server-side) · TypeScript · pnpm
+Expo SDK 58 (mobile) · Next.js 16 (web) · Supabase (Postgres, Auth, Storage, RLS) · Gemini API (server-side) · TypeScript · pnpm
