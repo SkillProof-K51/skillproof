@@ -32,8 +32,8 @@ export type HomeData = {
 
 /**
  * Returns the Home data, or null when there is nothing to show yet.
- * TODO (shared core, weeks 6–7): read the signed-in student from Supabase; keep the demo
- * branch behind the TEST MODE flag only.
+ * TODO (Modules 2–4): build it from the signed-in student's readiness (fit engine), today's
+ * challenge and matched projects; keep the demo branch behind the TEST MODE flag only.
  */
 export function getHomeData(): HomeData | null {
   return isTestMode ? demoHome : null;

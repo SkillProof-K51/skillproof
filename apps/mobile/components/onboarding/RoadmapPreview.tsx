@@ -13,7 +13,7 @@ const listOf = (items: string[]) => (items.length > 1 ? `${items.slice(0, -1).jo
 
 type Props = {
   role: TargetRole;
-  /** Skills the student said they've used: their first challenges start there. */
+  /** Ids of the skills the student said they've used: their first challenges start there. */
   used: string[];
 };
 
@@ -22,15 +22,15 @@ type Props = {
  * evidence unlocks them, rule 7), and where the first challenges start.
  */
 export function RoadmapPreview({ role, used }: Props) {
-  const start = role.roadmap.filter((s) => used.includes(s));
+  const start = role.roadmap.filter((s) => used.includes(s.id)).map((s) => s.name);
   return (
     <Card>
       <View style={styles.grid}>
         {role.roadmap.map((skill) => (
-          <View key={skill} style={styles.cell}>
-            <SkillBadge skill={skill} status="not_yet" size={BADGE} />
+          <View key={skill.id} style={styles.cell}>
+            <SkillBadge skill={skill.name} status="not_yet" size={BADGE} />
             <Text variant="label" align="center" numberOfLines={2}>
-              {skill}
+              {skill.name}
             </Text>
           </View>
         ))}
@@ -39,7 +39,7 @@ export function RoadmapPreview({ role, used }: Props) {
       <Text variant="body" color="secondary" style={styles.start}>
         {start.length
           ? `Your first challenges: ${listOf(start)}, since you’ve used them.`
-          : `Your first challenge: ${role.roadmap[0]}, the start of the roadmap.`}
+          : `Your first challenge: ${role.roadmap[0]?.name}, the start of the roadmap.`}
       </Text>
     </Card>
   );
