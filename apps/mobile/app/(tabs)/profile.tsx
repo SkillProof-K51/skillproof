@@ -1,5 +1,30 @@
-import { ModulePlaceholder } from "../../components/ModulePlaceholder";
+import { useState } from "react";
+import { View } from "react-native";
+import { layout } from "@skillproof/tokens";
+
+import { Button, Hero, Screen, Text } from "../../components/ui";
 
 export default function ProfileScreen() {
-  return <ModulePlaceholder title="Profile" module="Module 2" owner="Insyirah" pose="reading" />;
+  const [message, setMessage] = useState("");
+
+  return (
+    <Screen>
+      <Hero>
+        <Text variant="title">My Profile</Text>
+        <Text variant="small" color="secondary">
+          SkillProof Module 2 · Insyirah
+        </Text>
+      </Hero>
+
+      <View style={{ paddingHorizontal: layout.gutter }}>
+        <Button
+          label="Test Profile"
+          block
+          onPress={() => setMessage("Warm-up screen is working!")}
+        />
+
+        {message ? <Text variant="small">{message}</Text> : null}
+      </View>
+    </Screen>
+  );
 }

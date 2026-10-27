@@ -3,6 +3,7 @@
 Update this when you finish a step. Newest at the top of each list.
 
 ## Done
+- 2026-10-23 — Insyirah: warm-up PR screen (`apps/mobile/app/(tabs)/profile.tsx`) and personal migration (`supabase/migrations/0002_warmup_insyirah.sql`) with owner-based RLS; lint and typecheck passed.
 - 2026-10-27 — **Markdown no longer reformats on save** (`.vscode/settings.json`): Prettier re-padded the tables in `docs/` on every save, which buried real changes in whole-table diffs and made two people's new rows always conflict. Code still formats on save. `docs/start-here.md` › Where the project is: the new look and SDK 58 are on `main` (PR #4), and the warm-up page is the one web page to build before the portal.
 - 2026-10-26 — **M4 warm-up PR**: `warmup_fiona` table in `20261026120000_warmup_fiona.sql`, with `owner_id` and the owner-scoped RLS pattern from `0001_warmup_notes.sql`; Projects tab has the M4 landing screen and development-only UI kit shortcut. The real `micro_projects` schema is deferred to the M4 module task. RLS was not applied or tested, per reviewer guidance; screen and `pnpm check` verification still need recording.
 - 2026-10-25 — **Team guide**: `docs/start-here.md` (where the project is, a before-you-start checklist, the five steps of every feature, each teammate's first task, five rules, when stuck) + `docs/prompts.md` (Prompt 0 = project context for chat tools, then plan → table → data → calculation → screen → check → explain → PR). Linked from README, CONTRIBUTING and AGENTS.md; CONTRIBUTING's ownership table now shows the real folders.
