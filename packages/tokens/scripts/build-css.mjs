@@ -8,7 +8,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as tokens from "../src/index.ts";
 
-const { colors, fontStack, gap, radius, space, type } = tokens; // motion & co. go to tokens.json only
+const { colors, fontStack, gap, portalRadius, radius, space, type } = tokens; // motion & co. go to tokens.json only
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const lines = [];
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
@@ -26,9 +26,8 @@ walk(colors, []);
 for (const [k, v] of Object.entries(space)) lines.push(`  --spacing-${k}: ${v}px;`);
 for (const [k, v] of Object.entries(gap)) lines.push(`  --spacing-gap-${k}: ${v}px;`);
 for (const [k, v] of Object.entries(radius)) lines.push(`  --radius-${k}: ${v}px;`);
-lines.push(`  --font-sans: ${fontStack.sans};`);
-lines.push(`  --font-display: ${fontStack.display};`);
-lines.push(`  --font-mono: ${fontStack.mono};`);
+lines.push(`  --radius-portal: ${portalRadius}px;`);
+for (const [k, v] of Object.entries(fontStack)) lines.push(`  --font-${kebab(k)}: ${v};`);
 for (const [k, v] of Object.entries(type)) {
   lines.push(`  --text-${kebab(k)}: ${v.size}px;`);
   lines.push(`  --text-${kebab(k)}--line-height: ${v.lineHeight}px;`);
