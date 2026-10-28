@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import {
@@ -64,7 +64,12 @@ export async function requestPasswordReset(_prev: FormState, form: FormData): Pr
   if (emailError(email)) return { errors: { email: emailError(email) }, values: { email } };
   const sent = { message: `If ${email} has an account, a link to choose a new password is on its way.`, tone: "success" as const, values: { email } };
   if (isTestMode) return { ...sent, message: "Test mode: no email was sent." };
-  const { error } = await (await createClient()).auth.resetPasswordForEmail(email);
+  // The link lands on /auth/callback, which signs you in, then on the new-password page.
+  // (The address must be in Supabase's Redirect URLs.)
+  const origin = (await headers()).get("origin") ?? "";
+  const { error } = await (await createClient()).auth.resetPasswordForEmail(email, {
+    redirectTo: `${origin}/auth/callback?next=/reset-password`,
+  });
   if (error) return { message: authMessage(error), tone: "error", values: { email } };
   return sent;
 }

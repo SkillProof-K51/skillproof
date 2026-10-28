@@ -4,10 +4,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 /**
- * Where Supabase's email links land (a password reset, later an email confirmation): checks the
- * token, which signs the person in, then goes on to `next`. Takes both link styles — the token
- * hash from our email templates (works whichever device asked), and the code Supabase's default
- * template sends (works in the browser that asked).
+ * For our own email templates (once the project sends with its own SMTP — docs/portal.md › 5):
+ * a token-hash link, checked here on the server, works whichever device asked. Supabase's default
+ * links land on /auth/callback instead. Also takes a `code`, for the browser that asked.
  */
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);

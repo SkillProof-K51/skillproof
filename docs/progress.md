@@ -37,7 +37,8 @@ Update this when you finish a step. Newest at the top of each list.
 - [ ] Everyone: warm-up PR — one screen in your module's app + one table copied from `supabase/migrations/0001_warmup_notes.sql`.
 - [ ] Everyone: plan your module's screens from the coded kit (`docs/ui.md`; every component is live at `/kit`). The Figma file is no longer updated (Azim, 18 Oct) — sketch anywhere, but build only with the kit.
 - [ ] Azim: shared core on an iPhone (sign up, close the app, open it: still signed in; log out → Welcome), then merge.
-- [ ] Azim: apply `20261027201000_portal_accounts.sql`; Supabase Site URL + the Reset Password template ([`portal.md`](portal.md) › 5); sign up a company, a mentor and a coordinator on the portal and approve them as admin.
+- [ ] Azim: apply `20261027201000_portal_accounts.sql`; Supabase Site URL + Redirect URLs ([`portal.md`](portal.md) › 5); sign up a company, a mentor and a coordinator on the portal and approve them as admin.
+- [ ] Azim: our own email sender (custom SMTP: Brevo or a Gmail app password) before Progress III — Supabase's built-in email only reaches the project's team, 2 an hour; then Confirm email back on.
 - [ ] Azim: put the portal online (Vercel) before Progress III; Site URL → its address.
 - [ ] Iskandar: OK the warm-up page's switch to the kit's Button (the web lint rule now fails on `bg-blue-600`).
 - [ ] Azim: turn Supabase's **Confirm email** back on before the Progress III demo (off while we build: the built-in email allows only a few sends an hour).

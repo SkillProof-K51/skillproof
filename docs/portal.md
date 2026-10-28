@@ -40,18 +40,17 @@ The portal (`apps/web`) is where companies, mentors, university coordinators and
 - `src/proxy.ts` keeps the Supabase session cookie fresh (and never cacheable). It doesn't decide access.
 - `src/lib/account.ts`: `getAccount()` (who is signed in), `homeFor()` (where they land), `requireAccount(roles)` at the top of every page and action.
 - `src/lib/auth-actions.ts` (server actions) + `src/lib/auth-rules.ts` (the rules and their messages); forms share `FormField`, `FormMessage`, `SubmitButton`.
-- `src/app/auth/confirm/route.ts` takes Supabase's email links: the token hash from our templates (below) or the default template's code.
+- `/auth/callback` (a page) finishes Supabase's default email links: `?code=` when the portal asked, the tokens after `#` when the app asked (only the browser can read those). `/auth/confirm` (a route) takes token-hash links, for when our own templates are in (§5).
 - **TEST MODE** (`NEXT_PUBLIC_TEST_MODE=1`): demo accounts and data in `src/lib/demo/`, the yellow strip with the view switcher. Nothing touches Supabase.
 - No Cache Components: every page depends on who's signed in, and with it on each session read needs a `<Suspense>` boundary or the build fails.
 
 ## 5. Supabase settings (Azim, in the dashboard)
 
 1. **Authentication → URL Configuration → Site URL**: `http://localhost:3000` for now; the Vercel address once the portal is online.
-2. **Authentication → Emails → Templates → Reset Password**: make the link
-   `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/reset-password`
-   so a reset asked for on the phone opens the portal's page (a code-style link only works in the browser that asked).
-3. Before the Progress III demo, turn **Confirm email** back on, and make the **Confirm signup** link
-   `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/`
+2. Same page, **Redirect URLs**: add `http://localhost:3000/**` (later the Vercel address + `/**` too). Reset links land on `/auth/callback`, so it must be allowed. The app finds the portal through `EXPO_PUBLIC_PORTAL_URL`.
+3. **Before the Progress III demo: our own email sender (custom SMTP).** Supabase's built-in email only reaches people on the project's team, at most 2 emails an hour, and isn't meant for real use: companies, mentors and students wouldn't get their reset or confirmation emails. A free sender (Brevo, or a Gmail app password) goes in Authentication → Emails → SMTP Settings; then turn **Confirm email** back on. Custom SMTP also unlocks the email templates, which can then use the token-hash links (they work whichever device asked):
+   - Reset Password: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/reset-password`
+   - Confirm signup: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/`
 
 ## 6. Not yet
 
