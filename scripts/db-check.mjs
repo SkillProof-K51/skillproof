@@ -4,8 +4,8 @@
 // loudly: a public table without RLS or a policy, a check below that doesn't hold.
 //
 // PGlite isn't Supabase, so step 1 creates what the migrations expect: the API roles (anon,
-// authenticated, service_role) with Supabase's default grants, auth.users and auth.uid().
-// A module whose migration needs more (Storage, say) adds its stub there.
+// authenticated, service_role) with Supabase's default grants, auth.users and auth.uid(), and
+// Storage's two tables. A module whose migration needs more adds its stub there.
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,6 +71,26 @@ await db.exec(`
   $$;
   grant usage on schema auth to anon, authenticated, service_role;
   grant execute on function auth.uid() to anon, authenticated, service_role;
+
+  create schema storage;
+  create table storage.buckets (
+    id text primary key, name text not null, public boolean not null default false,
+    file_size_limit bigint, allowed_mime_types text[], created_at timestamptz default now()
+  );
+  create table storage.objects (
+    id uuid primary key default gen_random_uuid(),
+    bucket_id text references storage.buckets (id),
+    name text not null,
+    owner uuid,
+    created_at timestamptz default now()
+  );
+  create function storage.foldername(name text) returns text[] language sql immutable as $$
+    select _parts[1 : array_length(_parts, 1) - 1] from (select string_to_array(name, '/') as _parts) p
+  $$;
+  alter table storage.objects enable row level security;
+  grant usage on schema storage to anon, authenticated, service_role;
+  grant select, insert, update, delete on storage.objects to anon, authenticated, service_role;
+  grant select on storage.buckets to anon, authenticated, service_role;
 `);
 
 // ── 2. Migrations in file order, then the seed ──────────────────────────────────────────────
@@ -106,13 +126,16 @@ const definers = await db.query(`
 definers.rows.length === 0 ? ok("no definer function in public (they belong in private)") : fail(`definer in public: ${definers.rows.map((r) => r.proname).join(", ")}`);
 
 // The shared core's grants, exactly (the warm-up tables keep Supabase's defaults).
-const CORE = ["profiles", "student_profiles", "programmes", "skills", "job_roles", "job_role_skills", "student_skills"];
+const CORE = ["profiles", "student_profiles", "programmes", "skills", "job_roles", "job_role_skills", "student_skills", "companies", "mentors", "coordinators"];
 const WANT = {
   "anon:SELECT": ["job_role_skills", "job_roles", "programmes", "skills"],
   "authenticated:SELECT": [...CORE].sort(),
   "authenticated:INSERT": ["job_role_skills", "job_roles", "programmes", "skills"],
-  "authenticated:UPDATE": ["job_role_skills", "job_roles", "profiles(full_name)", "programmes", "skills", "student_profiles(job_role_id,programme_id,year)"],
-  "authenticated:DELETE": ["job_role_skills", "job_roles", "programmes", "skills"],
+  "authenticated:UPDATE": [
+    "companies(document_path,join_code,name,ssm_no,website)", "coordinators(faculty)", "job_role_skills", "job_roles",
+    "mentors(job_title)", "profiles(full_name,role,status)", "programmes", "skills", "student_profiles(job_role_id,programme_id,year)",
+  ],
+  "authenticated:DELETE": ["job_role_skills", "job_roles", "mentors", "programmes", "skills"],
 };
 const got = {};
 // SELECT / INSERT / UPDATE can be granted per column; DELETE, TRUNCATE, TRIGGER only per table.
@@ -175,13 +198,12 @@ await expect("bad answers are dropped, not trusted (role 'ghost', year 9)", asyn
   return r;
 }, "ok");
 await expect("a company signs up → pending, no student profile", async () => {
-  await signUp(CO, "hr@example.com", { full_name: "Contoh Tech Sdn Bhd", role: "company" });
+  await signUp(CO, "hr@example.com", { full_name: "Lina Contoh", role: "company", company_name: "Contoh Tech Sdn Bhd", ssm_no: "2024 0101 2345", website: "contoh.example" });
   const r = await db.query(`select p.status, s.id as student from public.profiles p left join public.student_profiles s using (id) where p.id = $1`, [CO]);
   if (r.rows[0].status !== "pending" || r.rows[0].student !== null) throw new Error(JSON.stringify(r.rows));
   return r;
 }, "ok");
 await expect("nobody signs up as an admin", () => signUp("66666666-6666-4666-8666-666666666666", "boss@example.com", { role: "admin" }), "refused:42501");
-await expect("nobody signs up as a coordinator", () => signUp("66666666-6666-4666-8666-666666666666", "boss@example.com", { role: "coordinator" }), "refused:42501");
 // An admin is made by hand: sign up, then the SQL editor sets the role.
 await signUp(ADMIN, "admin@example.com", { full_name: "Admin" });
 await db.query(`update public.profiles set role = 'admin' where id = $1`, [ADMIN]);
@@ -272,6 +294,82 @@ await expect("deleting Aina's account removes her rows", async () => {
   await db.query(`delete from auth.users where id = $1`, [AINA]);
   const r = await db.query(`select 1 from public.profiles where id = $1 union all select 1 from public.student_skills where student_id = $1`, [AINA]);
   if (r.rows.length) throw new Error(`${r.rows.length} row(s) left`);
+  return r;
+}, "ok");
+
+// ── 6. Portal accounts: companies, join codes, mentors, coordinators, documents ────────────
+console.log("\nportal accounts:");
+const CO2 = "77777777-7777-4777-8777-777777777777"; // a second company
+const MENTOR = "88888888-8888-4888-8888-888888888888"; // joins Contoh Tech
+const MENTOR2 = "99999999-9999-4999-8999-999999999999"; // joins the second company
+const COORD = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+const NOBODY = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"; // sign-ups that must fail
+const CODE = /^[A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{4}$/;
+const company = (owner) => db.query(`select id, join_code, website, ssm_no from public.companies where owner_id = $1`, [owner]).then((r) => r.rows[0]);
+
+await expect("the company got a join code, and its details were tidied (SSM spaces, https://)", async () => {
+  const c = await company(CO);
+  if (!CODE.test(c.join_code) || c.website !== "https://contoh.example" || c.ssm_no !== "202401012345") throw new Error(JSON.stringify(c));
+  return c;
+}, "ok");
+const firstCode = (await company(CO)).join_code;
+await expect("a mentor can't join a company that isn't approved yet", () => signUp(NOBODY, "early@example.com", { role: "mentor", join_code: firstCode }), "refused:22023");
+await expect("a student can't approve the company", () => q(HARIZ, `update public.profiles set status = 'active' where id = $1`, [CO]), "affected:0");
+await expect("the admin approves the company", () => q(ADMIN, `update public.profiles set status = 'active' where id = $1`, [CO]), "affected:1");
+await expect("a mentor joins with the code typed lower-case without the dash → active, linked", async () => {
+  await signUp(MENTOR, "kamal@example.com", { full_name: "Kamal Ariff", role: "mentor", join_code: firstCode.replace("-", "").toLowerCase(), job_title: "Senior developer" });
+  const r = await db.query(`select p.role, p.status, m.company_id, m.job_title from public.profiles p join public.mentors m using (id) where p.id = $1`, [MENTOR]);
+  const m = r.rows[0];
+  if (m?.role !== "mentor" || m.status !== "active" || m.company_id !== (await company(CO)).id || m.job_title !== "Senior developer") throw new Error(JSON.stringify(m));
+  return r;
+}, "ok");
+await expect("a wrong join code fails the sign-up", () => signUp(NOBODY, "guess@example.com", { role: "mentor", join_code: "ABCD-EFGH" }), "refused:22023");
+await expect("a coordinator signs up → pending, with their faculty", async () => {
+  await signUp(COORD, "coordinator@example.com", { full_name: "Hafiz Rahim", role: "coordinator", faculty: "Faculty of ICT" });
+  const r = await db.query(`select p.status, c.faculty from public.profiles p join public.coordinators c using (id) where p.id = $1`, [COORD]);
+  if (r.rows[0]?.status !== "pending" || r.rows[0].faculty !== "Faculty of ICT") throw new Error(JSON.stringify(r.rows));
+  return r;
+}, "ok");
+await expect("the admin approves the coordinator", () => q(ADMIN, `update public.profiles set status = 'active' where id = $1`, [COORD]), "affected:1");
+await signUp(CO2, "hello@kilangkod.example", { full_name: "Wei Ling", role: "company", company_name: "Kilang Kod Studio", ssm_no: "202201056789" });
+await expect("a coordinator is no admin: can't approve a company", () => q(COORD, `update public.profiles set status = 'active' where id = $1`, [CO2]), "affected:0");
+await q(ADMIN, `update public.profiles set status = 'active' where id = $1`, [CO2]);
+await signUp(MENTOR2, "devi@example.com", { full_name: "Devi Nair", role: "mentor", join_code: (await company(CO2)).join_code });
+
+await expect("the company reads its own company only", () => q(CO, `select id from public.companies`), "rows:1");
+await expect("the company reads its mentor and the mentor's name", () => q(CO, `select m.id from public.mentors m union all select p.id from public.profiles p where p.id = '${MENTOR}'`), "rows:2");
+await expect("the company can't see the other company's mentor", () => q(CO, `select id from public.mentors where id = $1 union all select id from public.profiles where id = $1`, [MENTOR2]), "rows:0");
+await expect("the mentor reads their own company, not the other", () => q(MENTOR, `select id from public.companies`), "rows:1");
+await expect("a student sees no companies", () => q(HARIZ, `select id from public.companies`), "rows:0");
+await expect("a visitor reads no companies, mentors or coordinators", () => q(null, `select id from public.companies`), "refused:42501");
+await expect("the admin reads both companies, both mentors and the coordinator", () => q(ADMIN, `select id from public.companies union all select id from public.mentors union all select id from public.coordinators`), "rows:5");
+
+await expect("the company can't pick its own join code", () => q(CO, `update public.companies set join_code = 'AAAA-BBBB' where owner_id = $1`, [CO]), "refused:42501");
+await expect("the company draws a new code (set it to null)", async () => {
+  await q(CO, `update public.companies set join_code = null where owner_id = $1`, [CO]);
+  const c = await company(CO);
+  if (!CODE.test(c.join_code) || c.join_code === firstCode) throw new Error(c.join_code);
+  return c;
+}, "ok");
+await expect("the old code no longer works", () => signUp(NOBODY, "late@example.com", { role: "mentor", join_code: firstCode }), "refused:22023");
+await expect("the company can't point its document at another folder", () => q(CO, `update public.companies set document_path = $2 where owner_id = $1`, [CO, `${CO2}/x.pdf`]), "refused:42501");
+
+const upload = (uid, path) => q(uid, `insert into storage.objects (bucket_id, name, owner) values ('company-documents', $1, $2)`, [path, uid]);
+await expect("the company uploads its SSM document into its own folder", () => upload(CO, `${CO}/ssm.pdf`), "affected:1");
+await expect("… and records it", () => q(CO, `update public.companies set document_path = $2 where owner_id = $1`, [CO, `${CO}/ssm.pdf`]), "affected:1");
+await expect("the company can't upload into another company's folder", () => upload(CO, `${CO2}/ssm.pdf`), "refused:42501");
+await expect("a student can't upload company documents", () => upload(HARIZ, `${HARIZ}/ssm.pdf`), "refused:42501");
+await expect("the admin reads the document", () => q(ADMIN, `select name from storage.objects where bucket_id = 'company-documents'`), "rows:1");
+await expect("the other company can't read it", () => q(CO2, `select name from storage.objects where bucket_id = 'company-documents'`), "rows:0");
+
+await expect("a mentor can't remove another mentor", () => q(MENTOR, `delete from public.mentors where id = $1`, [MENTOR2]), "affected:0");
+await expect("the company removes its mentor", () => q(CO, `delete from public.mentors where id = $1`, [MENTOR]), "affected:1");
+await expect("the admin promotes the coordinator to admin", () => q(ADMIN, `update public.profiles set role = 'admin' where id = $1`, [COORD]), "affected:1");
+await expect("… but can't turn a student into a company", () => q(ADMIN, `update public.profiles set role = 'company' where id = $1`, [HARIZ]), "refused:42501");
+await expect("an email changed in Auth reaches the profile", async () => {
+  await db.query(`update auth.users set email = 'hariz.new@example.com' where id = $1`, [HARIZ]);
+  const r = await db.query(`select email from public.profiles where id = $1`, [HARIZ]);
+  if (r.rows[0].email !== "hariz.new@example.com") throw new Error(JSON.stringify(r.rows));
   return r;
 }, "ok");
 

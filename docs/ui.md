@@ -108,3 +108,36 @@ Always `<Text variant="…">` (display · headline · title · heading · subhea
 - **A component looks wrong** → fix the component in `components/ui`; every screen gets the fix.
 - **A size only one component uses** → a named constant at the top of that file (`const TAIL = 12;`), with a comment saying where it comes from.
 - **Never** fix a look on one screen only, and never type a hex colour, a font name or a raw size — lint will stop the build.
+
+## The web portal
+
+The portal (`apps/web`) has its own look (**look A**, Azim 28 Oct: Kumo-style — neutral greys, hairline borders, Inter, compact, the app's purple as the one accent) and its own kit: **shadcn/ui** components in `apps/web/src/components/ui`, coloured by the `portal` tokens in `@skillproof/tokens`. Every component is live at **`localhost:3000/kit`**.
+
+| What | Where |
+|---|---|
+| Colours | Through shadcn's names only: `bg-primary`, `text-muted-foreground`, `border-border`, `bg-muted`… (`globals.css` maps them to the portal tokens). Status colours from the tokens: `bg-feedback-warning-bg`, `text-status-verified-fg`… |
+| Components | `@/components/ui/*` (button, card, table, tabs, dialog, field, input, select, badge, sidebar, sonner…). Badge has `warning` (pending) and `success` (approved). |
+| A page's parts | `PageHeader` (title, one line, actions), `ModulePlaceholder`, in `@/components/portal`; your area's parts in `@/components/<area>/` |
+| Data | `apps/web/src/lib/<area>.ts` (`import "server-only"`; TEST MODE first, then Supabase) and server actions in `lib/<area>-actions.ts` (`"use server"`). Never fetch in a page. |
+| Who's signed in | `await requireAccount(["admin"])` at the top of every page and action (`lib/account.ts`): it sends anyone else where they belong. RLS checks again in the database. |
+| Icons | Phosphor (like the app): `@phosphor-icons/react/ssr` in server components, `@phosphor-icons/react` in `"use client"` ones. |
+
+A page, top to bottom (copy `app/(portal)/admin/approvals/page.tsx`):
+```tsx
+export default async function SkillsPage() {
+  await requireAccount(["admin"]);            // who may open it
+  const skills = await getSkills();           // lib/skills.ts — demo data in TEST MODE
+  return (
+    <div className="flex flex-col gap-6">
+      <PageHeader title="Skills" description="…" actions={<Button>Add a skill</Button>} />
+      <SkillsTable skills={skills} />          {/* components/skills/, "use client" if it's interactive */}
+    </div>
+  );
+}
+```
+
+**`pnpm lint` fails on** hex / rgb colours, Tailwind's own palette (`bg-blue-600`, `text-white`) and typed-in sizes (`p-[13px]`) anywhere outside the kit — use Tailwind's scale (`p-4`, `gap-6`) and the names above. A new look = change the token or the component in `components/ui`, never one page.
+
+**TEST MODE** (`NEXT_PUBLIC_TEST_MODE=1`, the default in `.env.example`): demo data from `lib/demo/`, a yellow strip on every page, and a switch to view the portal as the admin, a coordinator, a company (approved or waiting), a mentor or a student. Build your pages there; nothing touches Supabase.
+
+**Next.js 16** differs from what most AI tools learned (e.g. `proxy.ts`, not `middleware.ts`): read `apps/web/node_modules/next/dist/docs/` first. The portal uses plain dynamic rendering (no Cache Components).

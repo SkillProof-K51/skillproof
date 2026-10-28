@@ -55,6 +55,22 @@ export const colors = {
     success: { fg: "#1d7348", bg: "#d9f2e3" },
     error: { fg: "#b42318", bg: "#fde8e6" },
     info: { fg: "#2a5db0", bg: "#dcebff" },
+    warning: { fg: "#9a5b00", bg: "#fff4d6" }, // waiting on someone: a pending account (4.9:1)
+  },
+  portal: {
+    // The web portal (Azim, 28 Oct: Kumo-style, look A): neutral greys and hairlines, compact,
+    // the app's purple as its one accent — companies, mentors, coordinators and the admin work
+    // here at a desk. shadcn/ui reads these through apps/web/src/app/globals.css.
+    page: "#fafafa", // behind everything, and the sidebar
+    surface: "#ffffff", // cards, tables, dialogs, inputs
+    subtle: "#f4f4f5", // table headers, the tabs' track, hovered rows
+    selected: "#ededed", // the sidebar's current page
+    border: "#e5e5e5", // hairlines
+    text: "#171717",
+    textSoft: "#404040", // sidebar items
+    textMuted: "#737373", // labels, sub-lines (4.5:1 on page)
+    accent: "#7c5cf0", // = accent.brand: primary buttons, links, focus rings, counts
+    onAccent: "#ffffff", // text on accent (4.5:1)
   },
   kind: {
     // A challenge's own page is a pastel of its kind (BitePal's detail pages, Azim 25 Oct): a
@@ -192,12 +208,20 @@ export const type = {
 
 export type TypeVariant = keyof typeof type;
 
-/** CSS font stacks for the web portal. */
+/**
+ * CSS font stacks. sans / display / mono are the app's; the portal's are Inter and Roboto Mono,
+ * which the web loads with next/font as --font-inter and --font-roboto-mono (apps/web layout).
+ */
 export const fontStack = {
   sans: "'Sofia Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
   display: "'Sofia Sans Condensed', 'Sofia Sans', system-ui, sans-serif",
   mono: "'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+  portal: "var(--font-inter), Inter, system-ui, -apple-system, 'Segoe UI', sans-serif",
+  portalMono: "var(--font-roboto-mono), 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
 } as const;
+
+/** Corner radius of the portal's cards, inputs and buttons (Kumo-style: small and sharp). */
+export const portalRadius = 8;
 
 /** Shadows. Only floating elements get one — cards are flat. */
 export const shadow = {

@@ -1,26 +1,31 @@
 # Data contracts: the shared core
 
 The tables every module builds on, who reads and writes each one, and how your module's tables
-plug in. The schema is `supabase/migrations/20261027083000_shared_core.sql`; the demo catalogue is
-`supabase/seed.sql`. Changing a table here = a new migration in a PR its owner approves (rule 6).
+plug in. The schema is `supabase/migrations/20261027083000_shared_core.sql` and
+`20261027201000_portal_accounts.sql` (the portal's accounts: [`portal.md`](portal.md)); the demo
+catalogue is `supabase/seed.sql`. Changing a table here = a new migration in a PR its owner approves (rule 6).
 
 ## The tables
 
 | Table | Holds | Reads | Writes | Owner |
 |---|---|---|---|---|
-| `profiles` | one row per account: `role` (student · company · mentor · coordinator · admin), `status` (active · pending · rejected), `full_name` | the user (own row), admin | made at sign-up; the user edits `full_name`; role and status only by an admin | shared core |
+| `profiles` | one row per account: `role` (student · company · mentor · coordinator · admin), `status` (active · pending · rejected), `full_name`, `email` | the user (own row), admin; a company its mentors' | made at sign-up; the user edits `full_name`; role and status only by an active admin (a role only between coordinator and admin) | shared core |
 | `student_profiles` | a student's `job_role_id`, `programme_id`, `year`, `used_skill_ids` | the student (own row), admin | made at sign-up; the student edits role, programme, year | **M2** from now |
 | `programmes` | study programmes (placeholders until the faculty's list) | everyone, signed in or not | admin | shared core |
 | `skills` | the skill catalogue; ids are short codes (`javascript`, `html_css`) | everyone | admin | **M1** from now |
 | `job_roles` | roles a student works towards (`web`, `data`, `mobile`, `qa`) | everyone | admin | **M1** from now |
 | `job_role_skills` | a role's roadmap: `position` (order) and `weight` (integer 1–100) | everyone | admin | **M1** from now |
 | `student_skills` | per student per skill: `not_yet → practised → verified`. **No row = not yet** | the student (own rows), admin | **only** M3's function (practised) and M4's function (verified), still to build. The app never writes here | shared core |
+| `companies` | a company account's name, SSM no., website, document path, **join code** | the company, its mentors, admin | made at sign-up; the company edits its details and draws a new code (sets it to null); the database draws every code | shared core |
+| `mentors` | a mentor and the company they joined (`company_id`), job title | the mentor, their company, admin | made at sign-up with an approved company's code; the mentor edits the title; the company (or an admin) removes them | shared core |
+| `coordinators` | a coordinator's faculty | the coordinator, admin | made at sign-up; the coordinator edits it | shared core |
 
 "Everyone" includes signed-out visitors: onboarding shows roles and roadmaps before sign-up.
 
 ## Rules the database enforces
 
-- **Sign-up** makes the `profiles` row (and `student_profiles` for a student) from what the app sends: `full_name`, `role`, `job_role_id`, `programme_id`, `year`, `used_skill_ids`. Unknown values are dropped. Sign-up can only choose student, company or mentor; companies and mentors start `pending` until an admin approves them.
+- **Sign-up** makes the `profiles` row and the role's own row from what the app or portal sends — student: `job_role_id`, `programme_id`, `year`, `used_skill_ids` · company: `company_name`, `ssm_no`, `website` · mentor: `join_code`, `job_title` · coordinator: `faculty`. Unknown values are dropped. Sign-up can't choose admin. Companies and coordinators start `pending` until an admin approves them; a mentor is active at once, but only with an approved company's join code.
+- **Company documents** live in the private `company-documents` bucket, in the company's own folder; only it and admins read them.
 - **Skill status only moves forward**, and `verified` only after `practised`. The timestamps (`practised_at`, `verified_at`) are set by the database, not by the writer.
 - **A skill a student holds can't be deleted** (M1's delete page should say so, not crash).
 - Deleting an account deletes its rows everywhere.
