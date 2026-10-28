@@ -1,8 +1,9 @@
 # Building a screen — the UI kit
 
 Read this before you (or your AI tool) build any mobile screen. **The code is the design source of
-truth** — the tokens and components in this repo, not the Figma file (it was the starting sketch and
-is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
+truth** — the tokens and components in this repo. The [Figma file](https://www.figma.com/design/ud5OlGZF5PjMXmIRMHfQCy) mirrors them (captured
+from the code on 29 Oct, with a proposal for each module's unbuilt screens): look there for ideas, build
+only with the kit. `pnpm lint` enforces the kit (AGENTS.md rule 13).
 
 ## Where things live
 | What | Where |
