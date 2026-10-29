@@ -25,8 +25,8 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
   </View>
 </Screen>
 ```
-- **Hero first.** Plain by default: the title on the page itself, the first card `space.xl` below (the BitePal look). Home and Welcome pass `scene` (the garden picture), and the first card slides up over its ground.
-- **No mascot.** It was dropped in the redesign (Azim, 25 Oct), with the painted sky. A screen's moment comes from its content instead, like the badge popping open on a Result.
+- **Hero first.** Plain by default: the title on the page itself, the first card `space.xl` below (the BitePal look). Welcome passes `scene` (the garden picture), and the first card slides up over its ground. Home is plain since 29 Oct: Gem's greeting, then the cards.
+- **One mascot, Gem, and only on Home for now** (Azim, 29 Oct; the old blue one went on 25 Oct). Gem is a skill badge come alive: the rounded hexagon with a face, no hands or feet. On Home it says the hello in a `SpeechBubble` whose tail points back at it, so the screen greets once (`components/home/Greeting.tsx`). What it says is text in the bubble, picked in `lib/` (`mascotLine()` in `lib/home.ts`); the mascot itself is decoration that screen readers skip. Ask Azim before putting it on another screen — a screen's moment still comes from its content, like the badge popping open on a Result.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
 - **Cards are flat**: white (`tone="surface"`) with big soft corners on the lavender page; the role tint (`tone="role"`) for today's challenge; blue for projects. No decoration on cards — no circles, borders or shadows.
 - **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label that says what happens, or an arrow — and an `accessibilityLabel` that says what tapping does.
@@ -58,6 +58,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 | Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `StackedBar` (parts of a whole + a legend) · `LineChart` (one series over time) |
 | Sharing | `QrCode` (a link to scan — navy on white, never inverted) |
 | Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` (an optional icon) · `Reveal` (a step fades up) |
+| Mascot | `Mascot` (Gem; `size`; floats at rest) · `SpeechBubble` (what it says; the tail points left, back at it) |
 
 ## Feedback — which one when
 - **Something saved or synced** → `toast({ message, tone: "success" })`. **It failed** → `tone: "error"`: the toast stays until tapped, so a failure is never swallowed (AGENTS.md rule 11).
@@ -81,7 +82,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 - Values arrive computed and formatted (rule 2); these only draw them.
 
 ## Motion
-Durations are the `motion` tokens (quick · standard · toast · pop). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components: a step or a page part that appears fades up with `<Reveal>` (new `key` = play again). The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
+Durations are the `motion` tokens (quick · standard · toast · pop · float). Every animation in the kit drops to 0 ms when the phone's Reduce Motion is on (`useReducedMotion()` / `useDuration()` in `components/ui/motion.ts`). Screens don't animate on their own — use the components: a step or a page part that appears fades up with `<Reveal>` (new `key` = play again). The one motion moment of a Result is the skill's badge popping open (`<SkillBadge from="not_yet" />`).
 
 ## Demo data
 Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MODE · demo data** strip appears under the status bar on every screen by itself (rule 4) — never fake data without it.
