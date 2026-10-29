@@ -73,6 +73,12 @@ export const colors = {
     goldLine: "rgba(220, 178, 83, 0.45)", // hairline border + divider on the cover
     wash: "#f7edd3", // a soft gold page tint where the passport is the subject (onboarding)
   },
+  mascot: {
+    // Gem (Azim, 29 Oct): a skill badge come alive. Its body is accent.brand, its eyes bg.surface
+    // and text.primary, its sparkles accent.butter; these two are its own.
+    facet: "#8d70f3", // the lighter hexagon inside the body
+    blush: "#ffb3cf", // cheeks
+  },
   glass: {
     // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
     veil: "rgba(226, 225, 232, 0.92)", // the soft grey of the floating tab pill
@@ -133,6 +139,7 @@ export const motion = {
   standard: 250, // sheets and dialogs opening
   toast: 3000, // how long a success / info toast stays (error toasts stay until closed)
   pop: 700, // a badge opening on a win: squeeze, spring, sparks (Result)
+  float: 1600, // the mascot rising (then sinking) at rest
 } as const;
 
 /** Press feedback for anything tappable. */
