@@ -37,9 +37,11 @@ const config: ExpoConfig = {
     [
       "expo-splash-screen",
       {
-        backgroundColor: tokens.colors.bg.app,
+        // the launch screen: the logo on the brand purple, at the size Welcome opens from
+        // (app/(auth)/welcome.tsx · LOGO_LAUNCH = 52 high → 236 wide)
+        backgroundColor: tokens.colors.accent.brand,
         image: "./assets/splash-icon.png",
-        imageWidth: 160,
+        imageWidth: 236,
       },
     ],
   ],

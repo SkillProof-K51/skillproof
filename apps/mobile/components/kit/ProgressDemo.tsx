@@ -56,7 +56,7 @@ export function ProgressDemo() {
       <KitLabel>Avatar · initials until photos arrive with the shared core</KitLabel>
       <View style={styles.row}>
         <Avatar initials="AS" />
-        {/* white, for a picture behind it (Home's scene) */}
+        {/* white, for a tinted or coloured background */}
         <View style={styles.tight}>
           <Avatar initials="AS" tone="surface" />
         </View>

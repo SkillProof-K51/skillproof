@@ -1,16 +1,16 @@
 import { colors, radius, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import { Mascot, SpeechBubble, Text } from "../ui";
+import { Logo, Mascot, SpeechBubble, Text } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const SMALL = 48;
 const LARGE = 96;
 
-/** The mascot: Gem at three sizes, then saying something, the way Home's greeting does. */
+/** The mascot (Gem at three sizes, then saying something, as on Home) and the logo. */
 export function MascotDemo() {
   return (
-    <KitSection title="Mascot" components="Mascot · SpeechBubble">
+    <KitSection title="Mascot & logo" components="Mascot · SpeechBubble · Logo">
       <KitLabel>Mascot · Gem, a skill badge come alive; it floats (still under Reduce Motion) and screen readers skip it</KitLabel>
       <View style={styles.row}>
         <Mascot size={SMALL} />
@@ -28,6 +28,11 @@ export function MascotDemo() {
           </Text>
         </SpeechBubble>
       </View>
+      <KitLabel>{'Logo · on the page, and tone="onBrand" on the purple (the launch screen Welcome opens from)'}</KitLabel>
+      <Logo />
+      <View style={styles.brand}>
+        <Logo tone="onBrand" />
+      </View>
     </KitSection>
   );
 }
@@ -36,4 +41,5 @@ const styles = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", gap: space.sm },
   page: { padding: space.md, borderRadius: radius.xl, backgroundColor: colors.bg.app },
   bubble: { flex: 1 },
+  brand: { alignItems: "center", paddingVertical: space.xl, borderRadius: radius.xl, backgroundColor: colors.accent.brand },
 });

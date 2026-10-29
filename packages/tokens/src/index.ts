@@ -162,6 +162,8 @@ export const motion = {
   toast: 3000, // how long a success / info toast stays (error toasts stay until closed)
   pop: 700, // a badge opening on a win: squeeze, spring, sparks (Result)
   float: 1600, // the mascot rising (then sinking) at rest
+  launch: 700, // Welcome holds the launch screen (the logo on the purple) this long…
+  open: 900, // …then opens into the page
 } as const;
 
 /** Press feedback for anything tappable. */
@@ -184,8 +186,6 @@ export const radius = {
 export const layout = {
   designWidth: 390,
   gutter: 16, // screen side padding — cards run wide, BitePal-style
-  sceneHeight: 330, // Home's illustrated scene (BitePal-style header)
-  sceneOverlap: 56, // the first card slides this far up over the scene's bottom edge
 } as const;
 
 /**
