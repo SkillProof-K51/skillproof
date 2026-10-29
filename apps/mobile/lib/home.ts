@@ -14,8 +14,8 @@ export type MicroProject = {
 
 /** What the Home screen displays. Every number is computed elsewhere (rule 2) — Home only shows it. */
 export type HomeData = {
-  student: { firstName: string; initials: string; pathLabel: string };
-  bubble: string;
+  /** `role` is the target job role ("Web Developer"); `pathLabel` its roadmap's title. */
+  student: { firstName: string; initials: string; role: string; pathLabel: string };
   readiness: {
     /** 0–100 integer from the Module 2 fit engine. */
     percent: number;
@@ -54,6 +54,19 @@ export function nextUnlock(data: HomeData): { project: MicroProject; remaining: 
   if (!c || c.done) return null;
   const project = data.microProjects.find((p) => p.lockedBy === c.skill);
   return project ? { project, remaining: c.of - c.passed } : null;
+}
+
+/**
+ * What Gem says under the hello on Home: one line from where Readiness stands. The numbers come
+ * from the fit engine (Module 2); this only picks the words.
+ */
+export function mascotLine(data: HomeData): string {
+  const { percent, readyAt, skills } = data.readiness;
+  const role = data.student.role;
+  if (skills.length > 0 && skills.every((s) => s.status === "verified")) return "Every skill is Verified. You’re fully ready!";
+  if (percent >= readyAt) return `You’re past ${readyAt}% — ready for ${role} roles!`;
+  if (percent === 0) return "Let’s earn your first skill today.";
+  return `${readyAt - percent}% more and you’re ready for ${role} roles.`;
 }
 
 /** "1 place left" / "3 places left". */

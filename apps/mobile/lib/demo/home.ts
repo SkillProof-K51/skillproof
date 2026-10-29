@@ -4,8 +4,7 @@ import { demoToday } from "./challenges";
 // Fictional persona (AGENTS.md rule 12): Aina Sofea, BITS student on the Web Developer path.
 // Numbers are illustrative — the real ones come from the Module 2 fit engine and Modules 3–5.
 export const demoHome: HomeData = {
-  student: { firstName: "Aina", initials: "AS", pathLabel: "Web Developer path" },
-  bubble: "Ready for today’s challenge, Aina?",
+  student: { firstName: "Aina", initials: "AS", role: "Web Developer", pathLabel: "Web Developer path" },
   readiness: {
     percent: 72,
     readyAt: 70,
