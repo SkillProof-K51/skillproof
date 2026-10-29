@@ -177,7 +177,7 @@ export const layout = {
 
 /**
  * Type scale (Sofia Sans, Azim 24 Oct). `family` + `weight` map to a loaded font on each platform:
- * mobile → SofiaSans_<weight>, SofiaSansCondensed_800ExtraBold (display), RobotoMono_400Regular / _700Bold
+ * mobile → SofiaSans_<weight>, SofiaSansCondensed_800ExtraBold (display), RobotoMono_400Regular
  * web    → the `--font-sans` / `--font-display` / `--font-mono` stacks in tokens.css
  */
 export type TypeStyle = {
@@ -204,7 +204,6 @@ export const type = {
   sectionLabel: { family: "sans", weight: 600, size: 13, lineHeight: 18, letterSpacing: 0 }, // grey, sentence case ("Micro-projects for you")
   overline: { family: "sans", weight: 700, size: 12, lineHeight: 16, letterSpacing: 0.8, uppercase: true }, // small caps label over a value ("UP NEXT")
   code: { family: "mono", weight: 400, size: 13, lineHeight: 20, letterSpacing: 0 },
-  wordmark: { family: "mono", weight: 700, size: 20, lineHeight: 24, letterSpacing: -0.6 }, // "skillproof" in the Logo only
 } as const satisfies Record<string, TypeStyle>;
 
 export type TypeVariant = keyof typeof type;
