@@ -109,6 +109,20 @@ Always `<Text variant="…">` (display · headline · title · heading · subhea
 - **A size only one component uses** → a named constant at the top of that file (`const TAIL = 12;`), with a comment saying where it comes from.
 - **Never** fix a look on one screen only, and never type a hex colour, a font name or a raw size — lint will stop the build.
 
+## Logo
+
+Direction 4, the Proof chip (Azim, 29 Oct): **Skill** then a purple chip reading **✓ Proof**, like the app's own status chips. **Gem**, the mascot, is the app icon; the chip's **tick** stands in wherever Gem's face would be too small to read (favicons, Android's themed icon). The other directions and the icon options sit on the Figma file's Logo page.
+
+| What | Where |
+|---|---|
+| In the app | `<Logo />` from the kit (Welcome; `size` = height). Use it instead of typing "SkillProof" as a heading. |
+| In the portal | `<Brand />` (the logo, `subtitle="Portal"` on signed-out pages) or `<Logo />`, in `@/components/portal`. "Skill" takes the text colour, so it reads on light and dark. |
+| Masters | `docs/brand/`: `logo.svg` (on light), `logo-on-dark.svg`, `app-icon.svg` (Gem on purple, full bleed), `gem.svg` + `gem-on-purple.svg` (Gem alone), `favicon.svg` (the tick on a purple tile). The lockup's letters are outlined Sofia Sans Black, so no font is needed. |
+| App icon, splash | `apps/mobile/assets/` — rendered from the masters. Android's adaptive icon keeps Gem inside the 66 dp safe circle on the brand purple; its themed (one-colour) icon is the tick |
+| Web favicon | `apps/web/src/app/favicon.ico` (16 / 32 / 48) and `icon.svg` (the tick), `apple-icon.png` (Gem) |
+
+To change the logo, change the masters in `docs/brand/` and re-render every PNG from them (Azim has the render script) — never touch one PNG by hand. The two `Logo` components copy the lockup's paths from `logo.svg`.
+
 ## The web portal
 
 The portal (`apps/web`) has its own look (**look A**, Azim 28 Oct: Kumo-style — neutral greys, hairline borders, Inter, compact, the app's purple as the one accent) and its own kit: **shadcn/ui** components in `apps/web/src/components/ui`, coloured by the `portal` tokens in `@skillproof/tokens`. Every component is live at **`localhost:3000/kit`**.

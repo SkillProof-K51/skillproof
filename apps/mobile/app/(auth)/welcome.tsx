@@ -2,13 +2,13 @@ import { gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
-import { Button, Hero, Screen, Text } from "../../components/ui";
+import { Button, Hero, Logo, Screen, Text } from "../../components/ui";
 
 const SCENE = require("../../assets/scenes/campus-garden.jpg");
 
 /**
  * Welcome (shared core, reference screen): screen 1 of 12 — the first thing a signed-out student
- * sees. Home's garden scene with the name on it, what SkillProof does in one line, then one strong
+ * sees. Home's garden scene with the logo on it, what SkillProof does in one line, then one strong
  * button into onboarding and the way back in (log in). The redesign's onboarding tells the rest.
  */
 export default function WelcomeScreen() {
@@ -16,7 +16,7 @@ export default function WelcomeScreen() {
   return (
     <Screen aboveTabBar={false}>
       <Hero scene={SCENE}>
-        <Text variant="heading">SkillProof</Text>
+        <Logo />
       </Hero>
 
       <View style={styles.content}>
