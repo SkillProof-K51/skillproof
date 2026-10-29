@@ -111,17 +111,17 @@ Always `<Text variant="…">` (display · headline · title · heading · subhea
 
 ## Logo
 
-Direction 3 (Azim, 29 Oct): a purple tick between two code brackets, then **skillproof** in the code font. The other three directions sit on the Figma file's Logo page.
+Direction 4, the Proof chip (Azim, 29 Oct): **Skill** then a purple chip reading **✓ Proof**, like the app's own status chips. **Gem**, the mascot, is the app icon; the chip's **tick** stands in wherever Gem's face would be too small to read (favicons, Android's themed icon). The other directions and the icon options sit on the Figma file's Logo page.
 
 | What | Where |
 |---|---|
-| In the app | `<Logo />` from the kit (Welcome). Use it instead of typing "SkillProof" as a heading. |
-| In the portal | `<Brand />` (the mark + name; `subtitle="Portal"` on signed-out pages) or `<Logo />` (the mark alone), in `@/components/portal` |
-| Masters | `docs/brand/`: `mark.svg` (on light), `mark-on-dark.svg`, `mark-on-purple.svg`, `app-icon.svg`, `favicon.svg` (a tile with a heavier glyph, so it reads at 16 px on light and dark tab bars) |
-| App icon, splash | `apps/mobile/assets/` — rendered from the masters. Android's adaptive icon keeps the glyph inside the 66 dp safe circle on the brand purple |
-| Web favicon | `apps/web/src/app/favicon.ico` (16 / 32 / 48), `icon.svg`, `apple-icon.png` |
+| In the app | `<Logo />` from the kit (Welcome; `size` = height). Use it instead of typing "SkillProof" as a heading. |
+| In the portal | `<Brand />` (the logo, `subtitle="Portal"` on signed-out pages) or `<Logo />`, in `@/components/portal`. "Skill" takes the text colour, so it reads on light and dark. |
+| Masters | `docs/brand/`: `logo.svg` (on light), `logo-on-dark.svg`, `app-icon.svg` (Gem on purple, full bleed), `gem.svg` + `gem-on-purple.svg` (Gem alone), `favicon.svg` (the tick on a purple tile). The lockup's letters are outlined Sofia Sans Black, so no font is needed. |
+| App icon, splash | `apps/mobile/assets/` — rendered from the masters. Android's adaptive icon keeps Gem inside the 66 dp safe circle on the brand purple; its themed (one-colour) icon is the tick |
+| Web favicon | `apps/web/src/app/favicon.ico` (16 / 32 / 48) and `icon.svg` (the tick), `apple-icon.png` (Gem) |
 
-To change the logo, change the masters in `docs/brand/` and re-render every PNG from them (Azim has the render script) — never touch one PNG by hand.
+To change the logo, change the masters in `docs/brand/` and re-render every PNG from them (Azim has the render script) — never touch one PNG by hand. The two `Logo` components copy the lockup's paths from `logo.svg`.
 
 ## The web portal
 
