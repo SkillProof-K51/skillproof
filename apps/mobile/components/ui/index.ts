@@ -15,6 +15,7 @@ export { Hero } from "./Hero";
 export { Icon, type IconName } from "./Icon";
 export { IconBadge, ICON_BADGE_SIZE } from "./IconBadge";
 export { IconButton } from "./IconButton";
+export { Logo } from "./Logo";
 export { LineChart } from "./LineChart";
 export { ListRow } from "./ListRow";
 export { useReducedMotion, useDuration } from "./motion";

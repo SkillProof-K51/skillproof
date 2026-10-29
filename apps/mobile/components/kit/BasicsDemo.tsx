@@ -17,7 +17,7 @@ export function BasicsDemo() {
             {v}
           </Text>
           <Text variant={v} numberOfLines={1} style={styles.sample}>
-            {v === "code" ? "const ready = 72;" : tokens.type[v].size >= tokens.type.title.size ? "72% ready" : "Skill verified, not just claimed"}
+            {v === "code" ? "const ready = 72;" : v === "wordmark" ? "skillproof" : tokens.type[v].size >= tokens.type.title.size ? "72% ready" : "Skill verified, not just claimed"}
           </Text>
         </View>
       ))}

@@ -137,6 +137,10 @@
   --text-code--line-height: 20px;
   --text-code--letter-spacing: 0px;
   --text-code--font-weight: 400;
+  --text-wordmark: 20px;
+  --text-wordmark--line-height: 24px;
+  --text-wordmark--letter-spacing: -0.6px;
+  --text-wordmark--font-weight: 700;
 }
 
 :root {

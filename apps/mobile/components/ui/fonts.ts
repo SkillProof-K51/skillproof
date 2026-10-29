@@ -1,4 +1,4 @@
-import { RobotoMono_400Regular } from "@expo-google-fonts/roboto-mono";
+import { RobotoMono_400Regular, RobotoMono_700Bold } from "@expo-google-fonts/roboto-mono";
 import {
   SofiaSans_400Regular,
   SofiaSans_500Medium,
@@ -20,6 +20,7 @@ export const fontsToLoad = {
   SofiaSans_900Black,
   SofiaSansCondensed_800ExtraBold,
   RobotoMono_400Regular,
+  RobotoMono_700Bold,
 };
 
 const SANS: Record<TypeStyle["weight"], string> = {
@@ -31,9 +32,9 @@ const SANS: Record<TypeStyle["weight"], string> = {
   900: "SofiaSans_900Black",
 };
 
-/** Token family + weight → the loaded font's name. Display (condensed) ships in one weight. */
+/** Token family + weight → the loaded font's name. Display (condensed) ships in one weight, mono in two. */
 export function fontFamilyFor(family: TypeStyle["family"], weight: TypeStyle["weight"]): string {
-  if (family === "mono") return "RobotoMono_400Regular";
+  if (family === "mono") return weight >= 700 ? "RobotoMono_700Bold" : "RobotoMono_400Regular";
   if (family === "display") return "SofiaSansCondensed_800ExtraBold";
   return SANS[weight];
 }
