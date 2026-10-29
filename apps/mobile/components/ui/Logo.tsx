@@ -15,6 +15,8 @@ const PROOF = "M119.774 35C119.419 35 119.242 34.8227 119.242 34.468V10.642C119.
 type Props = {
   /** Height; the width follows (about 4.5 times it). */
   size?: number;
+  /** `onBrand` = on the brand purple (the launch screen): white "Skill", a white chip, purple ✓ Proof. */
+  tone?: "default" | "onBrand";
 };
 
 /**
@@ -22,14 +24,21 @@ type Props = {
  * ✓ Proof — the app's own status chip. Gem is the app icon and the chip's tick the favicon; the
  * masters and every icon size: docs/brand.
  */
-export function Logo({ size = HEIGHT }: Props) {
+export function Logo({ size = HEIGHT, tone = "default" }: Props) {
+  const onBrand = tone === "onBrand";
   return (
     <View accessible accessibilityRole="image" accessibilityLabel="SkillProof">
       <Svg width={(size * VIEW_W) / VIEW_H} height={size} viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}>
-        <Path d={SKILL} fill={colors.text.primary} />
-        <Rect x={CHIP.x} width={CHIP.width} height={CHIP.height} rx={CHIP.radius} fill={colors.accent.brand} />
-        <Path d={TICK} fill={colors.text.inverse} />
-        <Path d={PROOF} fill={colors.text.inverse} />
+        <Path d={SKILL} fill={onBrand ? colors.text.inverse : colors.text.primary} />
+        <Rect
+          x={CHIP.x}
+          width={CHIP.width}
+          height={CHIP.height}
+          rx={CHIP.radius}
+          fill={onBrand ? colors.bg.surface : colors.accent.brand}
+        />
+        <Path d={TICK} fill={onBrand ? colors.accent.brand : colors.text.inverse} />
+        <Path d={PROOF} fill={onBrand ? colors.accent.brand : colors.text.inverse} />
       </Svg>
     </View>
   );

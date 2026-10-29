@@ -11,6 +11,11 @@
   --color-icon-muted: #9b9ba6;
   --color-action-primary-strong: #1d1e21;
   --color-action-on-primary-strong: #ffffff;
+  --color-action-primary: #7c5cf0;
+  --color-action-primary-edge: #5a3fcf;
+  --color-action-secondary-edge: #dcdbe3;
+  --color-action-danger: #d33a2c;
+  --color-action-danger-edge: #9e2318;
   --color-accent-sky: #c9b8ff;
   --color-accent-sky-soft: #efeaff;
   --color-accent-brand: #7c5cf0;
@@ -54,6 +59,8 @@
   --color-passport-gold: #dcb253;
   --color-passport-gold-line: rgba(220, 178, 83, 0.45);
   --color-passport-wash: #f7edd3;
+  --color-mascot-facet: #8d70f3;
+  --color-mascot-blush: #ffb3cf;
   --color-glass-veil: rgba(226, 225, 232, 0.92);
   --color-code-bg: #1e1e1e;
   --color-code-text: #d4d4d4;
@@ -105,6 +112,10 @@
   --text-body-strong--line-height: 21px;
   --text-body-strong--letter-spacing: 0px;
   --text-body-strong--font-weight: 700;
+  --text-button: 15px;
+  --text-button--line-height: 20px;
+  --text-button--letter-spacing: 0.8px;
+  --text-button--font-weight: 800;
   --text-body: 15px;
   --text-body--line-height: 21px;
   --text-body--letter-spacing: 0px;
