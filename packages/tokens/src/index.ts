@@ -32,8 +32,14 @@ export const colors = {
     muted: "#9b9ba6", // idle tabs
   },
   action: {
-    primaryStrong: "#1d1e21", // the ONE strong action per screen — a black pill (16:1 with white)
-    onPrimaryStrong: "#ffffff",
+    primaryStrong: "#1d1e21", // ink for strong controls: a ticked checkbox, the unlock card's lock (16:1 with white)
+    onPrimaryStrong: "#ffffff", // text and icons on a filled button
+    // Buttons are chunky (Azim, 29 Oct): a face on a darker edge that it presses down into.
+    primary: "#7c5cf0", // the ONE main action per screen, in the role purple (white on it: 4.5:1)
+    primaryEdge: "#5a3fcf",
+    secondaryEdge: "#dcdbe3", // the white button's outline and edge
+    danger: "#d33a2c", // the confirm of a delete / remove dialog (white on it: 4.8:1)
+    dangerEdge: "#9e2318",
   },
   accent: {
     sky: "#c9b8ff", // avatars; the light step of a segmented bar (Practised)
@@ -202,7 +208,8 @@ export const type = {
   title: { family: "sans", weight: 900, size: 30, lineHeight: 34, letterSpacing: -0.4 }, // a screen's title ("Progress"), Home's name
   heading: { family: "sans", weight: 800, size: 17, lineHeight: 22, letterSpacing: -0.1 }, // card titles
   subheading: { family: "sans", weight: 700, size: 16, lineHeight: 22, letterSpacing: -0.1 }, // list-row titles
-  bodyStrong: { family: "sans", weight: 700, size: 15, lineHeight: 21, letterSpacing: 0 }, // button labels
+  bodyStrong: { family: "sans", weight: 700, size: 15, lineHeight: 21, letterSpacing: 0 }, // strong body text, text-only buttons
+  button: { family: "sans", weight: 800, size: 15, lineHeight: 20, letterSpacing: 0.8, uppercase: true }, // button labels, in capitals (Azim, 29 Oct)
   body: { family: "sans", weight: 500, size: 15, lineHeight: 21, letterSpacing: 0 },
   label: { family: "sans", weight: 600, size: 13, lineHeight: 18, letterSpacing: 0 }, // a card's grey label, badges, tags
   small: { family: "sans", weight: 500, size: 13, lineHeight: 18, letterSpacing: 0 }, // sub-lines
