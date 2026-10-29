@@ -30,6 +30,7 @@ export { SegmentedControl } from "./SegmentedControl";
 export { SegmentedProgress, type SegmentFill } from "./SegmentedProgress";
 export { Select, type SelectOption } from "./Select";
 export { SkillBadge } from "./SkillBadge";
+export { SkillCircle } from "./SkillCircle";
 export { SkillLogo } from "./SkillLogo";
 export { StackedBar, type Segment } from "./StackedBar";
 export { Stat } from "./Stat";

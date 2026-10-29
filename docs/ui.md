@@ -54,7 +54,7 @@ Open `localhost:8081/kit` on the web, or tap **Open the UI kit** on any placehol
 | Text & actions | `Text` · `Button` (primary · secondary · danger · text) · `IconButton` · `Chip` · `Icon` |
 | Forms | `TextField` (`ref` for the Next key) · `Select` (one choice from a list) · `OptionList` (a question on its own screen: big rows, one choice or `multiple`) · `Checkbox` (`error`) · `Switch` · `SegmentedControl` (filters) |
 | Lists | `ListRow` (+ `Divider` between rows) · `Carousel` |
-| Status & progress | `StatusBadge` · `SkillBadge` (a skill's hexagon: Verified / Practised / locked; `from` pops it open on a win) · `SegmentedProgress` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `IconBadge` · `Avatar` · `SkillLogo` |
+| Status & progress | `StatusBadge` · `SkillBadge` (a skill's hexagon: Verified / Practised / locked; `from` pops it open on a win) · `SegmentedProgress` · `ProgressRing` · `ProgressBar` · `ProgressDots` · `SkillCircle` (a skill's logo ringed by its status — Home's readiness sheet) · `IconBadge` · `Avatar` · `SkillLogo` |
 | Reports | `Stat` (number + icon + unit) · `BarChart` (one series) · `StackedBar` (parts of a whole + a legend) · `LineChart` (one series over time) |
 | Sharing | `QrCode` (a link to scan — navy on white, never inverted) |
 | Feedback | `Toast` (`useToast()`) · `Dialog` · `BottomSheet` · `EmptyState` (an optional icon) · `Reveal` (a step fades up) |
