@@ -8,14 +8,16 @@ export const demoHome: HomeData = {
   bubble: "Ready for today’s challenge, Aina?",
   readiness: {
     percent: 72,
-    // the same statuses as the passport demo: 3 Verified, 2 Practised, Node.js still to practise
+    readyAt: 70,
+    // the same statuses as the passport demo: 3 Verified, 2 Practised, Node.js still to practise;
+    // weights as in supabase/seed.sql (20 + 25 + 10 in full, 20 + 15 at half = 72.5 → 72 %)
     skills: [
-      { name: "HTML and CSS", status: "verified" },
-      { name: "JavaScript", status: "verified" },
-      { name: "Git", status: "verified" },
-      { name: "React", status: "practised" },
-      { name: "TypeScript", status: "practised" },
-      { name: "Node.js", status: "not_yet" },
+      { name: "HTML and CSS", status: "verified", weight: 20 },
+      { name: "JavaScript", status: "verified", weight: 25 },
+      { name: "Git", status: "verified", weight: 10 },
+      { name: "React", status: "practised", weight: 20 },
+      { name: "TypeScript", status: "practised", weight: 15 },
+      { name: "Node.js", status: "not_yet", weight: 10 },
     ],
   },
   todaysChallenge: demoToday,

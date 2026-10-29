@@ -19,8 +19,14 @@ export type HomeData = {
   readiness: {
     /** 0–100 integer from the Module 2 fit engine. */
     percent: number;
-    /** The role's roadmap, in order, with each skill's status (Modules 3 and 4 write it; Home reads). */
-    skills: { name: string; status: "not_yet" | "practised" | "verified" }[];
+    /** 0–100 integer: where "ready" starts (the fit engine's line; spec: 70 %, Module 2 may refine). */
+    readyAt: number;
+    /**
+     * The role's roadmap, in order, with each skill's status (Modules 3 and 4 write it; Home reads)
+     * and weight — how much it counts toward Readiness, a 0–100 integer from Module 1
+     * (`job_role_skills.weight`; a role's weights add up to 100).
+     */
+    skills: { name: string; status: "not_yet" | "practised" | "verified"; weight: number }[];
   };
   /** null = Module 3 has no challenge for today; the card is hidden. */
   todaysChallenge: TodaysChallenge | null;
