@@ -35,7 +35,7 @@ import {
 import { signOut } from "@/lib/auth-actions";
 import type { IconKey, NavGroup } from "@/lib/nav";
 
-import { BrandMark } from "./BrandMark";
+import { Brand } from "./Brand";
 
 const ICONS: Record<IconKey, Icon> = {
   approvals: UserCheckIcon,
@@ -71,7 +71,7 @@ export function PortalSidebar({ nav, account, counts = {} }: Props) {
   return (
     <Sidebar>
       <SidebarHeader className="gap-3 px-3 pt-4">
-        <BrandMark />
+        <Brand className="px-1" />
         <p className="px-1 text-xs text-muted-foreground">
           Signed in as <span className="font-medium text-sidebar-foreground">{account.roleLabel}</span>
         </p>

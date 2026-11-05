@@ -1,13 +1,12 @@
-import { SealCheckIcon } from "@phosphor-icons/react/ssr";
+import { cn } from "@/lib/utils";
 
-/** The SkillProof mark and name (no logo yet): a purple tile with the verified seal. */
-export function Brand({ subtitle }: { subtitle?: string }) {
+import { Logo } from "./Logo";
+
+/** The SkillProof logo for the sidebar and signed-out pages, with an optional word after it ("Portal"). */
+export function Brand({ subtitle, className }: { subtitle?: string; className?: string }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
-        <SealCheckIcon weight="bold" className="size-4" />
-      </span>
-      <span className="font-semibold">SkillProof</span>
+    <div className={cn("flex items-center gap-2", className)}>
+      <Logo />
       {subtitle ? <span className="text-muted-foreground">{subtitle}</span> : null}
     </div>
   );
