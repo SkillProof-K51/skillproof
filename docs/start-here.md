@@ -17,7 +17,7 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 **The shared core is in** (27 Oct): signing up and in on the app, and the tables every module builds on: `profiles`, `student_profiles`, `skills`, `job_roles` + their weights, `programmes`, `student_skills`. Who reads and writes each one, and how your tables point at them: [`data-contracts.md`](data-contracts.md). Screens are still built on **demo data behind TEST MODE**, as before; real data is one line in `.env` away.
 
-**Not built yet** (Azim, next): the **web portal** (its layout, menu, sign-in and components). Web pages (M1, and M4's mentor side) wait for it. Plan and prepare them, but don't build them yet.
+**The web portal's shell is in** (28 Oct): sign-in for companies, mentors, coordinators and admins, a menu for each, the admin's approvals and the company page. Your web pages already have a place in its menu, each a placeholder with your name: build them on demo data (`pnpm dev:web` → `localhost:3000`; the yellow TEST MODE strip switches who you're viewing as). How: [`ui.md` › The web portal](ui.md#the-web-portal); the design: [`portal.md`](portal.md).
 
 ---
 
@@ -78,13 +78,13 @@ Each one is small, runs on demo data, and doesn't wait for the shared core.
 2. **Your tables, as a draft PR**: `micro_projects` and `applications`, each with an owner and RLS. Students read open projects, a mentor manages their own, a student sees only their own applications. Azim checks it against the shared core before it's applied.
 3. **The verification score: one function** in `lib/`: the mentor's rubric → Verified (≥ 3 of 5, [spec](spec.md)) or Revise. That's your graded calculation.
 4. **The Projects tab on demo data**, once the new kit is on `main`: the list (Home's project cards: `components/home/ProjectCard.tsx`, data in `lib/demo/home.ts`) and a project's own page. Copy a challenge's page (`app/challenges/[id].tsx`): what it is, the skills it needs, Fit %, and Apply pinned at the bottom, locked until those skills are Practised.
-5. **With Azim**: how many micro-projects at launch. The mentor pages on the web wait for the portal.
+5. **With Azim**: how many micro-projects at launch. The portal has a Micro-projects page waiting for you under both Company and Mentor.
 
 ### Iskandar: Module 1 (Industry Standards & Curriculum Alignment)
 1. **Warm-up PR by Wed 28 Oct.** Your screen goes in `apps/web` (a page).
 2. **Data, no code yet.** For each of our four roles (Web Developer, Data Analyst, Mobile Developer, QA Engineer), collect 20+ real job ads (JobStreet, LinkedIn, Hiredly) and count how often each skill appears. Put it in a sheet in `05 Team Shared`. **These counts become the skill weights** that everyone's Readiness % uses, so the whole app depends on them.
 3. **Course ↔ skill map**: map 3–4 FTMK courses to the skills they teach. Your curriculum gap report comes from this.
-4. **Plan your web pages** (roles, skills, weights, the gap report) on paper. You build them once the portal is in.
+4. **Your web pages** (Skills, Roles & weights, Course maps, the Curriculum gap report) are in the portal's menu as placeholders with your name. Replace them, on demo data first (TEST MODE), copying the Approvals page's pattern.
 
 ---
 
