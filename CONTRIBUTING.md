@@ -20,7 +20,7 @@ The full rule list (for people and for AI tools) is in [`AGENTS.md`](AGENTS.md).
 
 1. Accept the GitHub invite (email, or the bell icon on github.com).
 2. Install **Git**: Windows → https://git-scm.com/download/win (click Next through it) · macOS → open Terminal, type `git`, accept the prompt to install.
-3. Install **Node.js 24 LTS**: https://nodejs.org → then in a terminal run `corepack enable` (this gives you `pnpm`).
+3. Install **Node.js 24 LTS**: https://nodejs.org → then in a **new** terminal run `npm install -g pnpm@12.10.1` (this gives you `pnpm`; `pnpm --version` should say 12.10.1). Don't use `corepack enable`: Node 25 and later no longer include it, and on Windows it needs an administrator terminal.
 4. Install **VS Code** and, when the repo opens, accept the "install recommended extensions" prompt.
 5. Tell Git who you are (once, with **your** details):
    ```
@@ -34,6 +34,9 @@ The full rule list (for people and for AI tools) is in [`AGENTS.md`](AGENTS.md).
    cp apps/web/.env.example apps/web/.env.local
    cp apps/mobile/.env.example apps/mobile/.env
    ```
+   **Windows:**
+   - If the prompt looks like `C:\Users\you>`, that's **Command Prompt**, and `cp` doesn't exist there. Use `copy apps\web\.env.example apps\web\.env.local` and `copy apps\mobile\.env.example apps\mobile\.env`.
+   - If **PowerShell** says *running scripts is disabled on this system* when you type `pnpm`, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once in PowerShell, then open a new terminal. Command Prompt doesn't need it, and doesn't know the command.
    Ask Azim for the two Supabase values and paste them into both files (demo data runs without them). Then `pnpm dev:web` (opens http://localhost:3000) and `pnpm dev:mobile` (install **Expo Go** from the App Store / Play Store and scan the QR code, or press `w` for the browser). **iPhone:** Expo Go also needs a free Expo account, signed in on the phone and on the laptop (`npx expo login`). **Campus Wi-Fi** blocking the phone? `cd apps/mobile` → `npx expo start --tunnel`, or use your phone's hotspot. If both run, setup is done. Full list of what you need: [`docs/start-here.md`](docs/start-here.md#what-you-need-accounts-and-apps).
 
 ---
