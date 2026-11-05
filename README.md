@@ -16,7 +16,7 @@ Students prove IT skills in two steps — **Practised** (checked challenges) and
 | 5 | Skill Passport & Talent Analytics | Azim |
 
 ## Run it locally
-Needs **Node.js 24 LTS or newer** and **pnpm** (`corepack enable` gives you pnpm).
+Needs **Node.js 24 LTS or newer** and **pnpm 12** (`npm install -g pnpm@12.10.1`).
 
 ```bash
 pnpm install
@@ -24,7 +24,7 @@ cp apps/web/.env.example apps/web/.env.local       # fill in the Supabase values
 cp apps/mobile/.env.example apps/mobile/.env
 pnpm dev:web        # → http://localhost:3000
 pnpm dev:mobile     # → scan the QR code with Expo Go
-pnpm check          # lint + typecheck + build, same as CI
+pnpm check          # lint + typecheck + db:check + build, same as CI
 ```
 
 ## Working here
