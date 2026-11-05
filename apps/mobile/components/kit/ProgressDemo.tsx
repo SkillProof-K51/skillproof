@@ -1,7 +1,7 @@
 import { colors, radius, space } from "@skillproof/tokens";
 import { StyleSheet, View } from "react-native";
 
-import { Avatar, Chip, IconBadge, ProgressBar, ProgressDots, ProgressRing, SkillLogo, StatusBadge, Text } from "../ui";
+import { Avatar, Chip, IconBadge, ProgressBar, ProgressDots, ProgressRing, SkillCircle, SkillLogo, StatusBadge, Text } from "../ui";
 import { KitLabel, KitSection } from "./KitSection";
 
 const RING_SMALL = 64;
@@ -11,7 +11,7 @@ const SKILLS = ["Node.js", "JavaScript", "TypeScript", "React", "HTML and CSS", 
 /** Progress and status: rings, bar, dots, status badges, chips, icon badges, avatars, skill logos. */
 export function ProgressDemo() {
   return (
-    <KitSection title="Progress & status" components="ProgressRing · ProgressBar · ProgressDots · StatusBadge · Chip · IconBadge · Avatar · SkillLogo">
+    <KitSection title="Progress & status" components="ProgressRing · ProgressBar · ProgressDots · SkillCircle · StatusBadge · Chip · IconBadge · Avatar · SkillLogo">
       <KitLabel>ProgressRing · full, or a half gauge with a caption</KitLabel>
       <View style={styles.row}>
         <ProgressRing percent={72} size={RING_SMALL} />
@@ -20,6 +20,13 @@ export function ProgressDemo() {
       <KitLabel>ProgressBar · ProgressDots (challenges passed toward Practised)</KitLabel>
       <ProgressBar percent={72} />
       <ProgressDots done={2} of={3} />
+      <KitLabel>SkillCircle · a skill by its status: Verified · Practised · up next · not yet (a pair of logos drawn smaller)</KitLabel>
+      <View style={styles.wrap}>
+        <SkillCircle skill="HTML and CSS" status="verified" />
+        <SkillCircle skill="React" status="practised" />
+        <SkillCircle skill="Node.js" status="not_yet" next />
+        <SkillCircle skill="SQL" status="not_yet" />
+      </View>
       <KitLabel>StatusBadge · the skill status, one way only: not yet → Practised → Verified</KitLabel>
       <View style={styles.wrap}>
         <StatusBadge status="not_yet" />
