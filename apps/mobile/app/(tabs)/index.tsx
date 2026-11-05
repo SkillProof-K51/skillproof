@@ -2,13 +2,13 @@ import { gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
+import { Greeting } from "../../components/home/Greeting";
 import { PassportCard } from "../../components/home/PassportCard";
 import { ProjectCard } from "../../components/home/ProjectCard";
 import { ReadinessCard } from "../../components/home/ReadinessCard";
 import { TodayCard } from "../../components/challenges/TodayCard";
 import { UnlockCard } from "../../components/home/UnlockCard";
 import {
-  Avatar,
   Button,
   Card,
   Carousel,
@@ -18,20 +18,17 @@ import {
   Text,
 } from "../../components/ui";
 import { getMyAccount } from "../../lib/auth";
-import { getHomeData, greetingFor, nextUnlock } from "../../lib/home";
+import { getHomeData, greetingFor, mascotLine, nextUnlock } from "../../lib/home";
 import { useLoad } from "../../lib/useLoad";
-
-// Home's illustrated scene (ChatGPT image, Azim's account, 24 Oct — see docs/ai-use-log.md).
-const SCENE = require("../../assets/scenes/campus-garden.jpg");
 
 // The slider: the top open matches, then the next locked one as a goal. Everything else → "See all".
 const SLIDER_OPEN = 3;
 const SLIDER_LOCKED = 1;
 
 /**
- * Home (BitePal-style, Azim 24 Oct): an illustrated scene with the greeting, then cards sliding up
- * over it — readiness for the target role first, then today's challenge (the one strong CTA),
- * micro-projects, passport.
+ * Home (BitePal-style, Azim 24 Oct): Gem's greeting on the plain page (the garden scene went on
+ * 29 Oct — too busy), then the cards — readiness for the target role first, then today's challenge
+ * (the one strong CTA), micro-projects, passport.
  */
 export default function HomeScreen() {
   const router = useRouter();
@@ -50,15 +47,12 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <Hero scene={SCENE}>
-        <View style={styles.header}>
-          <View style={styles.greeting}>
-            <Text variant="title">
-              {greetingFor(new Date())}, {student.firstName}
-            </Text>
-          </View>
-          <Avatar initials={student.initials} tone="surface" />
-        </View>
+      <Hero>
+        <Greeting
+          hello={`${greetingFor(new Date())}, ${student.firstName}!`}
+          line={mascotLine(data)}
+          initials={student.initials}
+        />
       </Hero>
 
       <View style={styles.content}>
@@ -156,8 +150,6 @@ function HomeEmpty() {
 }
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", alignItems: "center", gap: space.md },
-  greeting: { flex: 1, gap: space.xxs },
   content: { paddingHorizontal: layout.gutter, gap: gap.loose },
   fill: { flexGrow: 1 },
   emptyBody: { marginTop: space.xs },
