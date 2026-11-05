@@ -21,7 +21,7 @@ export function BasicsDemo() {
           </Text>
         </View>
       ))}
-      <KitLabel>Button · one primary per screen; secondary for the rest; danger = can’t be undone</KitLabel>
+      <KitLabel>Button · chunky: press one and it sinks onto its edge. One primary per screen; secondary for the rest; danger = can’t be undone</KitLabel>
       <View style={styles.row}>
         <Button label="Start challenge" icon="play" onPress={() => {}} />
         <Button label="View project" variant="secondary" onPress={() => {}} />

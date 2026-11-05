@@ -28,6 +28,7 @@ is no longer updated). `pnpm lint` enforces the kit (AGENTS.md rule 13).
 - **Hero first.** Plain by default: the title on the page itself, the first card `space.xl` below (the BitePal look). Welcome passes `scene` (the garden picture), and the first card slides up over its ground. Home is plain since 29 Oct: Gem's greeting, then the cards.
 - **One mascot, Gem, and only on Home for now** (Azim, 29 Oct; the old blue one went on 25 Oct). Gem is a skill badge come alive: the rounded hexagon with a face, no hands or feet. On Home it says the hello in a `SpeechBubble` whose tail points back at it, so the screen greets once (`components/home/Greeting.tsx`). What it says is text in the bubble, picked in `lib/` (`mascotLine()` in `lib/home.ts`); the mascot itself is decoration that screen readers skip. Ask Azim before putting it on another screen — a screen's moment still comes from its content, like the badge popping open on a Result.
 - **One strong button per screen** (`<Button>` primary). Every other button is `variant="secondary"`.
+- **Buttons are chunky** (Azim, 29 Oct): a face on a darker edge, the label in capitals; pressing pushes the face down onto its edge, and the button keeps its height. Primary is the role purple, secondary white with a grey outline, danger red; `text` stays flat and in normal case. Write labels in normal case (`label="Start challenge"`): the `button` type draws them in capitals, and the button hands screen readers the words as written. The label is centred on its icon and face, including an optical fix for icons that lean (play) — add one to `OPTICAL_LEFT` in `Button.tsx` if a new icon looks off-centre.
 - **Cards are flat**: white (`tone="surface"`) with big soft corners on the lavender page; the role tint (`tone="role"`) for today's challenge; blue for projects. No decoration on cards — no circles, borders or shadows.
 - **A whole card can be the button** (`<Card onPress>`): give it a clear cue — a label that says what happens, or an arrow — and an `accessibilityLabel` that says what tapping does.
 
@@ -95,14 +96,14 @@ Only behind `EXPO_PUBLIC_TEST_MODE=1` (`lib/testMode.ts`). The butter **TEST MOD
 | role tint (`accent.skySoft`) + role colour (`accent.progress`) | your path | today's challenge card, a selected option, progress bars, segments and dots |
 | apricot · teal · pink (`kind.*`) | a challenge's kind (Fix the bug · SQL live · Explain it) | its page tint and its icon — a category, never a status; read them through `KINDS` |
 | butter (`accent.butter`) | test mode | TEST MODE labels (the strip, "Demo grade") |
-| black (`action.primaryStrong`) | the main action | the one primary button per screen, a pill |
+| purple (`action.primary` on `action.primaryEdge`) | the main action | the one primary button per screen — the role colour, on a darker edge |
 | navy cover + gold foil (`passport.*`) | your credential (M5) | the Skill Passport card (`<Card tone="passport">`) and page, and skill badges wherever they appear (`SkillBadge`) — gold never anywhere else |
 | near-black, filled icon (`text.primary`) | where you are | the active tab in the floating tab pill |
 | `feedback.success` / `error` / `info` | an outcome, just now | toasts, field errors, inline messages — never a skill status |
 Never use a status colour as decoration.
 
 ## Text
-Always `<Text variant="…">` (display · headline · title · heading · subheading · bodyStrong · body · label · small · caption · captionStrong · sectionLabel · overline · code). Never set `fontFamily` or `fontSize` yourself.
+Always `<Text variant="…">` (display · headline · title · heading · subheading · bodyStrong · body · button · label · small · caption · captionStrong · sectionLabel · overline · code). Never set `fontFamily` or `fontSize` yourself.
 
 ## When something needs to change
 - **A value is wrong everywhere** (a colour, a gap) → change it in `packages/tokens/src/index.ts`, run `pnpm --filter @skillproof/tokens build` (CI fails if you forget). Tokens are shared core — Azim reviews the PR.
