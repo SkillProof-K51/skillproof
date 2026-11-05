@@ -5,7 +5,7 @@ Read `docs/spec.md` (what we build, by module) before writing code. `docs/progre
 
 ## Stack (fixed — agreed by the team and approved by the supervisor; don't swap)
 - **Mobile app (students)**: Expo SDK 58 (React Native 0.88) + TypeScript → `apps/mobile` — the SDK the App Store / Play Store Expo Go runs; when Expo Go moves to the next SDK, one upgrade PR follows (`npx expo install expo@^<n> --fix`)
-- **Design system**: `packages/tokens` (`@skillproof/tokens` — colours, type, spacing) + the UI kit in `apps/mobile/components/ui` → how to use them: `docs/ui.md`. **The code is the design source of truth**; the Figma file was the starting sketch and is no longer updated — don't copy values from it.
+- **Design system**: `packages/tokens` (`@skillproof/tokens` — colours, type, spacing) + the UI kit in `apps/mobile/components/ui` → how to use them: `docs/ui.md`. **The code is the design source of truth**; the [Figma file](https://www.figma.com/design/ud5OlGZF5PjMXmIRMHfQCy) mirrors it (captured from the code on 29 Oct, plus a proposal for each module's unbuilt screens) — build with the kit, never copy values from Figma.
 - **Web portal (companies, mentors, university coordinators, admin)**: Next.js 16 App Router + TypeScript + Tailwind CSS 4 + shadcn/ui (look and kit: `docs/ui.md` › The web portal) → `apps/web`. Next 16 differs from most AI training data (e.g. `proxy.ts`, not `middleware.ts`): read the guide in `apps/web/node_modules/next/dist/docs/` before writing web code
 - **Backend**: one Supabase project — Postgres, Auth, Storage, Row Level Security → `supabase/`
 - **AI**: Gemini API (free tier), called from server code only — never from the app with a key
