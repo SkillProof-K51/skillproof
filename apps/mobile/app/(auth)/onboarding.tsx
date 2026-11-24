@@ -24,6 +24,7 @@ import {
   type IconName,
 } from "../../components/ui";
 import { getOnboardingOptions, getWarmUp, type OnboardingAnswers } from "../../lib/onboarding";
+import { useLoad } from "../../lib/useLoad";
 
 const NEXT_WIDTH = 168; // the centred black pill, BitePal-style
 const LOGO = 24;
@@ -42,6 +43,9 @@ const STEPS = [
   { id: "warmup", tint: colors.kind.fixBug.page },
   { id: "roadmap", tint: colors.accent.skySoft },
 ] as const;
+type Step = (typeof STEPS)[number];
+// The steps that need the options (roles, programmes) loaded before the student can answer.
+const NEEDS_OPTIONS = new Set<Step["id"]>(["role", "aim", "study", "used", "roadmap"]);
 
 const ROLE_ICONS: Record<string, IconName> = { web: "browser", data: "chart", mobile: "mobile", qa: "test" };
 const AIM_ICONS: Record<string, IconName> = { internship: "briefcase", first_job: "rocket", freelance: "compass" };
@@ -49,11 +53,12 @@ const AIM_ICONS: Record<string, IconName> = { internship: "briefcase", first_job
 /**
  * Onboarding (shared core, reference screen; Azim 25 Oct): screens 2–11 of 12, between Welcome and
  * Create account. Four "why SkillProof" screens, four questions, a 30-second warm-up, then the
- * student's roadmap. Each step fades up into place; answers ride along to sign-up.
+ * student's roadmap. Each step fades up into place; answers ride along to sign-up. The options load
+ * while the pitch screens play; the warm-up only shows when there's one to give (TEST MODE for now).
  */
 export default function OnboardingScreen() {
   const router = useRouter();
-  const options = getOnboardingOptions();
+  const { data: options, error, reload } = useLoad(getOnboardingOptions);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<OnboardingAnswers>({ used: [] });
   const [solved, setSolved] = useState(false);
@@ -71,13 +76,18 @@ export default function OnboardingScreen() {
     return () => sub.remove();
   }, [step]);
 
-  if (!options) return <NoOnboarding />;
-  const role = options.roles.find((r) => r.id === answers.roleId);
+  const steps: readonly Step[] = getWarmUp() ? STEPS : STEPS.filter((s) => s.id !== "warmup");
+  const { id, tint } = steps[step];
+  const waiting = !options && NEEDS_OPTIONS.has(id);
+  if (waiting && error) return <OptionsError message={error} onRetry={reload} />;
+  const role = options?.roles.find((r) => r.id === answers.roleId);
   const warmUp = getWarmUp(answers.roleId);
-  const { id, tint } = STEPS[step];
-  const last = step === STEPS.length - 1;
+  const last = step === steps.length - 1;
   const ready =
-    (id !== "role" || !!answers.roleId) && (id !== "aim" || !!answers.aimId) && (id !== "study" || (!!answers.programmeId && !!answers.year));
+    !waiting &&
+    (id !== "role" || !!answers.roleId) &&
+    (id !== "aim" || !!answers.aimId) &&
+    (id !== "study" || (!!answers.programmeId && !!answers.year));
   const skipping = id === "warmup" && !solved;
   const next = () =>
     last ? router.push({ pathname: "/sign-up", params: { answers: JSON.stringify(answers) } }) : setStep(step + 1);
@@ -97,7 +107,7 @@ export default function OnboardingScreen() {
       content: (
         <OptionList
           accessibilityLabel="Role"
-          options={options.roles.map((r) => ({ value: r.id, label: r.label, description: r.description, leading: <IconBadge icon={ROLE_ICONS[r.id] ?? "compass"} tone="grey" /> }))}
+          options={(options?.roles ?? []).map((r) => ({ value: r.id, label: r.label, description: r.description, leading: <IconBadge icon={ROLE_ICONS[r.id] ?? "compass"} tone="grey" /> }))}
           value={answers.roleId}
           // a new role has a new roadmap: skills picked for the old one no longer apply
           onChange={(roleId) => set({ roleId, used: [] })}
@@ -110,7 +120,7 @@ export default function OnboardingScreen() {
       content: (
         <OptionList
           accessibilityLabel="Aim"
-          options={options.aims.map((a) => ({ value: a.id, label: a.label, description: a.description, leading: <IconBadge icon={AIM_ICONS[a.id] ?? "compass"} tone="grey" /> }))}
+          options={(options?.aims ?? []).map((a) => ({ value: a.id, label: a.label, description: a.description, leading: <IconBadge icon={AIM_ICONS[a.id] ?? "compass"} tone="grey" /> }))}
           value={answers.aimId}
           onChange={(aimId) => set({ aimId })}
         />
@@ -123,7 +133,7 @@ export default function OnboardingScreen() {
         <View style={styles.study}>
           <OptionList
             accessibilityLabel="Programme"
-            options={options.programmes.map((p) => ({ value: p.id, label: p.label }))}
+            options={(options?.programmes ?? []).map((p) => ({ value: p.id, label: p.label }))}
             value={answers.programmeId}
             onChange={(programmeId) => set({ programmeId })}
           />
@@ -132,7 +142,7 @@ export default function OnboardingScreen() {
           </Text>
           <SegmentedControl
             accessibilityLabel="Year of study"
-            options={options.years.map((y) => ({ value: String(y), label: `Year ${y}` }))}
+            options={(options?.years ?? []).map((y) => ({ value: String(y), label: `Year ${y}` }))}
             value={answers.year ? String(answers.year) : ""}
             onChange={(y) => set({ year: Number(y) })}
           />
@@ -146,7 +156,7 @@ export default function OnboardingScreen() {
         <OptionList
           multiple
           accessibilityLabel="Skills you have used"
-          options={(role?.roadmap ?? []).map((s) => ({ value: s, label: s, leading: <SkillLogo skill={s} size={LOGO} /> }))}
+          options={(role?.roadmap ?? []).map((s) => ({ value: s.id, label: s.name, leading: <SkillLogo skill={s.name} size={LOGO} /> }))}
           value={answers.used}
           onChange={(used) => set({ used })}
         />
@@ -183,8 +193,8 @@ export default function OnboardingScreen() {
       <Hero>
         <View style={styles.top}>
           <IconButton icon="chevron-left" accessibilityLabel={step ? "Back" : "Back to welcome"} onPress={back} />
-          <View style={styles.flex} accessibilityLabel={`Step ${step + 2} of ${STEPS.length + 2}`}>
-            <ProgressBar percent={Math.round(((step + 1) / STEPS.length) * 100)} />
+          <View style={styles.flex} accessibilityLabel={`Step ${step + 2} of ${steps.length + 2}`}>
+            <ProgressBar percent={Math.round(((step + 1) / steps.length) * 100)} />
           </View>
         </View>
       </Hero>
@@ -197,15 +207,20 @@ export default function OnboardingScreen() {
             {body}
           </Text>
         </View>
-        {content}
+        {waiting ? (
+          <Text variant="body" color="secondary" align="center">
+            Loading the choices…
+          </Text>
+        ) : (
+          content
+        )}
       </Reveal>
     </Screen>
   );
 }
 
-/** Without demo data there is nothing to choose from yet: straight on to sign-up. */
-function NoOnboarding() {
-  const router = useRouter();
+/** The roles or programmes didn't load: say why, and offer to try again (rule 11). */
+function OptionsError({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
     <Screen aboveTabBar={false}>
       <Hero>
@@ -213,11 +228,7 @@ function NoOnboarding() {
       </Hero>
       <View style={styles.content}>
         <Card>
-          <EmptyState
-            title="Roles arrive with the shared core"
-            body="The questions here need Module 1’s roles (weeks 6–7). You can still create your account."
-            action={{ label: "Create account", onPress: () => router.replace("/sign-up") }}
-          />
+          <EmptyState title="Couldn’t load the choices" body={message} action={{ label: "Try again", onPress: onRetry }} />
         </Card>
       </View>
     </Screen>

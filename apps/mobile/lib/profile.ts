@@ -1,9 +1,10 @@
+import { demoRoles } from "./demo/auth";
 import { getPassportData, passportBadges } from "./passport";
-import { getTargetRoles } from "./auth";
 import { isTestMode } from "./testMode";
 import { readiness, isReady, type SkillProgress } from "./fitEngine";
 
 export type StudentAim = "internship" | "first_job" | "freelance";
+
 export type ProfileData = {
   student: {
     name: string;
@@ -27,8 +28,7 @@ export function getProfileData(): ProfileData | null {
   const passport = getPassportData();
   if (!passport) return null;
 
-  const roles = getTargetRoles();
-  const role = roles.find((item) => item.id === "web");
+  const role = demoRoles.find((item) => item.id === "web");
 
   if (!role) return null;
 
@@ -81,7 +81,7 @@ export async function updateStudentAim(aim: StudentAim): Promise<void> {
   const {
     data: { user },
     error: authError,
-  } = await supabase.auth.getUser();
+  } = await supabase().auth.getUser();
 
   if (authError) throw authError;
 
@@ -89,7 +89,7 @@ export async function updateStudentAim(aim: StudentAim): Promise<void> {
     throw new Error("You must be logged in to update your career aim.");
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from("student_profiles")
     .update({ aim })
     .eq("id", user.id)

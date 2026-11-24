@@ -11,7 +11,7 @@ type Reference = { title: string; subtitle: string; icon: IconName; href: Href }
 
 // One screen per pattern a module copies (docs/ui.md). Open one, read its file, build yours the same way.
 const SCREENS: Reference[] = [
-  { title: "Welcome", subtitle: "First screen: the scene, a headline, get started", icon: "compass", href: "/welcome" },
+  { title: "Welcome", subtitle: "First screen: opens from the launch screen; Gem, the logo, get started", icon: "compass", href: "/welcome" },
   { title: "Onboarding", subtitle: "Steps: pitch cards, questions, a warm-up, the roadmap", icon: "rocket", href: "/onboarding" },
   { title: "Sign up", subtitle: "The form pattern: fields, a choice, consent, errors", icon: "user", href: "/sign-up" },
   { title: "Log in", subtitle: "Two fields, forgot password, the Go key submits", icon: "lock", href: "/log-in" },

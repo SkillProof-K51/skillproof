@@ -18,6 +18,8 @@ jobs:
         run: pnpm --filter @skillproof/tokens build && git diff --exit-code packages/tokens
       - run: pnpm lint
       - run: pnpm typecheck
+      - name: Migrations + seed run, and the access rules hold (offline, PGlite)
+        run: pnpm db:check
       - run: pnpm build
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co

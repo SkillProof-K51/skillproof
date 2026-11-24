@@ -3,7 +3,7 @@ import type { ExpoConfig } from "expo/config";
 // Config files can't import TypeScript from another package, so colours come from the generated
 // tokens.json (same values as @skillproof/tokens). Never type a hex value here.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const tokens = require("@skillproof/tokens/tokens.json") as { colors: { bg: { app: string } } };
+const tokens = require("@skillproof/tokens/tokens.json") as { colors: { bg: { app: string }; accent: { brand: string } } };
 
 const config: ExpoConfig = {
   name: "SkillProof",
@@ -18,7 +18,7 @@ const config: ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: tokens.colors.bg.app,
+      backgroundColor: tokens.colors.accent.brand,
       foregroundImage: "./assets/android-icon-foreground.png",
       backgroundImage: "./assets/android-icon-background.png",
       monochromeImage: "./assets/android-icon-monochrome.png",
@@ -37,9 +37,11 @@ const config: ExpoConfig = {
     [
       "expo-splash-screen",
       {
-        backgroundColor: tokens.colors.bg.app,
+        // the launch screen: the logo on the brand purple, at the size Welcome opens from
+        // (app/(auth)/welcome.tsx · LOGO_LAUNCH = 52 high → 236 wide)
+        backgroundColor: tokens.colors.accent.brand,
         image: "./assets/splash-icon.png",
-        imageWidth: 160,
+        imageWidth: 236,
       },
     ],
   ],

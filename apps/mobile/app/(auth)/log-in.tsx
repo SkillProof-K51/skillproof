@@ -27,10 +27,12 @@ export default function LogInScreen() {
     setBusy(true);
     try {
       const { demo } = await logIn(form);
-      if (demo) toast({ message: "Test mode: you’re in as the demo student" });
-      // TODO (shared core): guard routes on the session (Stack.Protected) instead
-      if (router.canDismiss()) router.dismissAll();
-      router.replace("/");
+      // A real log-in moves on by itself: the session opens the app (app/_layout.tsx).
+      if (demo) {
+        toast({ message: "Test mode: you’re in as the demo student" });
+        if (router.canDismiss()) router.dismissAll();
+        router.replace("/");
+      }
     } catch (e) {
       fail(e);
     } finally {
@@ -64,7 +66,7 @@ export default function LogInScreen() {
         <TextField
           label="Email"
           icon="mail"
-          placeholder="you@student.utem.edu.my"
+          placeholder="you@example.com"
           value={form.email}
           onChangeText={set("email")}
           error={errors.email}

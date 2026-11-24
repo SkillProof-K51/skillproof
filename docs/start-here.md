@@ -15,9 +15,9 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 **On `main` since 25 Oct** (PR #4): the reference screens, the new look and SDK 58. Pull `main` before you start a branch and you have them, so screens in `apps/mobile` can be built now, on demo data.
 
-**Not built yet** (Azim, weeks 6–7): signing in, the `profiles` / `skills` / `student_skills` tables, and the **web portal** (its layout, menu and components). Until they exist:
-- the mobile app runs on **demo data behind TEST MODE**, which is how every reference screen works;
-- web pages (M1, and M4's mentor side) wait for the portal. Plan and prepare them, but don't build them yet. The one exception is your warm-up page.
+**The shared core is in** (27 Oct): signing up and in on the app, and the tables every module builds on: `profiles`, `student_profiles`, `skills`, `job_roles` + their weights, `programmes`, `student_skills`. Who reads and writes each one, and how your tables point at them: [`data-contracts.md`](data-contracts.md). Screens are still built on **demo data behind TEST MODE**, as before; real data is one line in `.env` away.
+
+**The web portal's shell is in** (28 Oct): sign-in for companies, mentors, coordinators and admins, a menu for each, the admin's approvals and the company page. Your web pages already have a place in its menu, each a placeholder with your name: build them on demo data (`pnpm dev:web` → `localhost:3000`; the yellow TEST MODE strip switches who you're viewing as). How: [`ui.md` › The web portal](ui.md#the-web-portal); the design: [`portal.md`](portal.md).
 
 ---
 
@@ -28,7 +28,7 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 | What | Who | When | Notes |
 |---|---|---|---|
 | GitHub account with the repo invite accepted | everyone | now | all four of us are in |
-| Git · Node.js 24 LTS (`corepack enable` gives you pnpm) · VS Code | everyone | now | [CONTRIBUTING › One-time setup](../CONTRIBUTING.md#one-time-setup-about-20-minutes). On Windows, run `corepack enable` in a terminal opened **as administrator** |
+| Git · Node.js 24 LTS (`npm install -g pnpm@12.10.1` gives you pnpm) · VS Code | everyone | now | [CONTRIBUTING › One-time setup](../CONTRIBUTING.md#one-time-setup-about-20-minutes). Windows: Command Prompt uses `copy` (not `cp`); PowerShell may need `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once |
 | **Expo Go** on your phone, from the App Store / Play Store | anyone opening the app on a phone | now | It runs SDK 58, the same as our app. No phone? Press `w` and use the browser; that's enough for most work |
 | **A free Expo account** ([expo.dev](https://expo.dev/signup)) | iPhone users | now | On an iPhone, Expo Go only opens the project when it and your laptop are signed in to the **same** account: run `npx expo login` on the laptop, then sign in inside Expo Go (top-right icon) |
 | Phone and laptop on the **same Wi-Fi** | phone users | now | Campus Wi-Fi often blocks this. Then `cd apps/mobile` → `npx expo start --tunnel` (say yes if it offers to install `@expo/ngrok`), or use your phone's hotspot |
@@ -53,7 +53,7 @@ How to use git and GitHub is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). The rul
 
 | # | Step | Where | Copy this |
 |---|---|---|---|
-| 1 | **The table**: owner column + Row Level Security in the **same** migration (rule 1) | `supabase/migrations/YYYYMMDDHHMMSS_<what>.sql` | `0001_warmup_notes.sql` |
+| 1 | **The table**: owner column + Row Level Security in the **same** migration (rule 1), pointing at the core's tables ([`data-contracts.md`](data-contracts.md)); your two-account checks in `scripts/db-check.mjs`, then `pnpm db:check` | `supabase/migrations/YYYYMMDDHHMMSS_<what>.sql` | `0001_warmup_notes.sql` |
 | 2 | **The data**: types + a `get…()` that returns demo data in TEST MODE (Supabase later). A save that isn't built yet **throws a clear error**, never pretends (rule 11) | `apps/mobile/lib/<area>.ts` + `lib/demo/<area>.ts` | `lib/passport.ts`, `lib/demo/passport.ts` |
 | 3 | **The calculation**: one function, integers (percent 0–100), in `lib/`. Screens only show its result (rule 2) | `apps/mobile/lib/` | `practiceTotal()` in `lib/progress.ts` |
 | 4 | **The screen**: built only from kit components and tokens (no colours, fonts or sizes typed by hand; `pnpm lint` fails). Under ~300 lines; its parts go in `components/<area>/` | `apps/mobile/app/…` | the closest reference screen ([table in ui.md](ui.md#reference-screens--start-from-one-of-these)) |
@@ -78,13 +78,13 @@ Each one is small, runs on demo data, and doesn't wait for the shared core.
 2. **Your tables, as a draft PR**: `micro_projects` and `applications`, each with an owner and RLS. Students read open projects, a mentor manages their own, a student sees only their own applications. Azim checks it against the shared core before it's applied.
 3. **The verification score: one function** in `lib/`: the mentor's rubric → Verified (≥ 3 of 5, [spec](spec.md)) or Revise. That's your graded calculation.
 4. **The Projects tab on demo data**, once the new kit is on `main`: the list (Home's project cards: `components/home/ProjectCard.tsx`, data in `lib/demo/home.ts`) and a project's own page. Copy a challenge's page (`app/challenges/[id].tsx`): what it is, the skills it needs, Fit %, and Apply pinned at the bottom, locked until those skills are Practised.
-5. **With Azim**: how many micro-projects at launch. The mentor pages on the web wait for the portal.
+5. **With Azim**: how many micro-projects at launch. The portal has a Micro-projects page waiting for you under both Company and Mentor.
 
 ### Iskandar: Module 1 (Industry Standards & Curriculum Alignment)
 1. **Warm-up PR by Wed 28 Oct.** Your screen goes in `apps/web` (a page).
 2. **Data, no code yet.** For each of our four roles (Web Developer, Data Analyst, Mobile Developer, QA Engineer), collect 20+ real job ads (JobStreet, LinkedIn, Hiredly) and count how often each skill appears. Put it in a sheet in `05 Team Shared`. **These counts become the skill weights** that everyone's Readiness % uses, so the whole app depends on them.
 3. **Course ↔ skill map**: map 3–4 FTMK courses to the skills they teach. Your curriculum gap report comes from this.
-4. **Plan your web pages** (roles, skills, weights, the gap report) on paper. You build them once the portal is in.
+4. **Your web pages** (Skills, Roles & weights, Course maps, the Curriculum gap report) are in the portal's menu as placeholders with your name. Replace them, on demo data first (TEST MODE), copying the Approvals page's pattern.
 
 ---
 

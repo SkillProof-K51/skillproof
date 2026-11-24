@@ -3,6 +3,7 @@ import { Fragment, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import {
+  Button,
   Card,
   Divider,
   EmptyState,
@@ -15,8 +16,10 @@ import {
   StatusBadge,
   Text,
   TopBar,
+  useToast,
 } from "../../components/ui";
 
+import { logOut } from "../../lib/auth";
 import {
   getProfileData,
   updateStudentAim,
@@ -37,6 +40,19 @@ export default function ProfileScreen() {
   const data = getProfileData();
 
   const [aim, setAim] = useState<StudentAim>(data?.student.aim ?? "internship");
+  const [message, setMessage] = useState("");
+  const toast = useToast();
+
+  const leave = () =>
+    logOut().then(
+      ({ demo }) => demo && toast({ message: "Test mode: you stay signed in" }),
+      (e: unknown) =>
+        toast({
+          message:
+            e instanceof Error ? e.message : "Couldn't log out. Try again.",
+          tone: "error",
+        }),
+    );
 
   return (
     <Screen>
@@ -133,6 +149,10 @@ export default function ProfileScreen() {
             />
           </Card>
         )}
+
+        {message ? <Text variant="small">{message}</Text> : null}
+
+        <Button label="Log out" variant="secondary" block onPress={leave} />
       </View>
     </Screen>
   );

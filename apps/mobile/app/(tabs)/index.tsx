@@ -2,13 +2,14 @@ import { gap, layout, space } from "@skillproof/tokens";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
+import { Greeting } from "../../components/home/Greeting";
 import { PassportCard } from "../../components/home/PassportCard";
 import { ProjectCard } from "../../components/home/ProjectCard";
 import { ReadinessCard } from "../../components/home/ReadinessCard";
 import { TodayCard } from "../../components/challenges/TodayCard";
 import { UnlockCard } from "../../components/home/UnlockCard";
 import {
-  Avatar,
+  Button,
   Card,
   Carousel,
   Hero,
@@ -16,19 +17,18 @@ import {
   SectionHeader,
   Text,
 } from "../../components/ui";
-import { getHomeData, greetingFor, nextUnlock } from "../../lib/home";
-
-// Home's illustrated scene (ChatGPT image, Azim's account, 24 Oct — see docs/ai-use-log.md).
-const SCENE = require("../../assets/scenes/campus-garden.jpg");
+import { getMyAccount } from "../../lib/auth";
+import { getHomeData, greetingFor, mascotLine, nextUnlock } from "../../lib/home";
+import { useLoad } from "../../lib/useLoad";
 
 // The slider: the top open matches, then the next locked one as a goal. Everything else → "See all".
 const SLIDER_OPEN = 3;
 const SLIDER_LOCKED = 1;
 
 /**
- * Home (BitePal-style, Azim 24 Oct): an illustrated scene with the greeting, then cards sliding up
- * over it — readiness for the target role first, then today's challenge (the one strong CTA),
- * micro-projects, passport.
+ * Home (BitePal-style, Azim 24 Oct): Gem's greeting on the plain page (the garden scene went on
+ * 29 Oct — too busy), then the cards — readiness for the target role first, then today's challenge
+ * (the one strong CTA), micro-projects, passport.
  */
 export default function HomeScreen() {
   const router = useRouter();
@@ -47,15 +47,12 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <Hero scene={SCENE}>
-        <View style={styles.header}>
-          <View style={styles.greeting}>
-            <Text variant="title">
-              {greetingFor(new Date())}, {student.firstName}
-            </Text>
-          </View>
-          <Avatar initials={student.initials} tone="surface" />
-        </View>
+      <Hero>
+        <Greeting
+          hello={`${greetingFor(new Date())}, ${student.firstName}!`}
+          line={mascotLine(data)}
+          initials={student.initials}
+        />
       </Hero>
 
       <View style={styles.content}>
@@ -116,20 +113,36 @@ export default function HomeScreen() {
   );
 }
 
-/** Shown when there is no signed-in student yet (and TEST MODE is off). */
+/**
+ * Outside TEST MODE until Modules 2–4 fill Home: who is signed in, read back from the database —
+ * proof that sign-up made their profile — and what will appear here.
+ */
 function HomeEmpty() {
+  const { data: account, error, reload } = useLoad(getMyAccount);
   return (
     <Screen>
       <Hero>
-        <Text variant="title">Nothing here yet</Text>
+        <Text variant="title">{account ? `Hi, ${account.firstName}` : "Welcome"}</Text>
       </Hero>
       <View style={styles.content}>
         <Card>
-          <Text variant="heading">Home fills up once you log in</Text>
-          <Text variant="small" color="secondary" style={styles.emptyBody}>
-            Auth, profiles and skills arrive with the shared core (weeks 6–7). To preview with demo data, set
-            EXPO_PUBLIC_TEST_MODE=1 in apps/mobile/.env and restart the dev server.
-          </Text>
+          {error ? (
+            <>
+              <Text variant="heading">Couldn’t load your profile</Text>
+              <Text variant="small" color="secondary" style={styles.emptyBody}>
+                {error}
+              </Text>
+              <Button label="Try again" variant="secondary" onPress={reload} style={styles.emptyAction} />
+            </>
+          ) : (
+            <>
+              <Text variant="heading">{account?.jobRole ? `Working towards ${account.jobRole}` : "You’re in"}</Text>
+              <Text variant="small" color="secondary" style={styles.emptyBody}>
+                Your readiness, today’s challenge and projects appear here as Modules 2–4 are built. To preview them
+                with demo data, set EXPO_PUBLIC_TEST_MODE=1 in apps/mobile/.env and restart the dev server.
+              </Text>
+            </>
+          )}
         </Card>
       </View>
     </Screen>
@@ -137,9 +150,8 @@ function HomeEmpty() {
 }
 
 const styles = StyleSheet.create({
-  header: { flexDirection: "row", alignItems: "center", gap: space.md },
-  greeting: { flex: 1, gap: space.xxs },
   content: { paddingHorizontal: layout.gutter, gap: gap.loose },
   fill: { flexGrow: 1 },
   emptyBody: { marginTop: space.xs },
+  emptyAction: { marginTop: space.md, alignSelf: "flex-start" },
 });

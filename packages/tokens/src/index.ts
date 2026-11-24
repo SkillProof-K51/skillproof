@@ -32,8 +32,14 @@ export const colors = {
     muted: "#9b9ba6", // idle tabs
   },
   action: {
-    primaryStrong: "#1d1e21", // the ONE strong action per screen — a black pill (16:1 with white)
-    onPrimaryStrong: "#ffffff",
+    primaryStrong: "#1d1e21", // ink for strong controls: a ticked checkbox, the unlock card's lock (16:1 with white)
+    onPrimaryStrong: "#ffffff", // text and icons on a filled button
+    // Buttons are chunky (Azim, 29 Oct): a face on a darker edge that it presses down into.
+    primary: "#7c5cf0", // the ONE main action per screen, in the role purple (white on it: 4.5:1)
+    primaryEdge: "#5a3fcf",
+    secondaryEdge: "#dcdbe3", // the white button's outline and edge
+    danger: "#d33a2c", // the confirm of a delete / remove dialog (white on it: 4.8:1)
+    dangerEdge: "#9e2318",
   },
   accent: {
     sky: "#c9b8ff", // avatars; the light step of a segmented bar (Practised)
@@ -55,6 +61,22 @@ export const colors = {
     success: { fg: "#1d7348", bg: "#d9f2e3" },
     error: { fg: "#b42318", bg: "#fde8e6" },
     info: { fg: "#2a5db0", bg: "#dcebff" },
+    warning: { fg: "#9a5b00", bg: "#fff4d6" }, // waiting on someone: a pending account (4.9:1)
+  },
+  portal: {
+    // The web portal (Azim, 28 Oct: Kumo-style, look A): neutral greys and hairlines, compact,
+    // the app's purple as its one accent — companies, mentors, coordinators and the admin work
+    // here at a desk. shadcn/ui reads these through apps/web/src/app/globals.css.
+    page: "#fafafa", // behind everything, and the sidebar
+    surface: "#ffffff", // cards, tables, dialogs, inputs
+    subtle: "#f4f4f5", // table headers, the tabs' track, hovered rows
+    selected: "#ededed", // the sidebar's current page
+    border: "#e5e5e5", // hairlines
+    text: "#171717",
+    textSoft: "#404040", // sidebar items
+    textMuted: "#737373", // labels, sub-lines (4.5:1 on page)
+    accent: "#7c5cf0", // = accent.brand: primary buttons, links, focus rings, counts
+    onAccent: "#ffffff", // text on accent (4.5:1)
   },
   kind: {
     // A challenge's own page is a pastel of its kind (BitePal's detail pages, Azim 25 Oct): a
@@ -72,6 +94,12 @@ export const colors = {
     gold: "#dcb253", // foil: labels, the ID tile, the chevron — 8.5:1 on the cover
     goldLine: "rgba(220, 178, 83, 0.45)", // hairline border + divider on the cover
     wash: "#f7edd3", // a soft gold page tint where the passport is the subject (onboarding)
+  },
+  mascot: {
+    // Gem (Azim, 29 Oct): a skill badge come alive. Its body is accent.brand, its eyes bg.surface
+    // and text.primary, its sparkles accent.butter; these two are its own.
+    facet: "#8d70f3", // the lighter hexagon inside the body
+    blush: "#ffb3cf", // cheeks
   },
   glass: {
     // frosted fallback for the bottom dock where Liquid Glass isn't available (Android, iOS < 26, web)
@@ -133,6 +161,9 @@ export const motion = {
   standard: 250, // sheets and dialogs opening
   toast: 3000, // how long a success / info toast stays (error toasts stay until closed)
   pop: 700, // a badge opening on a win: squeeze, spring, sparks (Result)
+  float: 1600, // the mascot rising (then sinking) at rest
+  launch: 700, // Welcome holds the launch screen (the logo on the purple) this long…
+  open: 900, // …then opens into the page
 } as const;
 
 /** Press feedback for anything tappable. */
@@ -155,8 +186,6 @@ export const radius = {
 export const layout = {
   designWidth: 390,
   gutter: 16, // screen side padding — cards run wide, BitePal-style
-  sceneHeight: 330, // Home's illustrated scene (BitePal-style header)
-  sceneOverlap: 56, // the first card slides this far up over the scene's bottom edge
 } as const;
 
 /**
@@ -179,7 +208,8 @@ export const type = {
   title: { family: "sans", weight: 900, size: 30, lineHeight: 34, letterSpacing: -0.4 }, // a screen's title ("Progress"), Home's name
   heading: { family: "sans", weight: 800, size: 17, lineHeight: 22, letterSpacing: -0.1 }, // card titles
   subheading: { family: "sans", weight: 700, size: 16, lineHeight: 22, letterSpacing: -0.1 }, // list-row titles
-  bodyStrong: { family: "sans", weight: 700, size: 15, lineHeight: 21, letterSpacing: 0 }, // button labels
+  bodyStrong: { family: "sans", weight: 700, size: 15, lineHeight: 21, letterSpacing: 0 }, // strong body text, text-only buttons
+  button: { family: "sans", weight: 800, size: 15, lineHeight: 20, letterSpacing: 0.8, uppercase: true }, // button labels, in capitals (Azim, 29 Oct)
   body: { family: "sans", weight: 500, size: 15, lineHeight: 21, letterSpacing: 0 },
   label: { family: "sans", weight: 600, size: 13, lineHeight: 18, letterSpacing: 0 }, // a card's grey label, badges, tags
   small: { family: "sans", weight: 500, size: 13, lineHeight: 18, letterSpacing: 0 }, // sub-lines
@@ -192,12 +222,20 @@ export const type = {
 
 export type TypeVariant = keyof typeof type;
 
-/** CSS font stacks for the web portal. */
+/**
+ * CSS font stacks. sans / display / mono are the app's; the portal's are Inter and Roboto Mono,
+ * which the web loads with next/font as --font-inter and --font-roboto-mono (apps/web layout).
+ */
 export const fontStack = {
   sans: "'Sofia Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
   display: "'Sofia Sans Condensed', 'Sofia Sans', system-ui, sans-serif",
   mono: "'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+  portal: "var(--font-inter), Inter, system-ui, -apple-system, 'Segoe UI', sans-serif",
+  portalMono: "var(--font-roboto-mono), 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
 } as const;
+
+/** Corner radius of the portal's cards, inputs and buttons (Kumo-style: small and sharp). */
+export const portalRadius = 8;
 
 /** Shadows. Only floating elements get one — cards are flat. */
 export const shadow = {

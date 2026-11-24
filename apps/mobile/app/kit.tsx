@@ -5,6 +5,7 @@ import { BasicsDemo } from "../components/kit/BasicsDemo";
 import { FeedbackDemo } from "../components/kit/FeedbackDemo";
 import { FormsDemo } from "../components/kit/FormsDemo";
 import { ListsDemo } from "../components/kit/ListsDemo";
+import { MascotDemo } from "../components/kit/MascotDemo";
 import { ProgressDemo } from "../components/kit/ProgressDemo";
 import { ReferenceScreens } from "../components/kit/ReferenceScreens";
 import { ResultsDemo } from "../components/kit/ResultsDemo";
@@ -32,6 +33,7 @@ export default function KitScreen() {
         <FormsDemo />
         <ListsDemo />
         <FeedbackDemo />
+        <MascotDemo />
         <ProgressDemo />
         <ResultsDemo />
       </View>

@@ -1,5 +1,6 @@
 import { getTargetRoles, type TargetRole } from "./auth";
-import { demoOnboarding, demoWarmUps } from "./demo/onboarding";
+import { demoProgrammes, demoWarmUps } from "./demo/onboarding";
+import { supabase } from "./supabase";
 import { isTestMode } from "./testMode";
 
 /** What a student is aiming for: it steers which micro-projects Module 2 suggests. */
@@ -19,9 +20,17 @@ export type OnboardingAnswers = {
   aimId?: string;
   programmeId?: string;
   year?: number;
-  /** Skills they've used before. These only pick the first challenges, never a status (rule 7). */
+  /** Ids of the skills they've used. These only pick the first challenges, never a status (rule 7). */
   used: string[];
 };
+
+// What a student can aim for. Asked, but not saved until Module 2 agrees to keep it on the profile.
+const AIMS: Aim[] = [
+  { id: "internship", label: "An internship", description: "For my industrial training" },
+  { id: "first_job", label: "My first job", description: "After I graduate" },
+  { id: "freelance", label: "Freelance projects", description: "Real work while I study" },
+];
+const YEARS = [1, 2, 3, 4];
 
 /** The warm-up before sign-up: a few lines of code with one bug; the student taps the line. */
 export type WarmUp = {
@@ -32,12 +41,17 @@ export type WarmUp = {
   why: string;
 };
 
-/**
- * The options, or null when there's nothing to offer yet.
- * TODO (shared core, weeks 6–7): Module 1's roles and the programmes from the profiles schema.
- */
-export function getOnboardingOptions(): OnboardingOptions | null {
-  return isTestMode ? { roles: getTargetRoles(), ...demoOnboarding } : null;
+/** The options: Module 1's roles with their roadmaps, and the programmes (anyone can read both). */
+export async function getOnboardingOptions(): Promise<OnboardingOptions> {
+  const [roles, programmes] = await Promise.all([getTargetRoles(), getProgrammes()]);
+  return { roles, aims: AIMS, programmes, years: YEARS };
+}
+
+async function getProgrammes(): Promise<OnboardingOptions["programmes"]> {
+  if (isTestMode) return demoProgrammes;
+  const { data, error } = await supabase().from("programmes").select("id, name").order("name");
+  if (error) throw new Error("Couldn’t load the programmes. Check your connection and try again.");
+  return (data as { id: string; name: string }[]).map((p) => ({ id: p.id, label: p.name }));
 }
 
 /**
