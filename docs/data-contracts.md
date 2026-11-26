@@ -19,6 +19,8 @@ catalogue is `supabase/seed.sql`. Changing a table here = a new migration in a P
 | `companies` | a company account's name, SSM no., website, document path, **join code** | the company, its mentors, admin | made at sign-up; the company edits its details and draws a new code (sets it to null); the database draws every code | shared core |
 | `mentors` | a mentor and the company they joined (`company_id`), job title | the mentor, their company, admin | made at sign-up with an approved company's code; the mentor edits the title; the company (or an admin) removes them | shared core |
 | `coordinators` | a coordinator's faculty | the coordinator, admin | made at sign-up; the coordinator edits it | shared core |
+| `micro_projects` | mentor-authored projects, required skills, and publication status | students: open projects; a mentor: own projects; a company: projects of its own mentors; admin | owning mentor creates and manages | **M4 draft** |
+| `applications` | a student's application to a project and its status | student: own applications; mentor and company: applications to their projects; admin | student applies when eligible; owning mentor decides status | **M4 draft** |
 
 "Everyone" includes signed-out visitors: onboarding shows roles and roadmaps before sign-up.
 
@@ -28,6 +30,7 @@ catalogue is `supabase/seed.sql`. Changing a table here = a new migration in a P
 - **Company documents** live in the private `company-documents` bucket, in the company's own folder; only it and admins read them.
 - **Skill status only moves forward**, and `verified` only after `practised`. The timestamps (`practised_at`, `verified_at`) are set by the database, not by the writer.
 - **A skill a student holds can't be deleted** (M1's delete page should say so, not crash).
+- **M4 draft:** a project is owned by its mentor; its company can read projects and application counts through the mentor's company link. A student reads open projects and applies only after practising every required skill. The student owns the application; only its mentor can decide it. See the unapplied draft migration `20261126115900_m4_projects.sql`.
 - Deleting an account deletes its rows everywhere.
 
 ## Plugging your module in

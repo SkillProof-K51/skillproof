@@ -364,6 +364,11 @@ await expect("a student cannot apply to a draft project", () =>
 await expect("a student reads their own application", () => q(AINA, `select id from public.applications`), "rows:1");
 await expect("a student sees only their own applications", () => q(HARIZ, `select id from public.applications`), "rows:0");
 await expect("the owning mentor sees applications to their projects", () => q(MENTOR, `select id from public.applications`), "rows:1");
+await expect("the company sees projects prepared by its own mentors", () => q(CO, `select id from public.micro_projects`), "rows:3");
+await expect("a company cannot see another company's projects", () => q(CO2, `select id from public.micro_projects`), "rows:1");
+await expect("the company can track applications to its mentors' projects", () => q(CO, `select id from public.applications`), "rows:1");
+await expect("a company cannot change its mentor's project", () => q(CO, `update public.micro_projects set status = 'closed' where id = $1`, [PROJECT]), "affected:0");
+await expect("a company cannot decide an application", () => q(CO, `update public.applications set status = 'accepted' where id = $1`, [APPLICATION]), "affected:0");
 await expect("another mentor cannot see or update the application", () => q(MENTOR2, `update public.applications set status = 'accepted' where id = $1`, [APPLICATION]), "affected:0");
 await expect("a student cannot set their own application status", () => q(AINA, `update public.applications set status = 'accepted' where id = $1`, [APPLICATION]), "affected:0");
 

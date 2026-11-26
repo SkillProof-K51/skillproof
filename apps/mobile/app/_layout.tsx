@@ -46,6 +46,13 @@ export default function RootLayout() {
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="challenges/[id]" />
               <Stack.Screen name="challenges/result" />
+              <Stack.Screen name="projects/[id]" />
+              <Stack.Screen name="projects/apply/[id]" />
+              <Stack.Screen name="projects/status/[id]" />
+              <Stack.Screen name="projects/hand-in/[id]" />
+              <Stack.Screen name="projects/review/[id]" />
+              <Stack.Screen name="projects/verified/[id]" />
+              <Stack.Screen name="projects/rating/[id]" />
               <Stack.Screen name="progress" />
             </Stack.Protected>
             <Stack.Screen name="kit" />

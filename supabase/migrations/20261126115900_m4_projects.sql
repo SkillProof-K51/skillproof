@@ -88,6 +88,15 @@ create policy "micro projects: students read open and mentors read own"
       select 1 from public.profiles p
       where p.id = (select auth.uid()) and p.role = 'mentor' and p.status = 'active'
     ))
+    or exists (
+      select 1
+      from public.mentors m
+      join public.companies c on c.id = m.company_id
+      join public.profiles p on p.id = c.owner_id
+      where m.id = micro_projects.owner_id
+        and c.owner_id = (select auth.uid())
+        and p.role = 'company' and p.status = 'active'
+    )
     or (select private.is_admin())
   );
 
@@ -139,6 +148,16 @@ create policy "applications: student or owning mentor reads"
     or exists (
       select 1 from public.micro_projects mp
       where mp.id = project_id and mp.owner_id = (select auth.uid())
+    )
+    or exists (
+      select 1
+      from public.micro_projects mp
+      join public.mentors m on m.id = mp.owner_id
+      join public.companies c on c.id = m.company_id
+      join public.profiles p on p.id = c.owner_id
+      where mp.id = applications.project_id
+        and c.owner_id = (select auth.uid())
+        and p.role = 'company' and p.status = 'active'
     )
     or (select private.is_admin())
   );
