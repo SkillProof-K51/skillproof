@@ -58,3 +58,34 @@ export const demoMentors: Mentor[] = [
   { id: "00000000-0000-4000-8000-000000000005", fullName: "Kamal Ariff", email: "kamal@example.com", jobTitle: "Senior developer", joinedAt: "2026-10-27T09:00:00Z" },
   { id: "00000000-0000-4000-8000-0000000000b2", fullName: "Siti Aminah", email: "siti@example.com", jobTitle: "QA lead", joinedAt: "2026-10-26T03:00:00Z" },
 ];
+
+/** TEST MODE micro-projects for the Company and Mentor portal pages. */
+export const demoMicroProjects = [
+  {
+    id: "00000000-0000-4000-8000-0000000000d1",
+    ownerId: demoMentors[0].id,
+    title: "Build a landing page",
+    summary: "Create a responsive landing page for a local community event.",
+    requiredSkills: ["HTML & CSS", "JavaScript"],
+    status: "open" as const,
+    applications: 3,
+  },
+  {
+    id: "00000000-0000-4000-8000-0000000000d2",
+    ownerId: demoMentors[0].id,
+    title: "Test a booking flow",
+    summary: "Write clear test cases for a small appointment booking flow.",
+    requiredSkills: ["Testing", "Communication"],
+    status: "draft" as const,
+    applications: 0,
+  },
+  {
+    id: "00000000-0000-4000-8000-0000000000d3",
+    ownerId: demoMentors[1].id,
+    title: "Tidy a data dashboard",
+    summary: "Improve labels and filters on a small sales dashboard.",
+    requiredSkills: ["SQL", "Data visualisation"],
+    status: "closed" as const,
+    applications: 2,
+  },
+];

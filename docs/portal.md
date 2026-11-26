@@ -26,7 +26,7 @@ The portal (`apps/web`) is where companies, mentors, university coordinators and
 | `/company` | company | join code, mentors, details | shared core |
 | `/mentor`, `/coordinator` | mentor, coordinator | home | shared core |
 | `/admin/skills`, `/admin/roles`, `/coordinator/course-maps`, `/reports/curriculum-gap` | admin, coordinator | **placeholders** | Module 1 · Iskandar |
-| `/company/micro-projects`, `/mentor/micro-projects` | company, mentor | **placeholders** | Module 4 · Fiona |
+| `/company/micro-projects`, `/mentor/micro-projects` | company, mentor | project and application-count lists (read-only first build) | Module 4 · Fiona |
 | `/reports/skill-shortage` | admin, coordinator | **placeholder** | Module 5 · Azim |
 | `/admin/programmes` | admin | **placeholder**: the faculty's real list | shared core |
 | `/kit` | anyone (dev) | every component, live | — |
