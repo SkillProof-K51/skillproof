@@ -26,7 +26,7 @@ The approved proposal is the source of truth: `Workshop II/03 Deliverables/BITU3
 | 4 | Micro-Projects & Mentor Verification | Fiona | micro-projects, applications, deliverables, ratings | verification score; completion report | first review of deliverables; mentor decides |
 | 5 | Skill Passport & Talent Analytics | Azim | evidence items, share links, per-skill visibility | skill shortage report (M1 demand vs verified supply) | — |
 
-Proposed numbers (owners may refine, then update here): Readiness = Σ weight × (verified 1 / practised 0.5 / not_yet 0), "Ready" ≥ 70 %. Weights come from Module 1.
+Proposed numbers (owners may refine, then update here): Readiness = Σ weight × (verified 1 / practised 0.5 / not_yet 0), "Ready" ≥ 70 %. Weights come from Module 1's job-ad counts (20 ads per role; each ad counts once per skill; weight = its share of the role's total, summing to 100) — see `supabase/migrations/20261126170210_catalogue_from_job_ads.sql`.
 
 ## Build order
 1. **Now → 23 Oct**: repo, warm-up PR each (1 screen + 1 table), module screens planned on the coded UI kit (`docs/ui.md`; the [Figma file](https://www.figma.com/design/ud5OlGZF5PjMXmIRMHfQCy) mirrors the code and has a proposal per module — a starting point, each owner designs their own).

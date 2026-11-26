@@ -25,6 +25,12 @@ const BY_SKILL: Record<string, SkillLogoKey | SkillLogoKey[] | { icon: IconName 
   sql: { icon: "database" },
   testing: { icon: "test" },
   "data visualisation": { icon: "chart" },
+  "react native": "react",
+  // No logo in skillLogos.ts yet (add one from simple-icons, docs/credits.md), so an icon for now
+  php: { icon: "browser" },
+  "rest apis": { icon: "share" },
+  excel: { icon: "chart" },
+  "test automation": { icon: "zap" },
 };
 const FALLBACK: IconName = "seedling";
 
