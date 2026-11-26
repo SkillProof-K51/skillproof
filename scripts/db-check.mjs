@@ -336,6 +336,37 @@ await expect("a coordinator is no admin: can't approve a company", () => q(COORD
 await q(ADMIN, `update public.profiles set status = 'active' where id = $1`, [CO2]);
 await signUp(MENTOR2, "devi@example.com", { full_name: "Devi Nair", role: "mentor", join_code: (await company(CO2)).join_code });
 
+console.log("\nModule 4 (micro-projects and applications):");
+const PROJECT = "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb";
+const LOCKED_PROJECT = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
+const DRAFT_PROJECT = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
+const OTHER_PROJECT = "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee";
+const APPLICATION = "ffffffff-ffff-4fff-8fff-ffffffffffff";
+await signUp(AINA, "aina.m4@example.com", { full_name: "Aina Sofea", role: "student" });
+await db.query(`insert into public.student_skills (student_id, skill_id, status) values ($1, 'git', 'practised')`, [AINA]);
+await expect("a mentor creates an open project with a valid required skill", () =>
+  q(MENTOR, `insert into public.micro_projects (id, owner_id, title, summary, required_skill_ids, status) values ($1, $2, 'Git starter', 'A short Git project', array['git'], 'open')`, [PROJECT, MENTOR]), "affected:1");
+await expect("unknown required skill is refused", () =>
+  q(MENTOR, `insert into public.micro_projects (owner_id, title, summary, required_skill_ids) values ($1, 'Bad skill', 'Invalid reference', array['unknown_skill'])`, [MENTOR]), "refused:23503");
+await q(MENTOR, `insert into public.micro_projects (id, owner_id, title, summary, status) values ($1, $2, 'Draft project', 'Not listed to students', 'draft')`, [DRAFT_PROJECT, MENTOR]);
+await q(MENTOR, `insert into public.micro_projects (id, owner_id, title, summary, required_skill_ids, status) values ($1, $2, 'React project', 'Needs more practice', array['react'], 'open')`, [LOCKED_PROJECT, MENTOR]);
+await q(MENTOR2, `insert into public.micro_projects (id, owner_id, title, summary, required_skill_ids, status) values ($1, $2, 'Other mentor project', 'Owned by another mentor', array['git'], 'open')`, [OTHER_PROJECT, MENTOR2]);
+await expect("a student sees open projects only", () => q(AINA, `select id from public.micro_projects`), "rows:3");
+await expect("the mentor manages their own projects only", () => q(MENTOR, `select id from public.micro_projects`), "rows:3");
+await expect("another mentor cannot see the first mentor's projects", () => q(MENTOR2, `select id from public.micro_projects where id = $1`, [PROJECT]), "rows:0");
+await expect("a student cannot manage a project", () => q(AINA, `update public.micro_projects set status = 'closed' where id = $1`, [PROJECT]), "affected:0");
+await expect("an eligible student applies to an open project", () =>
+  q(AINA, `insert into public.applications (id, owner_id, project_id, message) values ($1, $2, $3, 'Ready to practise on this project')`, [APPLICATION, AINA, PROJECT]), "affected:1");
+await expect("a student cannot apply before practising every required skill", () =>
+  q(AINA, `insert into public.applications (owner_id, project_id) values ($1, $2)`, [AINA, LOCKED_PROJECT]), "refused:42501");
+await expect("a student cannot apply to a draft project", () =>
+  q(AINA, `insert into public.applications (owner_id, project_id) values ($1, $2)`, [AINA, DRAFT_PROJECT]), "refused:42501");
+await expect("a student reads their own application", () => q(AINA, `select id from public.applications`), "rows:1");
+await expect("a student sees only their own applications", () => q(HARIZ, `select id from public.applications`), "rows:0");
+await expect("the owning mentor sees applications to their projects", () => q(MENTOR, `select id from public.applications`), "rows:1");
+await expect("another mentor cannot see or update the application", () => q(MENTOR2, `update public.applications set status = 'accepted' where id = $1`, [APPLICATION]), "affected:0");
+await expect("a student cannot set their own application status", () => q(AINA, `update public.applications set status = 'accepted' where id = $1`, [APPLICATION]), "affected:0");
+
 await expect("the company reads its own company only", () => q(CO, `select id from public.companies`), "rows:1");
 await expect("the company reads its mentor and the mentor's name", () => q(CO, `select m.id from public.mentors m union all select p.id from public.profiles p where p.id = '${MENTOR}'`), "rows:2");
 await expect("the company can't see the other company's mentor", () => q(CO, `select id from public.mentors where id = $1 union all select id from public.profiles where id = $1`, [MENTOR2]), "rows:0");
