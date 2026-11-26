@@ -234,6 +234,8 @@ await expect("a visitor cannot call private.is_admin()", () => q(null, `select p
 console.log("\nthe catalogue (programmes, skills, job roles, weights):");
 await expect("a visitor reads the 4 roles (onboarding, before sign-up)", () => q(null, `select id from public.job_roles`), "rows:4");
 await expect("a visitor reads the web roadmap: 6 skills", () => q(null, `select skill_id from public.job_role_skills where job_role_id = 'web'`), "rows:6");
+await expect("the catalogue has the 15 skills (10 + 5 from the job ads)", () => q(null, `select id from public.skills`), "rows:15");
+await expect("the web roadmap comes from the job ads: PHP and REST APIs are on it", () => q(null, `select skill_id from public.job_role_skills where job_role_id = 'web' and skill_id in ('php', 'rest_api')`), "rows:2");
 await expect("a visitor reads the 5 programmes", () => q(null, `select id from public.programmes`), "rows:5");
 await expect("each seeded role's weights sum to 100", async () => {
   const r = await db.query(`select job_role_id, sum(weight)::int as total from public.job_role_skills group by 1 having sum(weight) <> 100`);
